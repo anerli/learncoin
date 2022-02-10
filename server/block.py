@@ -19,8 +19,8 @@ class BlockHeader:
 
 class Block:
     def __init__(self, header: BlockHeader, transactions: List[Transaction] = []):
-        self.transactions = transactions
         self.header = header
+        self.transactions = transactions
     
     def to_json(self) -> dict:
         '''
@@ -31,7 +31,7 @@ class Block:
         pass
     
     def to_puzzle_bytes(self) -> bytes:
-        byte_sum = 0
+        byte_sum = b'\x00' # 0 as bytes
         byte_sum += self.header.to_puzzle_bytes()
 
         for transaction in self.transactions:
@@ -42,12 +42,12 @@ class Block:
     def to_puzzle_hash(self) -> bytes:
         return secure_hash(self.to_puzzle_bytes())
     
-    def is_proven(self) -> bool:
-        '''
-        Returns true if this block contains a proof and false otherwise.
-        Does NOT check whether the proof is actually valid or not.
-        '''
-        return self.header.proof is not None
+    # def is_proven(self) -> bool:
+    #     '''
+    #     Returns true if this block contains a proof and false otherwise.
+    #     Does NOT check whether the proof is actually valid or not.
+    #     '''
+    #     return self.header.proof is not None
     
     def is_valid(self) -> bool:
         '''
@@ -56,12 +56,19 @@ class Block:
         '''
         
         # === Verify proof ===
-        if not self.is_proven():
+        # Check if there is even a proof contained in the header
+        #if not self.is_proven():
+        if self.header.proof is None:
             return False
-        # TODO: Do actual verification
+        # Do actual verification of proof
+        if not is_valid_proof(self.to_puzzle_hash(), self.header.proof):
+            return False
         
         # === Verify transaction signatures ===
         # TODO
 
         # === Verify address sums ===
         # TODO
+
+        # Everything is valid if we get here
+        return True
