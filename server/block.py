@@ -7,6 +7,9 @@ class BlockHeader:
     def __init__(self, previous_block_hash: bytes, proof: bytes = None):
         self.previous_block_hash = previous_block_hash
         self.proof = proof
+    
+    def __repr__(self):
+        return f'<BlockHeader previous_block_hash={self.previous_block_hash.hex()} proof={self.proof.hex()}>'
 
     def to_puzzle_bytes(self):
         '''
@@ -21,6 +24,9 @@ class Block:
     def __init__(self, header: BlockHeader, transactions: List[Transaction] = []):
         self.header = header
         self.transactions = transactions
+    
+    def __repr__(self):
+        return f'<Block header={self.header} transactions={self.transactions}>'
     
     def to_json(self) -> dict:
         '''

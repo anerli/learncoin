@@ -7,5 +7,5 @@ def is_valid_proof(block_hash: bytes, proof: bytes):
     # or do we just need the secure hash for the block bytes + proof?
     combined_bytes = block_hash + proof
     combined_hash = secure_hash(combined_bytes)
-    print(combined_hash.hex())#[:DIFFICULTY])
+    #print(combined_hash.hex())#[:DIFFICULTY])
     return combined_hash.hex()[:DIFFICULTY] == "0"*DIFFICULTY
