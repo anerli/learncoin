@@ -1,5 +1,47 @@
 from block import Block, BlockHeader
 
+from typing import List
+
+# Constant value representing the hash of an imaginary genesis block
+GENESIS_HASH = b"this is the UTF-8 representation of the genesis hash bytes"
+
 class BlockChain:
-    def __init__(self, blocks=[]):
+    '''
+    All blocks contained in this should be proven already.
+    New blocks should be stored separately and added only when proven.
+    '''
+    def __init__(self, blocks: List[Block] = []):
+        #if blocks == []:
+        #    blocks.append(Block(BlockHeader(GENESIS_HASH)))
+        # Actually don't add a block yet because it won't be proven
+        self.blocks = blocks
+    
+    def __repr__(self):
+        s = ''
+        s += '<BlockChain\n'
+        for block in self.blocks:
+            s += block.__repr__() + '\n'
+        s += '>\n'
+        return s
+    
+    def to_json(self) -> dict:
         pass
+    
+    def add_block(self, block: Block):
+        if not block.is_valid():
+            raise Exception("Attempted to add invalid block to chain!")
+        self.blocks.append(block)
+    
+    def is_valid(self):
+        # Verify all blocks as a proof chain
+
+        last_hash = GENESIS_HASH
+
+        for block in self.blocks:
+            if block.header.previous_block_hash != last_hash:
+                return False
+            if not block.is_valid():
+                return False
+        
+        # If all blocks and prev hashes are valid, the chain is valid
+        return True
