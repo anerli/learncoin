@@ -65,9 +65,11 @@ class Block:
         # Check if there is even a proof contained in the header
         #if not self.is_proven():
         if self.header.proof is None:
+            print('Invalid block: No header')
             return False
         # Do actual verification of proof
         if not is_valid_proof(self.to_puzzle_hash(), self.header.proof):
+            print('Invalid block: Invalid proof: ' + self.header.proof)
             return False
         
         # === Verify transaction signatures ===

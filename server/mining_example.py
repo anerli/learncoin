@@ -42,7 +42,7 @@ try:
 
         print(f'Is block valid? {current_block.is_valid()}')
 
-        # Add a new block to prove
+        # Add proven block
         chain.add_block(current_block)
         # Set up a new block to prove
         current_block = Block(BlockHeader(current_block_hash))

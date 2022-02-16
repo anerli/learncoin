@@ -39,9 +39,11 @@ class BlockChain:
 
         for block in self.blocks:
             if block.header.previous_block_hash != last_hash:
+                #print(f'Block stored previous hash {block.header.previous_block_hash} does not match ')
                 return False
             if not block.is_valid():
                 return False
+            last_hash = block.to_puzzle_hash()
         
         # If all blocks and prev hashes are valid, the chain is valid
         return True
