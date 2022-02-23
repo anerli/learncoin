@@ -6,10 +6,12 @@ import puzzle
 
 from time import time
 
-
+import sys
 
 # Reduce difficulty for testing purposes
 puzzle.DIFFICULTY = 4
+
+if len(sys.argv) > 1: puzzle.DIFFICULTY = int(sys.argv[1])
 
 DEBUG_INTERVAL = 10000
 
