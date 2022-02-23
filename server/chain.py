@@ -25,7 +25,16 @@ class BlockChain:
         return s
     
     def to_json(self) -> dict:
-        pass
+        #return self.__dict__
+        return {
+            'blocks': [block.to_json() for block in self.blocks]
+        }
+    
+    @classmethod
+    def from_json(cls, data: dict) -> 'BlockChain':
+        return BlockChain(
+            blocks=[Block.from_json(block) for block in data['blocks']]
+        )
     
     def add_block(self, block: Block):
         if not block.is_valid():

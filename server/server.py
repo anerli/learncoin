@@ -16,7 +16,6 @@ async def hello(request):
 @app.get("/test")
 async def test(request):
     discovery.test_neighbors()
-    print('HERE' + '&'*99)
     return text('aight')
 
 if __name__ == '__main__':

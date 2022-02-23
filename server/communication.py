@@ -1,5 +1,5 @@
 import discovery
+from chain import BlockChain
 
-def start():
-    # Begin communication with neighbors
+def broadcast_chain(chain: BlockChain):
     pass
