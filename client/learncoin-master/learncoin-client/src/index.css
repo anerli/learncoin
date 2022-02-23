@@ -1,0 +1,163 @@
+* {
+  box-sizing: border-box;
+}
+
+img {
+  background-color: #000A24;
+  border-color: #000A24;
+}
+
+button {
+  border-color: #000A24;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 3rem;
+  background-color: #000A24;
+}
+
+h1 {
+  color: #BCED09;
+  
+}
+
+h2 {
+  color: #BCED09;
+}
+
+h3 {
+  color: #BCED09;
+  float: left;
+  width: 50%;
+  font-weight: 500;
+}
+
+.btn {
+  font: inherit;
+  width: 40%;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #000A24;
+  color: #BCED09;
+  border: 3.5px solid #BCED09;
+  margin: 3rem;
+}
+
+.send_btn {
+  max-width: 7rem;
+}
+
+.btn:hover {
+  background-color: #BCED09;
+  color: #000A24;
+}
+
+.btn--alt {
+  background-color: transparent;
+  color: #800040;
+}
+
+.banner {
+  margin-top: 5rem;
+  height: 62px;
+}
+
+.redirect {
+  background-color: #000A24;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  margin-top: 3rem;
+  margin-left: 15%;
+  width: 20%;
+  border-style: solid;
+  border-width: 3.5px;
+  border-radius: 8px;
+  border-color: #BCED09;
+  float: left;
+}
+.btn--alt:hover {
+  background-color: #f8dae9;
+}
+
+.cubes {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  max-width: 100%;
+}
+
+.redirect_decal {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  max-width: 100%;
+}
+
+.card {
+  background-color: #000A24;
+  padding: 1rem;
+  max-width: 75%;
+  max-height: 15rem;
+  border-style: solid;
+  border-width: 3.5px;
+  border-radius: 8px;
+  border-color: #BCED09;
+  align-content: center;
+}
+
+.card_items {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.send_btn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  margin-top: 25px;
+}
+
+.card_title {
+  font-weight: 500;
+  letter-spacing: 10px;
+}
+
+input[type="text"] {
+  background-color: #000A24;
+  border-style: solid;
+  border-width: 3.5px;
+  border-radius: 8px;
+  border-color: #BCED09;
+  margin-right: 5%;
+  color: #BCED09;
+  width: 45%;
+}
+
+.actions {
+  text-align: right;
+}
+
+.modal {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background-color: white;
+  padding: 1rem;
+  text-align: center;
+  width: 30rem;
+  z-index: 10;
+  position: fixed;
+  top: 20vh;
+  left: calc(50% - 15rem);
+}
+
+.backdrop {
+  position: fixed;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.75);
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
