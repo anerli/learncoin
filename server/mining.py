@@ -5,6 +5,10 @@ import communication
 from time import time
 from conversions import int_to_bytes
 import puzzle
+import colors
+
+def info(*args, **kwargs):
+    print(f'{colors.YELLOW}<MINING>{colors.RESET}', *args, **kwargs)
 
 def mine():
     global chain
@@ -31,7 +35,7 @@ def mine():
 
 def prove(block: Block):
     proof = 0
-    start = time()
+    #start = time()
 
     current_block_hash = block.to_puzzle_hash()
 
@@ -41,8 +45,10 @@ def prove(block: Block):
             break
         # Increment proof
         proof += 1
-    print(f'<MINING> Proof found: {proof}')
-    print(f'<MINING> Time to prove: {time() - start} seconds.')
+    #print(f'<MINING> Proof found: {proof}')
+    #print(f'<MINING> Time to prove: {time() - start} seconds.')
+    info(f'Proof found: {proof}')
+    #info(f'<MINING> Time to prove: {time() - start} seconds.')
 
     # Add proof to block header
     block.header.proof = int_to_bytes(proof)

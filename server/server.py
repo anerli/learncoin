@@ -9,12 +9,13 @@ import communication
 import time
 from mining import mine
 from chain_manager import chain
+import colors
 
 app = Sanic("learncoin_full_node")
 #hain = BlockChain()
 
 def info(*args, **kwargs):
-    print('<SRV>', *args, **kwargs)
+    print(f'{colors.MAGENTA}<SRV>{colors.RESET}', *args, **kwargs)
 
 @app.get("/")
 async def hello(request):
@@ -36,7 +37,7 @@ async def receive_chain(request):
     # ???? if request has no json this silently fails and freezes the call?? why???????
     other_chain = BlockChain.from_json(request.json)
     #print('What?')
-    info('Received chain:', other_chain.describe())
+    #info('Received chain:', other_chain.describe())
     if not other_chain.is_valid():
         info('Received chain is invalid!')
         return text('Received chain is invalid.', status=400)
@@ -47,10 +48,14 @@ async def receive_chain(request):
         info(msg)
         return text(msg, status=400)
     # Replace chain
-    info('Received longer valid chain, replacing own')
+    #info('Received longer valid chain, replacing own')
+    info(f'Accepted chain of length {other_len}.')
     chain = other_chain
     return text('Chain Accepted')
 
+@app.get("/chain")
+async def get_chain(request):
+    return json(chain.to_json())
 
 def start_mining():
     # Make sure server is running before we start mining
@@ -62,7 +67,7 @@ def start_mining():
 
 if __name__ == '__main__':
     argp = ArgumentParser()
-    argp.add_argument('--mine', action='store_true', dest='mine')
+    argp.add_argument('--mine', '-m', action='store_true', dest='mine')
     argp.add_argument('--port', '-p', dest='port', default=8000)
     argp.add_argument('--neighbors', '-n', dest='neighbors', nargs='+', metavar='<ip:port>',
         help='Initial neighbor nodes to use. An example of the format would be `127.0.0.1:8000`.')

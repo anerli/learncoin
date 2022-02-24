@@ -1,9 +1,10 @@
 from discovery import get_neighbors
 from chain import BlockChain
 import requests
+import colors
 
 def info(*args, **kwargs):
-    print('<COMMS>', *args, **kwargs)
+    print(f'{colors.CYAN}<COMMS>{colors.RESET}', *args, **kwargs)
 
 def broadcast_chain(chain: BlockChain):
     neighbors = get_neighbors()
