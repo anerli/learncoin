@@ -18,4 +18,4 @@ def broadcast_chain(chain: BlockChain):
         if resp.status_code == 200:
             info('Chain was accepted by neighbor.')
         else:
-            info('Chain not accepted by neighbor, given reason is:', resp.text)
+            info('Chain not accepted by neighbor; reason:', resp.text)

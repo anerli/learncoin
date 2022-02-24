@@ -39,10 +39,13 @@ async def receive_chain(request):
     info('Received chain:', other_chain.describe())
     if not other_chain.is_valid():
         info('Received chain is invalid!')
-        return text('invalid chain', status=400)
-    if len(other_chain) <= len(chain):
-        info(f'Chain received is not the longest (mine is {len(chain)}, theirs is {len(other_chain)}).')
-        return text('i have a longer (or just as long) chain', status=418)
+        return text('Received chain is invalid.', status=400)
+    other_len = len(other_chain)
+    my_len = len(chain)
+    if other_len <= my_len:
+        msg = f'Received chain of length {other_len} is not longer than local chain of length {my_len}.'
+        info(msg)
+        return text(msg, status=400)
     # Replace chain
     info('Received longer valid chain, replacing own')
     chain = other_chain
