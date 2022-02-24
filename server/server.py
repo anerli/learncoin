@@ -13,6 +13,9 @@ from chain_manager import chain
 app = Sanic("learncoin_full_node")
 #hain = BlockChain()
 
+def info(*args, **kwargs):
+    print('<SRV>', *args, **kwargs)
+
 @app.get("/")
 async def hello(request):
     return text("hello")
@@ -24,27 +27,24 @@ async def test(request):
 
 @app.post("/chain")
 async def receive_chain(request):
-    print('=== RECEIVE CHAIN ===')
+    # Endpoint for receiving chains, which have presumably mined a new block
+    #print('=== RECEIVE CHAIN ===')
     # TODO: Separate this logic into another file (?)
     global chain
-    print('Hello?')
-    print('Request:', request)
-    
-    print(request.body)
-    # Endpoint for receiving chains, which have presumably mined a new block
-    print('Request JSON:', request.json)
+    #print(request.body)
+    #print('Request JSON:', request.json)
     # ???? if request has no json this silently fails and freezes the call?? why???????
     other_chain = BlockChain.from_json(request.json)
-    print('What?')
-    print('Received chain:', other_chain)
+    #print('What?')
+    info('Received chain:', other_chain.describe())
     if not other_chain.is_valid():
-        print('Received chain is invalid!')
+        info('Received chain is invalid!')
         return text('invalid chain', status=400)
     if len(other_chain) <= len(chain):
-        print('Chain received is not the longest')
+        info(f'Chain received is not the longest (mine is {len(chain)}, theirs is {len(other_chain)}).')
         return text('i have a longer (or just as long) chain', status=418)
     # Replace chain
-    print('Received longer valid chain, replacing own')
+    info('Received longer valid chain, replacing own')
     chain = other_chain
     return text('Chain Accepted')
 

@@ -24,6 +24,9 @@ class BlockChain:
         s += '>\n'
         return s
     
+    def describe(self):
+        return f'Blockchain of length {len(self)} which is {"" if self.is_valid() else "NOT "}valid.'
+    
     def __len__(self):
         return len(self.blocks)
     
@@ -40,6 +43,8 @@ class BlockChain:
         )
     
     def add_block(self, block: Block):
+        # TODO: (Design) should unproven blocks be allowed on the chain object or not?
+        # -> Not? Makes it less clear when comparing chain lengths
         if not block.is_valid():
            raise Exception("Attempted to add invalid block to chain!")
         self.blocks.append(block)

@@ -2,13 +2,20 @@ from discovery import get_neighbors
 from chain import BlockChain
 import requests
 
+def info(*args, **kwargs):
+    print('<COMMS>', *args, **kwargs)
+
 def broadcast_chain(chain: BlockChain):
     neighbors = get_neighbors()
 
     for neighbor in neighbors:
         url = 'http://' + neighbor + '/chain'
-        print('BROADCASTING TO URL:', url)
+        info('BROADCASTING TO URL:', url)
         try:
-            requests.post(url, json=chain.to_json())
+            resp = requests.post(url, json=chain.to_json())
         except requests.exceptions.ConnectionError:
-            print('Could not broadcast chain to neighbor at:', url)
+            info('Could not broadcast chain to neighbor at:', url)
+        if resp.status_code == 200:
+            info('Chain was accepted by neighbor.')
+        else:
+            info('Chain not accepted by neighbor, given reason is:', resp.text)

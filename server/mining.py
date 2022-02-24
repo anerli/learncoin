@@ -26,7 +26,7 @@ def mine():
         # Add our newly proven block to our local chain
         chain.add_block(block)
 
-        print('Is chain valid?', chain.is_valid())
+        #print('Is chain valid?', chain.is_valid())
 
         # Broadcast the (theoretically) new longest chain
         communication.broadcast_chain(chain)
@@ -52,11 +52,11 @@ def prove(block: Block):# -> bytes:
             break
         # Increment proof
         proof += 1
-    print(f'Proof found: {proof}')
-    print(f'Time to prove: {time() - start}')
+    print(f'<MINING> Proof found: {proof}')
+    print(f'<MINING> Time to prove: {time() - start}')
 
     # Add proof to block header
     block.header.proof = int_to_bytes(proof)
 
-    print(f'Is block valid? {block.is_valid()}')
+    #print(f'Is block valid? {block.is_valid()}')
     #return int_to_bytes(proof)
