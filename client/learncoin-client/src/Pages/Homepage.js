@@ -1,7 +1,7 @@
-import Module from "./components/Module";
-import Send from "./components/Send";
-import Redirect1 from "./components/Redirect1";
-import Redirect2 from "./components/Redirect2"
+import Module from "../components/Module";
+import Send from "../components/Send";
+import Redirect1 from "../components/Redirect1";
+import Redirect2 from "../components/Redirect2"
 
 function Homepage() {
     return (
