@@ -9,8 +9,8 @@ function Module(props) {
                 <div className="card_items">
                     <h3>AMOUNT</h3>
                     <h3>RECEIVER</h3>
-                    <input type="text"></input>
-                    <input type="text"></input>
+                    <input id="amount" type="text"></input>
+                    <input id="receiver" type="text"></input>
                 </div>
             </div>
         </div>
