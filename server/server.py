@@ -21,7 +21,7 @@ async def test(request):
 
 @app.post("/chain")
 async def receive_chain(request):
-    # TODO: Separate this logic into another file
+    # TODO: Separate this logic into another file (?)
     global chain
     # Endpoint for receiving chains, which have presumably mined a new block
     other_chain = BlockChain.from_json(request.json)
@@ -34,6 +34,7 @@ async def receive_chain(request):
         return text('i have a longer (or just as long) chain', status=418)
     # Replace chain
     print('Received longer valid chain, replacing own')
+    chain = other_chain
     return text('Chain Accepted')
     
 
