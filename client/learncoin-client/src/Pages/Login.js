@@ -1,27 +1,9 @@
-import {Outlet, Link} from "react-router-dom";
-
 const Login = () => {
     return (
-        <>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/homepage">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/signup">Signup</Link>
-                    </li>
-                    <li>
-                        <Link to="/mining">Mining</Link>
-                    </li>
-                    <li>
-                        <Link to="/blockchain">Blockchain</Link>
-                    </li>
-                </ul>
-            </nav>
-
-            <Outlet />
-        </>
+        <div>
+            <h1>Login using your private key</h1>
+            <h3>Don't have a private key? Signup</h3>
+        </div>
     )
 };
 
