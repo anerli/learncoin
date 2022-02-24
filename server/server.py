@@ -32,12 +32,8 @@ async def receive_chain(request):
     #print('=== RECEIVE CHAIN ===')
     # TODO: Separate this logic into another file (?)
     global chain
-    #print(request.body)
-    #print('Request JSON:', request.json)
-    # ???? if request has no json this silently fails and freezes the call?? why???????
+    # ? if request has no json this silently fails and freezes the call? why?
     other_chain = BlockChain.from_json(request.json)
-    #print('What?')
-    #info('Received chain:', other_chain.describe())
     if not other_chain.is_valid():
         info('Received chain is invalid!')
         return text('Received chain is invalid.', status=400)
@@ -64,9 +60,7 @@ def start_mining(chain):
     # Make sure server is running before we start mining
     while not app.is_running:
         time.sleep(1)
-    
     mine(chain)
-    
 
 if __name__ == '__main__':
     argp = ArgumentParser()

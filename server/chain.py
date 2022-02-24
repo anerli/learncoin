@@ -37,6 +37,7 @@ class BlockChain:
         }
     
     def replace(self, other: 'BlockChain'):
+        # Useful for replacing local chain without replacing the chain reference itself.
         # Note that this copies the REFERENCES of the other's blocks, does not copy the actual blocks
         self.blocks = other.blocks
     
