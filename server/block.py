@@ -9,8 +9,21 @@ class BlockHeader:
         self.proof = proof
     
     def __repr__(self):
-        return f'<BlockHeader previous_block_hash={self.previous_block_hash.hex()} proof={self.proof.hex()}>'
+        return f"<BlockHeader previous_block_hash={self.previous_block_hash.hex()} proof={self.proof.hex() if self.proof else 'UNPROVEN'}>"
 
+    def to_json(self) -> dict:
+        return {
+            'previous_block_hash': self.previous_block_hash.hex(),
+            'proof': self.proof.hex() if self.proof else ''
+        }
+    #def to_dict(self) -> dict:
+    @classmethod
+    def from_json(cls, data: dict) -> 'BlockHeader':
+        return BlockHeader(
+            previous_block_hash=bytes.fromhex(data['previous_block_hash']),
+            proof=bytes.fromhex(data['proof']) if data['proof'] != '' else None
+        )
+    
     def to_puzzle_bytes(self):
         '''
         Get the bytes of this header, to be used in the calculation
@@ -33,8 +46,17 @@ class Block:
         Serializes block data to a dictionary which can be passed as json
         to other servers.
         '''
-        # TODO
-        pass
+        return {
+            'header': self.header.to_json(),
+            'transactions': self.transactions
+        }
+    
+    @classmethod
+    def from_json(cls, data: dict) -> 'Block':
+        return Block(
+            header=BlockHeader.from_json(data['header']),
+            transactions=data['transactions']
+        )
     
     def to_puzzle_bytes(self) -> bytes:
         byte_sum = b'\x00' # 0 as bytes
@@ -69,7 +91,7 @@ class Block:
             return False
         # Do actual verification of proof
         if not is_valid_proof(self.to_puzzle_hash(), self.header.proof):
-            print('Invalid block: Invalid proof: ' + self.header.proof)
+            print('Invalid block: Invalid proof: ' + self.header.proof.hex())
             return False
         
         # === Verify transaction signatures ===
