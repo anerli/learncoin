@@ -8,11 +8,11 @@ from threading import Thread
 import communication
 import time
 from mining import mine
-from chain_manager import chain
+#from chain_manager import chain
 import colors
 
 app = Sanic("learncoin_full_node")
-#hain = BlockChain()
+chain = BlockChain()
 
 def info(*args, **kwargs):
     print(f'{colors.MAGENTA}<SRV>{colors.RESET}', *args, **kwargs)
@@ -50,19 +50,22 @@ async def receive_chain(request):
     # Replace chain
     #info('Received longer valid chain, replacing own')
     info(f'Accepted chain of length {other_len}.')
-    chain = other_chain
+
+    # PROBLEM: Chain object is referenced in other places
+    #chain = other_chain
+    chain.replace(other_chain)
     return text('Chain Accepted')
 
 @app.get("/chain")
 async def get_chain(request):
     return json(chain.to_json())
 
-def start_mining():
+def start_mining(chain):
     # Make sure server is running before we start mining
     while not app.is_running:
         time.sleep(1)
     
-    mine()
+    mine(chain)
     
 
 if __name__ == '__main__':
@@ -80,7 +83,7 @@ if __name__ == '__main__':
     print('Neighbors:', discovery.neighbors)
 
     if args.mine:
-        mining_thread = Thread(target=start_mining)
+        mining_thread = Thread(target=start_mining, args=[chain])
         mining_thread.daemon = True
         mining_thread.start()
   

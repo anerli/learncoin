@@ -36,6 +36,10 @@ class BlockChain:
             'blocks': [block.to_json() for block in self.blocks]
         }
     
+    def replace(self, other: 'BlockChain'):
+        # Note that this copies the REFERENCES of the other's blocks, does not copy the actual blocks
+        self.blocks = other.blocks
+    
     @classmethod
     def from_json(cls, data: dict) -> 'BlockChain':
         return BlockChain(
