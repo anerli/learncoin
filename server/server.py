@@ -15,7 +15,7 @@ app = Sanic("learncoin_full_node")
 chain = BlockChain()
 
 def info(*args, **kwargs):
-    print(f'{colors.MAGENTA}<SRV>{colors.RESET}', *args, **kwargs)
+    print(f'{colors.MAGENTA}<SRV🖳>{colors.RESET}', *args, **kwargs)
 
 @app.get("/")
 async def hello(request):
