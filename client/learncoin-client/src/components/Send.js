@@ -1,8 +1,8 @@
 function Send() {
 
     function logWalletData() {
-        console.log(document.getElementById('amount').value);
-        console.log(document.getElementById('receiver').value);
+        console.log("amt: " + document.getElementById('amount').value);
+        console.log("receiver: " + document.getElementById('receiver').value); 
     }
 
     return (
