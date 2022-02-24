@@ -41,7 +41,7 @@ class BlockChain:
     
     def add_block(self, block: Block):
         if not block.is_valid():
-            raise Exception("Attempted to add invalid block to chain!")
+           raise Exception("Attempted to add invalid block to chain!")
         self.blocks.append(block)
     
     def is_valid(self):

@@ -6,4 +6,9 @@ def broadcast_chain(chain: BlockChain):
     neighbors = get_neighbors()
 
     for neighbor in neighbors:
-        requests.post('http://' + neighbor + '/chain', chain.to_json())
+        url = 'http://' + neighbor + '/chain'
+        print('BROADCASTING TO URL:', url)
+        try:
+            requests.post(url, json=chain.to_json())
+        except requests.exceptions.ConnectionError:
+            print('Could not broadcast chain to neighbor at:', url)
