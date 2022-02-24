@@ -1,4 +1,5 @@
 import requests
+from typing import List
 
 # Each neighbor is a string of the format `ip:port`
 neighbors = []
@@ -6,6 +7,11 @@ neighbors = []
 def add_neighbor(ip_port_str: str):
     global neighbors
     neighbors.append(ip_port_str)
+
+def get_neighbors() -> List[str]:
+    global neighbors
+    return neighbors
+    
 
 # https://en.bitcoin.it/wiki/Satoshi_Client_Node_Discovery
 

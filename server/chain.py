@@ -24,6 +24,9 @@ class BlockChain:
         s += '>\n'
         return s
     
+    def __len__(self):
+        return len(self.blocks)
+    
     def to_json(self) -> dict:
         #return self.__dict__
         return {

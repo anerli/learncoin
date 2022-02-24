@@ -9,7 +9,7 @@ from time import time
 import sys
 
 # Reduce difficulty for testing purposes
-puzzle.DIFFICULTY = 4
+#puzzle.DIFFICULTY = 4
 
 if len(sys.argv) > 1: puzzle.DIFFICULTY = int(sys.argv[1])
 
@@ -54,3 +54,8 @@ except KeyboardInterrupt:
     #print(chain.blocks)
 
     print('Chain:\n' + chain.__repr__())
+
+    import json
+    #print(chain.to_json())
+    # This can be used for test requests
+    print(json.dumps(chain.to_json(), indent=2))
