@@ -33,6 +33,10 @@ h3 {
   font-weight: 500;
 }
 
+p {
+  color: #BCED09;
+}
+
 .btn {
   font: inherit;
   width: 40%;
