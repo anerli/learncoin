@@ -7,6 +7,7 @@ import colors
 import random
 
 def info(*args, **kwargs):
+    # ⛓
     print(f'{colors.YELLOW}<MINING⛏>{colors.RESET}', *args, **kwargs)
 
 def mine(chain):
