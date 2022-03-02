@@ -29,7 +29,7 @@ function createFunction() {
 const Signup = () => {
     return (
         <div>
-            <h1>Sign up for Learncoin here!</h1>
+            <h1>Sign up for LearnCoin here!</h1>
             <button id='button' onClick={createFunction}>Sign up</button>
             <p>There is no way to restore a forgotten key!</p>
             <p id='text' style={inputStyle}>This is your private key: </p>
