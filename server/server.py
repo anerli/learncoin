@@ -10,6 +10,7 @@ import time
 from mining import mine
 #from chain_manager import chain
 import colors
+import json
 
 app = Sanic("learncoin_full_node")
 chain = BlockChain()
@@ -25,6 +26,12 @@ async def hello(request):
 async def test(request):
     discovery.test_neighbors()
     return text('aight')
+
+@app.route("/getaddr")
+async def get_addr(request):
+    with open('server/addresses.json', 'r') as f:
+        data = json.load(f)
+    return text(json.dumps(data))
 
 @app.post("/chain")
 async def receive_chain(request):
@@ -85,3 +92,5 @@ if __name__ == '__main__':
         mining_thread.start()
   
     app.run(debug=True, port=int(args.port))
+
+
