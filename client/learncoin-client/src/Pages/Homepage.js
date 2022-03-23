@@ -12,6 +12,7 @@ function Homepage() {
             <img
                 className="banner"
                 src="https://drive.google.com/uc?export=download&id=113hYCr2JAlQ4Ym5RMujNNEQa2rLCqmh3"
+                alt="homepage banner"
             />
             <Redirect1 />
             <Redirect2 />

@@ -8,6 +8,7 @@ function Redirect1() {
           <img
             className="redirect_decal"
             src="https://drive.google.com/uc?export=download&id=1T8ab5ZD5OxG1STCtTYadP2SRsjXSUCUW"
+            alt="blockchain viewer graphic"
           />
         </Link>
       </div>

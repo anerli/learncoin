@@ -6,7 +6,7 @@ let valid = false;
 function checkLogin(formid) {
     console.log("submitted: ", document.getElementById("key").value);
 
-    if(document.getElementById("key").value != ""){
+    if(document.getElementById("key").value !== ""){
         valid = true;
     }
 
