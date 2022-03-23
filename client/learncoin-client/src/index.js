@@ -20,6 +20,14 @@ export default function App() {
                     <Route path="signup" element={<Signup />} />
                     <Route path="mining" element={<Mining />} />
                     <Route path="blockchain" element={<Blockchain />} />
+                    <Route
+                        path="*"
+                        element={
+                            <main>
+                                <h2>This page does not exist!</h2>
+                            </main>
+                        }
+                    />
                 </Route>
             </Routes>
         </BrowserRouter>

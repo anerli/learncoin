@@ -7,23 +7,6 @@ let inputStyle = {
 function createFunction() {
     console.log('clicked');
     document.getElementById('text').style.visibility = 'visible';
-    crypto.generateKeyPair(
-        'ed25519',
-        {
-            publicKeyEncoding: {
-                type: 'spki',
-                format: 'der'
-            },
-            privateKeyEncoding: {
-                type: 'pkcs8',
-                format: 'der'
-            }
-        },
-        (err, publicKey, privateKey) => {
-            console.log("Public key:", publicKey.toString('hex'));
-            console.log("Private key:", privateKey.toString('hex'));
-        }
-    );
 };
 
 const Signup = () => {
