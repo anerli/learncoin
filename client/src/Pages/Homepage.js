@@ -1,7 +1,7 @@
 import Module from "../components/Module";
 import Send from "../components/Send";
 import Redirect1 from "../components/Redirect1";
-import Redirect2 from "../components/Redirect2"
+import Redirect2 from "../components/Redirect2";
 
 function Homepage() {
     return (
@@ -12,6 +12,7 @@ function Homepage() {
             <img
                 className="banner"
                 src="https://drive.google.com/uc?export=download&id=113hYCr2JAlQ4Ym5RMujNNEQa2rLCqmh3"
+                alt="homepage banner"
             />
             <Redirect1 />
             <Redirect2 />

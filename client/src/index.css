@@ -37,6 +37,10 @@ p {
   color: #BCED09;
 }
 
+label {
+  color: #BCED09;
+}
+
 .btn {
   font: inherit;
   width: 40%;

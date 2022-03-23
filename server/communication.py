@@ -14,9 +14,11 @@ def broadcast_chain(chain: BlockChain):
         info('BROADCASTING TO URL:', url)
         try:
             resp = requests.post(url, json=chain.to_json())
+
+            if resp.status_code == 200:
+                info('Chain was accepted by neighbor.')
+            else:
+                info('Chain not accepted by neighbor; reason:', resp.text)
         except requests.exceptions.ConnectionError:
             info('Could not broadcast chain to neighbor at:', url)
-        if resp.status_code == 200:
-            info('Chain was accepted by neighbor.')
-        else:
-            info('Chain not accepted by neighbor; reason:', resp.text)
+        

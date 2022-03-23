@@ -1,4 +1,3 @@
-from dis import disco
 from sanic import Sanic
 from sanic.response import json, text
 from chain import BlockChain
@@ -11,6 +10,7 @@ from mining import mine
 #from chain_manager import chain
 import colors
 import json
+from primitives import PrivateKey, deserialize_private_key, serialize_private_key
 
 app = Sanic("learncoin_full_node")
 chain = BlockChain()
@@ -65,6 +65,24 @@ async def receive_chain(request):
 @app.get("/chain")
 async def get_chain(request):
     return json(chain.to_json())
+
+@app.get("/genprivkey")
+async def generate_private_key(request):
+    # ! unsafe !
+    key = PrivateKey.generate()
+    return json({'key': serialize_private_key(key).hex()})
+
+@app.post("/keycheck")
+async def check_valid_key(request):
+    key = request.json['key']
+    valid = True
+    print(key)
+    try:
+        deserialize_private_key(bytes.fromhex(key))
+    except ValueError:
+        valid = False
+    return json({'valid': valid})
+
 
 def start_mining(chain):
     # Make sure server is running before we start mining
