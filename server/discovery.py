@@ -14,6 +14,7 @@ def get_neighbors() -> List[str]:
 
 # https://en.bitcoin.it/wiki/Satoshi_Client_Node_Discovery
 def get_addr():
+    global neighbors
     if(len(neighbors) != 0):
         for x in neighbors:
             try:
@@ -21,16 +22,15 @@ def get_addr():
                 addrs = resp.json()
                 print(addrs)
                 for addr in addrs['neighbors']:
-                    print("gets in where I want")
                     if(addr not in neighbors):
                         neighbors.append(addr)
             except:
-                print("adding neighbors went wrong")
-            #try:
-            #    data = {'neighbors': neighbors}
-            #    print(requests.put('http://'+x+'/shareAddrs', data))
-            #except:
-            #    print("Posting neighbors went wrong")
+                continue
+            try:
+                data = {'neighbors': neighbors}
+                r = requests.post('http://'+x+'/post/addrs', json=data)
+            except:
+                continue
 
 # See https://en.bitcoin.it/wiki/Satoshi_Client_Node_Discovery#Local_Client.27s_External_Address
 def get_my_external_ip():

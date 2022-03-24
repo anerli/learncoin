@@ -30,13 +30,17 @@ async def test(request):
 async def get_addr(request):
     return json({'neighbors': discovery.neighbors})
 
-#@app.put("/shareAddrs")
-#async def recieve_addrs(request):
-#    addrs = await request.json
-#    for x in addrs['neighbors']:
-#        if(x not in discovery.neighbors):
-#            discovery.add_neighbor(x)
-#    return json({ "received": True, "message": request.json })
+@app.post("/post/addrs")
+async def recieve_addrs(request):
+    addrs = request.json
+    if(len(addrs['neighbors']) < 0):
+        info("List was empty")
+        return text("list was empty", status=400)
+    for x in addrs['neighbors']:
+        if(x not in discovery.neighbors):
+            discovery.add_neighbor(x)
+    info("addresses were recieved")
+    return text("addresses were received", status=200)
 
 
 
