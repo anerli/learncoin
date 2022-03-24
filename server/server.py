@@ -1,5 +1,5 @@
 from sanic import Sanic
-from sanic.response import json, text
+from sanic.response import json, text, file
 from chain import BlockChain
 from argparse import ArgumentParser
 import discovery
@@ -9,7 +9,6 @@ import time
 from mining import mine
 #from chain_manager import chain
 import colors
-import json
 from primitives import PrivateKey, deserialize_private_key, serialize_private_key
 
 app = Sanic("learncoin_full_node")
@@ -29,9 +28,17 @@ async def test(request):
 
 @app.route("/getaddr")
 async def get_addr(request):
-    with open('server/addresses.json', 'r') as f:
-        data = json.load(f)
-    return text(json.dumps(data))
+    return json({'neighbors': discovery.neighbors})
+
+#@app.put("/shareAddrs")
+#async def recieve_addrs(request):
+#    addrs = await request.json
+#    for x in addrs['neighbors']:
+#        if(x not in discovery.neighbors):
+#            discovery.add_neighbor(x)
+#    return json({ "received": True, "message": request.json })
+
+
 
 @app.post("/chain")
 async def receive_chain(request):
@@ -108,7 +115,7 @@ if __name__ == '__main__':
         mining_thread = Thread(target=start_mining, args=[chain])
         mining_thread.daemon = True
         mining_thread.start()
-  
+    discovery.get_addr()
     app.run(debug=True, port=int(args.port))
 
 
