@@ -12,12 +12,14 @@ const Homepage = () => {
     const [publicKey, setPublicKey] = useState('');
 
     useEffect(() => {
-        const ec = new EC('ed25519');
-        let pkey = cookies.privateKey;
-        let key = ec.keyFromPrivate(pkey, 'hex');
-        let hexPublicKey = key.getPublic('hex');
-        setPublicKey(hexPublicKey);
-        console.log('pub key: ', hexPublicKey);
+        if ('privateKey' in cookies) {
+            const ec = new EC('ed25519');
+            let pkey = cookies.privateKey;
+            let key = ec.keyFromPrivate(pkey, 'hex');
+            let hexPublicKey = key.getPublic('hex');
+            setPublicKey(hexPublicKey);
+        }
+        console.log('pub key: ', publicKey);
     });
 
     return (
