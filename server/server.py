@@ -14,6 +14,10 @@ from primitives import PrivateKey, deserialize_private_key, serialize_private_ke
 app = Sanic("learncoin_full_node")
 chain = BlockChain()
 
+# ===== Attach blueprints =====
+app.blueprint(discovery.discovery_bp)
+# ^^^^^ Attach blueprints ^^^^^
+
 def info(*args, **kwargs):
     print(f'{colors.MAGENTA}<SRV🖳>{colors.RESET}', *args, **kwargs)
 
@@ -25,24 +29,6 @@ async def hello(request):
 async def test(request):
     discovery.test_neighbors()
     return text('aight')
-
-@app.route("/getaddr")
-async def get_addr(request):
-    return json({'neighbors': discovery.neighbors})
-
-@app.post("/post/addrs")
-async def recieve_addrs(request):
-    addrs = request.json
-    if(len(addrs['neighbors']) < 0):
-        info("List was empty")
-        return text("list was empty", status=400)
-    for x in addrs['neighbors']:
-        if(x not in discovery.neighbors):
-            discovery.add_neighbor(x)
-    info("addresses were recieved")
-    return text("addresses were received", status=200)
-
-
 
 @app.post("/chain")
 async def receive_chain(request):
@@ -119,7 +105,9 @@ if __name__ == '__main__':
         mining_thread = Thread(target=start_mining, args=[chain])
         mining_thread.daemon = True
         mining_thread.start()
-    discovery.get_addr()
+
+    discovery.discover_more_neighbors()
+
     app.run(debug=True, port=int(args.port))
 
 
