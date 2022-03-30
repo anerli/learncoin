@@ -4,5 +4,5 @@ HOSTS=("coms-402-sd-23.class.las.iastate.edu" "coms-402-sd-24.class.las.iastate.
 USERNAME="gitlab"
 for i in ${!HOSTS[*]} ; do
      echo ${HOSTS[i]}
-     ssh -l ${USERNAME} ${HOSTS[i]} "${SCR}"
+     ssh -ttl ${USERNAME} ${HOSTS[i]} "${SCR}"
 done
