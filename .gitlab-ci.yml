@@ -30,4 +30,4 @@ deploy-job:      # This job runs in the deploy stage.
     - pwd
     - ls
     - chmod +x ./updateServers.sh
-    - ./updateServer.sh
+    - ./updateServers.sh
