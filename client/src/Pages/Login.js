@@ -22,12 +22,16 @@ const Login = () => {
     return (
         <div>
             <h1>Login using your private key</h1>
-            <form id="myform" action="/Homepage">
+            <form id="myform" action="/homepage">
                 <input type="text" placeholder="Enter Private Key" id="key"/>
                 <input type="button" value="Submit" onClick={() => checkLogin('myform')}/>
             </form>
             <h3>Don't have a private key? &nbsp;
                 <Link to="/signup">SIGNUP</Link>
+                <br></br>
+                or &nbsp;
+                <Link to="/homepage">login</Link> &nbsp;
+                as a guest
             </h3>
             
         </div>

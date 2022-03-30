@@ -3,10 +3,15 @@ import Send from "../components/Send";
 import Redirect1 from "../components/Redirect1";
 import Redirect2 from "../components/Redirect2";
 
-function Homepage() {
+import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
+const EC = require('elliptic').ec;
+
+const Homepage = () => {
     return (
         <div>
             <h1> LearnCoin </h1>
+            <h2> Your public key: </h2> 
             <Module text="WALLET" />
             <Send />
             <img

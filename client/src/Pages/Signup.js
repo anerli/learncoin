@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 const EC = require('elliptic').ec;
 
 const Signup = () => {
@@ -43,9 +44,13 @@ const Signup = () => {
     return (
         <div>
             <h1>Sign up for LearnCoin here!</h1>
-            <button id='button' onClick={generatePrivateKey}>Sign up</button>
+            <button id='privateKeyButton' onClick={generatePrivateKey}>Sign up</button>
             <p>There is no way to restore a forgotten key!</p>
-            {privateKey != '' && <p>This is your private key: {privateKey}</p>}
+            {privateKey !== '' && <p>This is your private key: {privateKey}</p>}
+            {privateKey !== '' && 
+            <Link id = 'signinButton' to="/homepage">
+                <button>Login using this private key</button>
+            </Link>}
 
         </div>
     );
