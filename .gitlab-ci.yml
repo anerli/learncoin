@@ -29,5 +29,5 @@ deploy-job:      # This job runs in the deploy stage.
   script:
     - pwd
     - ls
-    - chmod +x ./updateServer.sh
+    - chmod +x ./updateServers.sh
     - ./updateServer.sh
