@@ -33,6 +33,8 @@ const Login = () => {
         </div>
         <h3 className="nokey">No key? &nbsp;
                 <Link to="/homepage">Guest Login</Link> &nbsp;
+                or &nbsp;
+                <Link to="/signup">Sign Up</Link> &nbsp;
         </h3>
         <img src="login_bg.jpg" className="login_bg"></img>
         </div>
