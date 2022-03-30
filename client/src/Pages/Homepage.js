@@ -8,6 +8,13 @@ import { useCookies } from 'react-cookie';
 const EC = require('elliptic').ec;
 
 const Homepage = () => {
+    // const [cookies, setCookie, removeCookie] = useCookies(['privateKey']);
+    // const [privateKey] = useState('');
+    // const ec = new EC('ed25519');
+    // privateKey = cookies['privateKey'];
+    // let key = ec.keyFromPrivate(privateKey, 'hex');
+    // let hexPublicKey = key.getPublic('hex');
+
     return (
         <div>
             <h1> LearnCoin </h1>

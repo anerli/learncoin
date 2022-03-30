@@ -43,20 +43,25 @@ const Signup = () => {
 
     return (
         <div>
-            <a href="#">
-            <img src="learncoin.png" className="logo" alt="LearnCoin Logo" height="30" width="170"/>
-            </a>
-            <div className="login_modal">
-            <h4>Register</h4>
-            <button className="signup_btn" id='privateKeyButton' onClick={generatePrivateKey}>Sign up</button>
-            <h5>There is no way to restore a forgotten key!</h5>
-            {privateKey !== '' && <p>This is your private key: {privateKey}</p>}
-            {privateKey !== '' && 
-            <Link id = 'signinButton' to="/homepage">
-                <button>Login using this private key</button>
-            </Link>}
+            <div>
+                <Link to='/'>BACK</Link>
             </div>
-            <img src="login_bg.jpg" className="login_bg"></img>
+            <div>
+                <a href="#">
+                <img src="learncoin.png" className="logo" alt="LearnCoin Logo" height="30" width="170"/>
+                </a>
+                <div className="login_modal">
+                <h4>Register</h4>
+                <button className="signup_btn" id='privateKeyButton' onClick={generatePrivateKey}>Sign up</button>
+                <h5>There is no way to restore a forgotten key!</h5>
+                {privateKey !== '' && <h4 id='privateKey'>This is your private key: {privateKey}</h4>}
+                {privateKey !== '' && 
+                <Link id = 'signinButton' to="/homepage">
+                    <button className='login_btn'>Login using this private key</button>
+                </Link>}
+                </div>
+                <img src="login_bg.jpg" className="login_bg"></img>
+            </div>
         </div>
     );
 };
