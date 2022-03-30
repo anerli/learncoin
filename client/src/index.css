@@ -206,7 +206,8 @@ label {
 #key {
   margin-left: 20%;
   width: 60%;
-<<<<<<< HEAD
+  color: #000A24;
+  height: 3rem;
 }
 
 #amount {
@@ -215,15 +216,13 @@ label {
 }
 
 #receiver {
-  margin-left: 5px;
+  margin-left: 1rem;
   width: 40%;
-=======
-  color: #000A24;
-  height: 3rem;
+  margin-right: 0%;
 }
 
 input[type="text"] {
-  background-color: #000A24;
+  background-color: #DEE7C1;
   border-style: solid;
   border-color: #BCED09;
   border-width: 4px;
@@ -231,7 +230,6 @@ input[type="text"] {
   margin-right: 20%;
   color: #000A24;
   height: 3rem;
->>>>>>> 9173ae3c35cdd50ac27e16f2a98d138aa1f2dae3
 }
 
 input[type="button"] {
