@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 import discovery
 from threading import Thread
 import communication
+import transactions
 import time
 from mining import mine
 #from chain_manager import chain
@@ -16,6 +17,7 @@ chain = BlockChain()
 
 # ===== Attach blueprints =====
 app.blueprint(discovery.discovery_bp)
+app.blueprint(transactions.transactions_bp)
 # ^^^^^ Attach blueprints ^^^^^
 
 def info(*args, **kwargs):

@@ -28,6 +28,18 @@ def serialize_private_key(key: PrivateKey) -> bytes:
 def deserialize_private_key(key_bytes: bytes) -> PrivateKey:
     return PrivateKey.from_private_bytes(key_bytes)
 
+# ! needs testing
+def serialize_public_key(key: PublicKey) -> bytes:
+    return key.public_bytes(
+        encoding=Encoding.Raw,
+        format=PrivateFormat.Raw,
+        encryption_algorithm=NoEncryption()#BestAvailableEncryption(b'asd')
+    )
+
+# ! needs testing
+def deserialize_public_key(key_bytes: bytes) -> PublicKey:
+    return PublicKey.from_public_bytes(key_bytes)
+
 if __name__ == '__main__':
     key = PrivateKey.generate()
     #print('pubkey:', key.public_key().public_bytes().hex())
