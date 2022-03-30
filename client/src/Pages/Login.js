@@ -27,7 +27,7 @@ const Login = () => {
         <div className="login_modal">
             <h4>Login</h4>
             <form id="myform" action="/homepage">
-                <input type="text" placeholder="#" id="key"/>
+                <input type="text" placeholder="#" id="key" className="login_text"/>
                 <input type="button" value="Submit" onClick={() => checkLogin('myform')}/>
             </form>
         </div>
