@@ -21,20 +21,23 @@ function checkLogin(formid) {
 const Login = () => {
     return (
         <div>
-            <h1>Login using your private key</h1>
+            <a href="#">
+            <img src="learncoin.png" className="logo" alt="LearnCoin Logo" height="30" width="170"/>
+            </a>
+        <div className="login_modal">
+            <h4>Login</h4>
             <form id="myform" action="/homepage">
-                <input type="text" placeholder="Enter Private Key" id="key"/>
+                <input type="text" placeholder="#" id="key"/>
                 <input type="button" value="Submit" onClick={() => checkLogin('myform')}/>
             </form>
-            <h3>Don't have a private key? &nbsp;
-                <Link to="/signup">SIGNUP</Link>
-                <br></br>
-                or &nbsp;
-                <Link to="/homepage">login</Link> &nbsp;
-                as a guest
-            </h3>
-            
         </div>
+        <h3 className="nokey">No key? &nbsp;
+                <Link to="/homepage">Guest Login</Link> &nbsp;
+        </h3>
+        <img src="login_bg.jpg" className="login_bg"></img>
+        </div>
+        
+        
     )
 };
 
