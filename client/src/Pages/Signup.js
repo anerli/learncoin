@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const EC = require('elliptic').ec;
 
 const Signup = () => {
-    const [cookies, setCookie, removeCookie] = useCookies(['privateKey']);
+    const [setCookie] = useCookies(['privateKey']);
     const [privateKey, setPrivateKey] = useState('');
 
     const generatePrivateKey = () => {
@@ -14,31 +14,6 @@ const Signup = () => {
         const privateKey = key.getPrivate('hex');
         setPrivateKey(privateKey);
         setCookie('privateKey', privateKey, { path: '/' });
-
-        // How you would get the key back, e.g. loading it from the cookie hex value to sign something,
-        // or to load it from the cookie to generate the public key
-        /*
-        let key_again = ec.keyFromPrivate(privateKey, 'hex');
-        console.log(key_again);
-        */
-        
-        // Other example
-        /*
-        let ec = new EC('ed25519');
-        console.log(ec);
-        let key = ec.genKeyPair();
-        console.log(key);
-        let privateKey = key.getPrivate('hex');
-        console.log("privateKey", privateKey);
-        let publicKey = key.getPublic('hex');
-        console.log("publicKey", publicKey);
-        */
-        
-        // Signature example
-        /*
-        var msgHash = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
-        var signature = key.sign(msgHash);
-        */
     };
 
     return (
