@@ -4,6 +4,6 @@ HOSTS=("coms-402-sd-23.class.las.iastate.edu" "coms-402-sd-24.class.las.iastate.
 USERNAME="gitlab"
 for i in ${!HOSTS[*]} ; do
      echo ${HOSTS[i]}
+     ssh-keygen -R 10.90.73.217
      ssh -ttl ${USERNAME} ${HOSTS[i]} "${SCR}"
-     pwd
 done
