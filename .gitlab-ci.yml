@@ -29,9 +29,6 @@ deploy-job:      # This job runs in the deploy stage.
   before_script:
   - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
 
-  ##
-  ## Run ssh-agent (inside the build environment)
-  ##
   - eval $(ssh-agent -s)
 
   ##
