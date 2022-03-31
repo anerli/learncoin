@@ -33,7 +33,7 @@ export async function makeTransaction(senderPrivateKey, receiverPublicKey, amoun
     // !tmp: dont include amt in hash
     //const hash = sha256(senderBytes + receiverBytes);// + amountBytes);
     
-    const hash = sha256(combinedHex);
+    const hash = sha256(CryptoJS.enc.Hex.parse(combinedHex));
 
     const hashHex = CryptoJS.enc.Hex.stringify(hash);
 
