@@ -1,4 +1,4 @@
-from transaction import Transaction
+from transactions import Transaction
 from typing import List
 from primitives import secure_hash
 from puzzle import is_valid_proof
@@ -95,7 +95,9 @@ class Block:
             return False
         
         # === Verify transaction signatures ===
-        # TODO
+        for transaction in self.transactions:
+            if not transaction.is_valid():
+                return False
 
         # === Verify address sums ===
         # TODO

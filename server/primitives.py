@@ -5,7 +5,7 @@ but it does otherwise make the code more clear.
 '''
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey, Ed25519PublicKey
-from cryptography.hazmat.primitives.serialization import Encoding, PrivateFormat, BestAvailableEncryption, NoEncryption
+from cryptography.hazmat.primitives.serialization import Encoding, PrivateFormat, BestAvailableEncryption, NoEncryption, PublicFormat
 
 def secure_hash(data: bytes) -> bytes:
     digest = hashes.Hash(hashes.SHA256())
@@ -27,6 +27,18 @@ def serialize_private_key(key: PrivateKey) -> bytes:
 
 def deserialize_private_key(key_bytes: bytes) -> PrivateKey:
     return PrivateKey.from_private_bytes(key_bytes)
+
+# ! needs testing
+def serialize_public_key(key: PublicKey) -> bytes:
+    return key.public_bytes(
+        encoding=Encoding.Raw,
+        format=PublicFormat.Raw,
+        #encryption_algorithm=NoEncryption()#BestAvailableEncryption(b'asd')
+    )
+
+# ! needs testing
+def deserialize_public_key(key_bytes: bytes) -> PublicKey:
+    return PublicKey.from_public_bytes(key_bytes)
 
 if __name__ == '__main__':
     key = PrivateKey.generate()

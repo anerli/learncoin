@@ -5,7 +5,7 @@ import Redirect2 from "../components/Redirect2";
 
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-const EC = require('elliptic').ec;
+import * as ed from '@noble/ed25519';
 
 const Homepage = () => {
     const [cookies] = useCookies(['privateKey']);
@@ -13,11 +13,12 @@ const Homepage = () => {
 
     useEffect(() => {
         if ('privateKey' in cookies) {
-            const ec = new EC('ed25519');
-            let pkey = cookies.privateKey;
-            let key = ec.keyFromPrivate(pkey, 'hex');
-            let hexPublicKey = key.getPublic('hex');
-            setPublicKey(hexPublicKey);
+            ed.getPublicKey(cookies.privateKey).then(
+              (publicKey) => {
+                let hexPublicKey = ed.utils.bytesToHex(publicKey);
+                setPublicKey(hexPublicKey);
+              }
+            );
         }
         console.log('pub key: ', publicKey);
     });
