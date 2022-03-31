@@ -68,15 +68,6 @@ class Transaction:
         transaction_hash = secure_hash(combined_bytes)
         print('Hash as hex:', transaction_hash.hex())
 
-        
-        '''
-        # Concatenate transaction bytes
-        transaction_bytes = self.sender + self.receiver# + self.amount
-        print('Combined bytes as hex: ', transaction_bytes.hex())
-        transaction_hash = secure_hash(transaction_bytes)
-        print('Hash as hex: ', transaction_hash.hex())
-        '''
-
         try:
             self.sender_key().verify(self.signature, transaction_hash)
             return True

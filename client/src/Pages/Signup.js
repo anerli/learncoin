@@ -3,50 +3,16 @@ import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import { makeTransaction } from "../logic/transactions";
 import * as ed from '@noble/ed25519';
-//const EC = require('elliptic').ec;
-
-
 
 const Signup = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['privateKey']);
     const [privateKey, setPrivateKey] = useState('');
 
     const testMakeTransaction = async () => {
-        //const ec = new EC('ed25519');
-        // let k = ec.genKeyPair();
-        // console.log(k);
-        // console.log(k.getPrivate('hex'));
-        // //console.log(k.getPublic('hex'));
-        // let pub = k.getPublic();
-        // console.log('pub: ', pub);
-        // console.log(pub.encode('hex'));
-        //let k = ec.keyFromPublic('86a6ebcc659e5f5eefc095847b825684a2afb7fb4191cb8e3731fbdeef917849', 'hex');
-        // let k = ec.keyFromPublic('04791b32552792dc08f6781692b78321a6f66652b70b3160b21248db6218ebed5530b70e4686d4b59991b6219989ba247b9a93284fef91561fa0bd9079846c3a7f', 'hex');
-        // console.log('K: ', k);
-
-        // const privateKey = ed.utils.randomPrivateKey();
-        // console.log('privateKey', ed.utils.bytesToHex(privateKey));
-        // ed.getPublicKey(privateKey).then((pubkey) => console.log('pubkey: ', ed.utils.bytesToHex(pubkey)));
-
-        /*
-        console.log('cookies: ', cookies);
-        let privateKey = cookies.privateKey;//cookies.get('privateKey');
-        
-        console.log('privateKey: ', privateKey);
-        const key = ec.keyFromPrivate(privateKey, 'hex');
-        console.log('key: ', key);
-        const publicKey = key.getPublic('hex');
-        console.log('publicKey: ', publicKey);
-        makeTransaction(privateKey, publicKey, 3.14, key)
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
-        */
         const privateKey = cookies.privateKey;
         // Sending to yourself? ig?
         const receiverPublicKey = ed.utils.bytesToHex(await ed.getPublicKey(privateKey));
 
-        console.log('priv: ', privateKey);
-        //console.log('pub: ', publicKey);
         await makeTransaction(privateKey, receiverPublicKey, 3.14);
     }
     
