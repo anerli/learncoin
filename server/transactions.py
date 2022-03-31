@@ -60,9 +60,22 @@ class Transaction:
         Verifies that the given signature authenticates this transaction.
         '''
 
+        # For easier consistency across Python / JS, we defined the combined byte value
+        # of the transaction components as the concatenation of their hex values
+        combined_hex = self.sender.hex() + self.receiver.hex()
+        print('Combined bytes as hex:', combined_hex)
+        combined_bytes = bytes.fromhex(combined_hex)
+        transaction_hash = secure_hash(combined_bytes)
+        print('Hash as hex:', transaction_hash.hex())
+
+        
+        '''
         # Concatenate transaction bytes
-        transaction_bytes = self.sender + self.receiver + self.amount
+        transaction_bytes = self.sender + self.receiver# + self.amount
+        print('Combined bytes as hex: ', transaction_bytes.hex())
         transaction_hash = secure_hash(transaction_bytes)
+        print('Hash as hex: ', transaction_hash.hex())
+        '''
 
         try:
             self.sender_key().verify(self.signature, transaction_hash)

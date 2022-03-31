@@ -21,16 +21,29 @@ export async function makeTransaction(senderPrivateKey, receiverPublicKey, amoun
     console.log('receiver pub: ', receiverPublicKey);
     console.log('amount: ', amount);
 
-    const senderBytes = CryptoJS.enc.Hex.parse(senderPublicKey);
-    const receiverBytes = CryptoJS.enc.Hex.parse(receiverPublicKey);
+    // const senderBytes = CryptoJS.enc.Hex.parse(senderPublicKey);
+    // const receiverBytes = CryptoJS.enc.Hex.parse(receiverPublicKey);
     const amountBytes = CryptoJS.enc.Hex.parse(floatToHex(amount));
 
-    const hash = sha256(senderBytes + receiverBytes + amountBytes);
+    //const combined = senderBytes + receiverBytes;
+    const combinedHex = senderPublicKey + receiverPublicKey;
+
+    console.log('combined hex: ', combinedHex);
+
+    // !tmp: dont include amt in hash
+    //const hash = sha256(senderBytes + receiverBytes);// + amountBytes);
+    
+    const hash = sha256(combinedHex);
+
     const hashHex = CryptoJS.enc.Hex.stringify(hash);
+
+    console.log('hash hex: ', hashHex);
 
     const signature = ed.utils.bytesToHex(await ed.sign(hashHex, senderPrivateKey));
 
-    console.log('signature: ', signature)
+    console.log('signature: ', signature);
+
+    console.log('valid? ', await ed.verify(signature, hashHex, senderPublicKey))
 
     // const signature = key.sign(hash_hex);
 
