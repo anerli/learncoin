@@ -33,7 +33,7 @@ def add_transaction(request: Request):
     transaction = Transaction(sender_bytes, receiver_bytes, amount_bytes, signature_bytes)
     info(f'Received transaction: {transaction}')
 
-    print(f'Is valid? {transaction.is_valid()}')
+    info(f'Is valid? {transaction.is_valid()}')
 
     return json({'valid': transaction.is_valid()})
 # ▲▲▲▲▲ Transaction Endpoints ▲▲▲▲▲
@@ -65,10 +65,10 @@ class Transaction:
         # For easier consistency across Python / JS, we defined the combined byte value
         # of the transaction components as the concatenation of their hex values
         combined_hex = self.sender.hex() + self.receiver.hex() + self.amount.hex()
-        print('Combined bytes as hex:', combined_hex)
+        #print('Combined bytes as hex:', combined_hex)
         combined_bytes = bytes.fromhex(combined_hex)
         transaction_hash = secure_hash(combined_bytes)
-        print('Hash as hex:', transaction_hash.hex())
+        #print('Hash as hex:', transaction_hash.hex())
 
         try:
             self.sender_key().verify(self.signature, transaction_hash)
