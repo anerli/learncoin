@@ -31,7 +31,11 @@ def add_transaction(request: Request):
     # receiver_key = deserialize_public_key(receiver_key)
 
     transaction = Transaction(sender_bytes, receiver_bytes, amount_bytes, signature_bytes)
-    info(f'Received transaction: {transaction}')
+    info(f'Received transaction:')
+    print(f'\tsender: {transaction.sender.hex()}')
+    print(f'\treceiver: {transaction.receiver.hex()}')
+    print(f'\tamount: {transaction.amount.hex()} -> {float_from_bytes(transaction.amount)}')
+    print(f'\tsignature: {transaction.signature.hex()}')
 
     info(f'Is valid? {transaction.is_valid()}')
 
