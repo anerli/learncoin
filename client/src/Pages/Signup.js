@@ -5,11 +5,13 @@ import { makeTransaction } from "../logic/transactions";
 import * as ed from '@noble/ed25519';
 
 const Signup = () => {
-    const [setCookie, cookies] = useCookies(['privateKey']);
+    const [cookies, setCookie] = useCookies(['privateKey']);
     const [privateKey, setPrivateKey] = useState('');
 
     const testMakeTransaction = async () => {
         const privateKey = cookies.privateKey;
+
+        console.log('privateKey: ', privateKey);
         // Sending to yourself? ig?
         const receiverPublicKey = ed.utils.bytesToHex(await ed.getPublicKey(privateKey));
 
