@@ -12,7 +12,12 @@ def int_from_bytes(xbytes: bytes) -> int:
 
 # https://stackoverflow.com/questions/5415/convert-bytes-to-floating-point-numbers
 def float_to_bytes(f: float) -> bytes:
-    return struct.pack('f', f)
+    return struct.pack('>f', f)
 
-def float_from_bytes(fbytes: bytes) -> float:
-    return struct.unpack('f', fbytes)
+# https://stackoverflow.com/questions/37093485/how-to-interpret-4-bytes-as-a-32-bit-float-using-python
+def float_from_bytes(data: bytes) -> float:
+    # Big endian
+    return struct.unpack('>f', data)[0]
+
+
+#print(float_from_bytes(bytes.fromhex('4048f5c3')))

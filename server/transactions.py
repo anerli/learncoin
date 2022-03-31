@@ -47,6 +47,8 @@ class Transaction:
         self.signature = signature
     
     def __repr__(self):
+        # print('amount: ', self.amount.hex())
+        # print('amount float: ', float_from_bytes(self.amount))
         return f'<Transaction sender={self.sender.hex()} receiver={self.receiver.hex()} amount={float_from_bytes(self.amount)} signature={self.signature.hex()}>'
 
     # def sender_hex(self):
@@ -62,7 +64,7 @@ class Transaction:
 
         # For easier consistency across Python / JS, we defined the combined byte value
         # of the transaction components as the concatenation of their hex values
-        combined_hex = self.sender.hex() + self.receiver.hex()
+        combined_hex = self.sender.hex() + self.receiver.hex() + self.amount.hex()
         print('Combined bytes as hex:', combined_hex)
         combined_bytes = bytes.fromhex(combined_hex)
         transaction_hash = secure_hash(combined_bytes)
