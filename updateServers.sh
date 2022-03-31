@@ -5,4 +5,5 @@ USERNAME="gitlab"
 for i in ${!HOSTS[*]} ; do
      echo ${HOSTS[i]}
      ssh -ttl ${USERNAME} ${HOSTS[i]} "${SCR}"
+     pwd
 done
