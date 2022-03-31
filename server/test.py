@@ -19,9 +19,13 @@
 # print(j)
 # print(BlockChain.from_json(j))
 
-from primitives import PrivateKey, serialize_private_key, serialize_public_key
+from primitives import PrivateKey, serialize_private_key, deserialize_private_key, serialize_public_key
 
-key = PrivateKey.generate()
-print(serialize_private_key(key).hex())
+pkey = deserialize_private_key(bytes.fromhex('679df846fdf7118544654392e0b7a4b7473622581b28e1189793de5d694bce64'))
+pubkey = pkey.public_key()
+print(serialize_public_key(pubkey).hex())
 
-print(serialize_public_key(key.public_key()).hex())
+# key = PrivateKey.generate()
+# print(serialize_private_key(key).hex())
+
+# print(serialize_public_key(key.public_key()).hex())

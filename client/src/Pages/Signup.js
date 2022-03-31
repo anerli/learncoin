@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import { makeTransaction } from "../logic/transactions";
-const EC = require('elliptic').ec;
+import * as ed from '@noble/ed25519';
+//const EC = require('elliptic').ec;
 
 
 
@@ -10,10 +11,27 @@ const Signup = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['privateKey']);
     const [privateKey, setPrivateKey] = useState('');
 
-    const testMakeTransaction = () => {
-      console.log('cookies: ', cookies);
+    const testMakeTransaction = async () => {
+        //const ec = new EC('ed25519');
+        // let k = ec.genKeyPair();
+        // console.log(k);
+        // console.log(k.getPrivate('hex'));
+        // //console.log(k.getPublic('hex'));
+        // let pub = k.getPublic();
+        // console.log('pub: ', pub);
+        // console.log(pub.encode('hex'));
+        //let k = ec.keyFromPublic('86a6ebcc659e5f5eefc095847b825684a2afb7fb4191cb8e3731fbdeef917849', 'hex');
+        // let k = ec.keyFromPublic('04791b32552792dc08f6781692b78321a6f66652b70b3160b21248db6218ebed5530b70e4686d4b59991b6219989ba247b9a93284fef91561fa0bd9079846c3a7f', 'hex');
+        // console.log('K: ', k);
+
+        // const privateKey = ed.utils.randomPrivateKey();
+        // console.log('privateKey', ed.utils.bytesToHex(privateKey));
+        // ed.getPublicKey(privateKey).then((pubkey) => console.log('pubkey: ', ed.utils.bytesToHex(pubkey)));
+
+        /*
+        console.log('cookies: ', cookies);
         let privateKey = cookies.privateKey;//cookies.get('privateKey');
-        const ec = new EC('ed25519');
+        
         console.log('privateKey: ', privateKey);
         const key = ec.keyFromPrivate(privateKey, 'hex');
         console.log('key: ', key);
@@ -22,16 +40,29 @@ const Signup = () => {
         makeTransaction(privateKey, publicKey, 3.14, key)
             .then(res => console.log(res))
             .catch(err => console.log(err));
+        */
+        const privateKey = cookies.privateKey;
+        // Sending to yourself? ig?
+        const receiverPublicKey = ed.utils.bytesToHex(await ed.getPublicKey(privateKey));
+
+        console.log('priv: ', privateKey);
+        //console.log('pub: ', publicKey);
+        await makeTransaction(privateKey, receiverPublicKey, 3.14);
     }
+    
 
     const generatePrivateKey = () => {
         console.log('Generating private key...');
-        const ec = new EC('ed25519');
-        const key = ec.genKeyPair();
-        const privateKey = key.getPrivate('hex');
-        console.log('generated privateKey: ', privateKey);
-        setPrivateKey(privateKey);
-        setCookie('privateKey', privateKey, { path: '/' });
+        // const ec = new EC('ed25519');
+        // const key = ec.genKeyPair();
+        // const privateKey = key.getPrivate('hex');
+
+        const privKey = ed.utils.randomPrivateKey();
+        const privKeyHex = ed.utils.bytesToHex(privKey);
+
+        console.log('generated privateKey: ', privKeyHex);
+        setPrivateKey(privKeyHex);
+        setCookie('privateKey', privKeyHex, { path: '/' });
 
         // How you would get the key back, e.g. loading it from the cookie hex value to sign something,
         // or to load it from the cookie to generate the public key
