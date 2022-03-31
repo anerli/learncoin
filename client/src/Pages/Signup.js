@@ -1,17 +1,35 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
+import { makeTransaction } from "../logic/transactions";
 const EC = require('elliptic').ec;
+
+
 
 const Signup = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['privateKey']);
     const [privateKey, setPrivateKey] = useState('');
+
+    const testMakeTransaction = () => {
+      console.log('cookies: ', cookies);
+        let privateKey = cookies.privateKey;//cookies.get('privateKey');
+        const ec = new EC('ed25519');
+        console.log('privateKey: ', privateKey);
+        const key = ec.keyFromPrivate(privateKey, 'hex');
+        console.log('key: ', key);
+        const publicKey = key.getPublic('hex');
+        console.log('publicKey: ', publicKey);
+        makeTransaction(privateKey, publicKey, 3.14, key)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    }
 
     const generatePrivateKey = () => {
         console.log('Generating private key...');
         const ec = new EC('ed25519');
         const key = ec.genKeyPair();
         const privateKey = key.getPrivate('hex');
+        console.log('generated privateKey: ', privateKey);
         setPrivateKey(privateKey);
         setCookie('privateKey', privateKey, { path: '/' });
 
@@ -46,6 +64,7 @@ const Signup = () => {
             <a href="#">
             <img src="learncoin.png" className="logo" alt="LearnCoin Logo" height="30" width="170"/>
             </a>
+            <button onClick={testMakeTransaction}>Test Transaction</button>
             <div className="login_modal">
             <h4>Register</h4>
             <button className="signup_btn" id='privateKeyButton' onClick={generatePrivateKey}>Sign up</button>
