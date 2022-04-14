@@ -110,6 +110,6 @@ if __name__ == '__main__':
 
     discovery.discover_more_neighbors()
 
-    app.run(debug=True, port=int(args.port))
+    app.run(host='0.0.0.0', debug=True, port=int(args.port))
 
 
