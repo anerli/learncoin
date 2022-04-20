@@ -20,7 +20,7 @@ discovery_bp = Blueprint('discovery', url_prefix='/discovery')
 @discovery_bp.get("/")
 async def get_neighbors(request):
     global neighbors
-    return json({'neighbors': neighbors})
+    return json({'neighbors': neighbors + [me]})
 
 @discovery_bp.post("/")
 async def receive_neighbors(request):
@@ -30,7 +30,7 @@ async def receive_neighbors(request):
         info("List was empty")
         return text("list was empty", status=400)
     for n in addrs:
-        if(n not in neighbors):
+        if n not in neighbors and n != me:
             add_neighbor(n)
     msg = f"Received neighbors: {addrs}"
     info(msg)
@@ -42,6 +42,8 @@ async def receive_neighbors(request):
 # Each neighbor is a string of the format `ip:port`
 neighbors = []
 
+me = ''
+
 def add_neighbor(ip_port_str: str):
     global neighbors
     neighbors.append(ip_port_str)
@@ -52,7 +54,7 @@ def get_neighbors() -> List[str]:
 
 # https://en.bitcoin.it/wiki/Satoshi_Client_Node_Discovery
 def discover_more_neighbors():
-    global neighbors
+    global neighbors, me
     if len(neighbors) != 0:
         for n in neighbors:
             try:
@@ -60,10 +62,10 @@ def discover_more_neighbors():
                 addrs = resp.json()['neighbors']
                 info(f"Got neighbors {addrs} from {n}")
                 for addr in addrs:
-                    if(addr not in neighbors):
+                    if addr not in neighbors and addr != me:
                         neighbors.append(addr)
 
-                data = {'neighbors': neighbors}
+                data = {'neighbors': neighbors + [me]}
                 _ = requests.post(f'http://{n}/discovery', json=data)
             except ConnectionError:
                 err(f'Failed to connect to neighbor {n}')

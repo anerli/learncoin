@@ -100,6 +100,9 @@ if __name__ == '__main__':
     if args.neighbors is not None:
         for n in args.neighbors:
             discovery.add_neighbor(n)
+    
+    # ! tmp
+    discovery.me = f'localhost:{args.port}'
 
     print('Neighbors:', discovery.neighbors)
 
@@ -110,6 +113,6 @@ if __name__ == '__main__':
 
     discovery.discover_more_neighbors()
 
-    app.run(debug=True, port=int(args.port))
+    app.run(debug=True, port=int(args.port), access_log=False)
 
 
