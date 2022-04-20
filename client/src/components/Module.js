@@ -5,6 +5,9 @@ function Module(props) {
     return (
         <div>
             <h2 className="card_title">{props.text}</h2>
+        
+            <div class="float-container">
+            <div class="float-child">
             <div className="card">
                 <div className="card_items">
                     <h3>AMOUNT</h3>
@@ -15,6 +18,14 @@ function Module(props) {
                     <input id="receiver" type="text"></input>
                 </div>
             </div>
+            </div>
+            <div className="float-child">
+            <div className="info_btn"/>
+            </div>
+
+            </div>
+        
+        
         </div>
     );
 }

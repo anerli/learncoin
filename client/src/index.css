@@ -131,6 +131,16 @@ label {
   background-size: cover;
 }
 
+.info_btn {
+  background-color:#000A24;
+  border:3px solid #BCED09;    
+  height:35px;
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+  width:35px;
+}
+
 .card {
   background-color: #000A24;
   padding: 2rem;
