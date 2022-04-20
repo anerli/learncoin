@@ -10,10 +10,8 @@ class Block:
     def __init__(self, header: BlockHeader, transactions: List[Transaction] = None):
         if transactions is None:
             transactions = []
-        print('>>> Block init')
         self.header = header
         self.transactions = transactions
-        print('>>> Transactions:', self.transactions)
     
     def __repr__(self):
         return f'<Block header={self.header} transactions={self.transactions}>'
