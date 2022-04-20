@@ -23,10 +23,11 @@ export async function makeTransaction(senderPrivateKey, receiverPublicKey, amoun
 
     // const senderBytes = CryptoJS.enc.Hex.parse(senderPublicKey);
     // const receiverBytes = CryptoJS.enc.Hex.parse(receiverPublicKey);
+    console.log('amount hex: ', floatToHex(amount));
     const amountBytes = CryptoJS.enc.Hex.parse(floatToHex(amount));
 
     //const combined = senderBytes + receiverBytes;
-    const combinedHex = senderPublicKey + receiverPublicKey;
+    const combinedHex = senderPublicKey + receiverPublicKey + floatToHex(amount);
 
     console.log('combined hex: ', combinedHex);
 
@@ -62,5 +63,5 @@ export async function makeTransaction(senderPrivateKey, receiverPublicKey, amoun
       }
     );
 
-    return response.json();
+    return await response.json();
 }

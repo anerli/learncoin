@@ -7,6 +7,7 @@ export function hexToFloat(hex) {
 
 export function floatToHex(f) {
   // Convert IEEE hex encoded float as str to float
+  // Big endian
   let v = new DataView(new ArrayBuffer(4));
   v.setFloat32(0, f);
   return v.getUint32(0).toString(16);
