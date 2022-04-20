@@ -14,6 +14,7 @@ from lc.util import colors
 
 is_mining = False
 current_block = None
+current_block_changed = False
 chain = None
 
 def mine(server_chain: 'BlockChain'):
@@ -56,15 +57,22 @@ def mine(server_chain: 'BlockChain'):
 def prove(block: Block, chain: BlockChain) -> bool:
     # Returns true if block was proven or false if interrupted (i.e. detected a change in the chain)
     # Start at random value
+    global current_block_changed
+
     proof = random.randrange(0, 1_000_000)
 
     #!!!!! PROBLEM: current block hash is cached!
-    #current_block_hash = block.to_puzzle_hash()
+    current_block_hash = block.to_puzzle_hash()
 
     init_chain_len = len(chain)
 
     i = 0
     while True:
+        if current_block_changed:
+            # Recompute block hash
+            current_block_hash = block.to_puzzle_hash()
+            current_block_changed = False
+
         if i % 50000 == 0: info('Trying to prove block with transactions:', block.transactions)
         i+=1
         #if proof % 100000 == 0: print(f'{len(chain)=}, {init_chain_len=}')
@@ -74,7 +82,7 @@ def prove(block: Block, chain: BlockChain) -> bool:
         #if proof % DEBUG_INTERVAL == 0: print('Trying proof:', proof)
 
         # ! TMP: do not cache, but this is slow!
-        if puzzle.is_valid_proof(block.to_puzzle_hash(), int_to_bytes(proof)):#!
+        if puzzle.is_valid_proof(current_block_hash, int_to_bytes(proof)):#!
             info(f'{colors.GREEN}Proof found{colors.RESET} with integer value: {proof} ({int_to_bytes(proof).hex()})')
             block.header.proof = int_to_bytes(proof)
             return True
@@ -88,7 +96,7 @@ def make_transaction(transaction: 'Transaction'):
     Make a transaction by adding it to the latest block and notifying neighbors of it.
     Called by transaction endpoint as well as miner when a block is mined.
     '''
-    global chain
+    global chain, current_block_changed
     # info(f'Making transaction:')
     # print(f'\tsender: {transaction.sender.hex()}')
     # print(f'\treceiver: {transaction.receiver.hex()}')
@@ -101,6 +109,7 @@ def make_transaction(transaction: 'Transaction'):
         print(current_block)
         # add to current block
         current_block.add_transaction(transaction)
+        current_block_changed = True
         info(current_block.transactions)
     
         info('Is block valid?', current_block.is_valid())

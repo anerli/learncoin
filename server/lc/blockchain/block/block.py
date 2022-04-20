@@ -25,7 +25,7 @@ class Block:
         '''
         return {
             'header': self.header.to_json(),
-            'transactions': self.transactions
+            'transactions': [transaction.to_json() for transaction in self.transactions]
         }
     
     @classmethod

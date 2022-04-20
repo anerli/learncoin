@@ -59,3 +59,11 @@ class Transaction:
         in the computation of a block hash for a proof of work puzzle.
         '''
         return self.sender + self.receiver + self.amount + self.signature
+    
+    def to_json(self) -> dict:
+        return dict(
+            sender=self.sender.hex(),
+            receiver=self.receiver.hex(),
+            amount=self.amount.hex(),
+            signature=self.signature.hex()
+        )
