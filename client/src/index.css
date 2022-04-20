@@ -7,6 +7,28 @@ img {
   border-color: #000A24;
 }
 
+.info_modal {
+  position: relative;
+}
+
+.info_modal img {
+  height: 30px;
+  width: 30px;
+}
+
+.info_modal:hover:after {
+  position: absolute;
+  content: attr(title);
+  display: inline-block;
+  left: 0px;
+  top: 0px;
+  padding: 15px;
+  background-color: black;
+  border: 3px solid #BCED09;
+  border-radius: 2px;
+  color: #BCED09;
+}
+
 button {
   border-color: #000A24;
 }
@@ -131,15 +153,15 @@ label {
   background-size: cover;
 }
 
-.info_btn {
-  background-color:#000A24;
-  border:3px solid #BCED09;    
-  height:35px;
-  border-radius:50%;
-  -moz-border-radius:50%;
-  -webkit-border-radius:50%;
-  width:35px;
+.float-container {
+  padding: 10px;
 }
+
+.float-child {
+  width: 50%;
+  float: left;
+  padding: 10px;
+}  
 
 .card {
   background-color: #000A24;

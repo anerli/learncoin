@@ -20,7 +20,9 @@ function Module(props) {
             </div>
             </div>
             <div className="float-child">
-            <div className="info_btn"/>
+            <div class="info_modal" title="So basically this is a thing that we can do... and so like the reason...">
+                <img src="https://drive.google.com/uc?export=download&id=1A1ZS6cN2rRB2mDvqjICdxECrD8GxOA4R"/>
+            </div>
             </div>
 
             </div>

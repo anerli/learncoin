@@ -28,6 +28,11 @@ const Homepage = () => {
             <h1> LearnCoin </h1>
             {publicKey !== '' && <h2 className='public_key'> Your public key: {publicKey}</h2>}
             <Module text="WALLET" />
+            <img
+                className="banner"
+                src="https://drive.google.com/uc?export=download&id=1eiGCCpQiiHu4QxpJhR2PZ-l5YHJc-mqU"
+                alt="homepage banner"
+            />
             <Send />
             <img
                 className="banner"
