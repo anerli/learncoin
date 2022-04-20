@@ -7,9 +7,13 @@ from .block_header import BlockHeader
 
 
 class Block:
-    def __init__(self, header: BlockHeader, transactions: List[Transaction] = []):
+    def __init__(self, header: BlockHeader, transactions: List[Transaction] = None):
+        if transactions is None:
+            transactions = []
+        print('>>> Block init')
         self.header = header
         self.transactions = transactions
+        print('>>> Transactions:', self.transactions)
     
     def __repr__(self):
         return f'<Block header={self.header} transactions={self.transactions}>'
@@ -49,6 +53,9 @@ class Block:
     #     Does NOT check whether the proof is actually valid or not.
     #     '''
     #     return self.header.proof is not None
+
+    def add_transaction(self, transaction: Transaction):
+        self.transactions.append(transaction)
     
     def is_valid(self) -> bool:
         '''
@@ -60,16 +67,19 @@ class Block:
         # Check if there is even a proof contained in the header
         #if not self.is_proven():
         if self.header.proof is None:
-            print('Invalid block: No header')
+            print('Invalid block: No proof')
             return False
         # Do actual verification of proof
-        if not is_valid_proof(self.to_puzzle_hash(), self.header.proof):
+        if not is_valid_proof(self.to_puzzle_hash(), self.header.proof):#!
             print('Invalid block: Invalid proof: ' + self.header.proof.hex())
             return False
         
+
+        # TODO: Account for block reward
         # === Verify transaction signatures ===
         for transaction in self.transactions:
             if not transaction.is_valid():
+                print('Invalid block: Invalid transaction: ' + transaction)
                 return False
 
         # === Verify address sums ===

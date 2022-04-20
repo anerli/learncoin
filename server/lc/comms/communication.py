@@ -1,6 +1,7 @@
 from lc.comms.discovery import get_neighbors
 from lc.blockchain.blockchain import BlockChain
 import requests
+from lc.transactions.transaction import Transaction
 #import colors
 from lc.util.info import comms_info as info
 
@@ -20,4 +21,8 @@ def broadcast_chain(chain: BlockChain):
                 info('Chain not accepted by neighbor; reason:', resp.text)
         except requests.exceptions.ConnectionError:
             info('Could not broadcast chain to neighbor at:', url)
-        
+
+
+def broadcast_transaction(transaction: Transaction):
+    # TODO
+    pass
