@@ -2,7 +2,7 @@ import requests
 from typing import List
 from sanic import Blueprint
 from sanic.response import text, json
-import colors
+from lc.util import colors
 from requests.exceptions import ConnectionError
 
 def info(*args, error=False, **kwargs):

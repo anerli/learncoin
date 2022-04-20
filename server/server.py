@@ -1,27 +1,28 @@
 from sanic import Sanic
 from sanic.response import json, text, file
-from chain import BlockChain
+from lc.blockchain import BlockChain
 from argparse import ArgumentParser
-import discovery
+from lc.comms import discovery
 from threading import Thread
-import communication
-import transactions
+from lc.comms import communication
+from lc import transactions
 import time
-from mining import mine
+from lc.mining.miner import mine
 #from chain_manager import chain
-import colors
-from primitives import PrivateKey, deserialize_private_key, serialize_private_key
+from lc.cryptography.primitives import PrivateKey, deserialize_private_key, serialize_private_key, serialize_public_key
+from lc.blockchain import chain_manager
+
+from lc.util.info import server_info as info
 
 app = Sanic("learncoin_full_node")
-chain = BlockChain()
+
 
 # ===== Attach blueprints =====
 app.blueprint(discovery.discovery_bp)
 app.blueprint(transactions.transactions_bp)
+app.blueprint(chain_manager.chain_bp)
 # ^^^^^ Attach blueprints ^^^^^
 
-def info(*args, **kwargs):
-    print(f'{colors.MAGENTA}<SRV🖳>{colors.RESET}', *args, **kwargs)
 
 @app.get("/")
 async def hello(request):
@@ -32,44 +33,19 @@ async def test(request):
     discovery.test_neighbors()
     return text('aight')
 
-@app.post("/chain")
-async def receive_chain(request):
-    # Endpoint for receiving chains, which have presumably mined a new block
-    #print('=== RECEIVE CHAIN ===')
-    # TODO: Separate this logic into another file (?)
-    global chain
-    # ? if request has no json this silently fails and freezes the call? why?
-    other_chain = BlockChain.from_json(request.json)
-    if not other_chain.is_valid():
-        info('Received chain is invalid!')
-        return text('Received chain is invalid.', status=400)
-    other_len = len(other_chain)
-    my_len = len(chain)
-    if other_len <= my_len:
-        # FIXME Future Problem: if chains are same length but carry different transactions and proofs then each chain will
-        # be valid but have different blocks at certain points.
-        # One way to fix would be finding a way to merge the chains and have both nodes agree on that one.
-        msg = f'Received chain of length {other_len} is not longer than local chain of length {my_len}.'
-        info(msg)
-        return text(msg, status=400)
-    # Replace chain
-    #info('Received longer valid chain, replacing own')
-    info(f'Accepted chain of length {other_len}.')
 
-    # PROBLEM: Chain object is referenced in other places
-    #chain = other_chain
-    chain.replace(other_chain)
-    return text('Chain Accepted')
+# @app.get("/genprivkey")
+# async def generate_private_key(request):
+#     # ! unsafe !
+#     key = PrivateKey.generate()
+#     return json({'key': serialize_private_key(key).hex()})
 
-@app.get("/chain")
-async def get_chain(request):
-    return json(chain.to_json())
-
-@app.get("/genprivkey")
+@app.get("/genkeypair")
 async def generate_private_key(request):
     # ! unsafe !
+    # ! for easy key generation for testing !
     key = PrivateKey.generate()
-    return json({'key': serialize_private_key(key).hex()})
+    return json({'priv': serialize_private_key(key).hex(), 'pub': serialize_public_key(key.public_key()).hex()})
 
 @app.post("/keycheck")
 async def check_valid_key(request):
@@ -107,7 +83,7 @@ if __name__ == '__main__':
     print('Neighbors:', discovery.neighbors)
 
     if args.mine:
-        mining_thread = Thread(target=start_mining, args=[chain])
+        mining_thread = Thread(target=start_mining, args=[chain_manager.chain])
         mining_thread.daemon = True
         mining_thread.start()
 

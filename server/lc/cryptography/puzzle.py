@@ -1,4 +1,4 @@
-from primitives import secure_hash
+from .primitives import secure_hash
 
 DIFFICULTY = 5
 

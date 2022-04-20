@@ -1,10 +1,9 @@
-from discovery import get_neighbors
-from chain import BlockChain
+from lc.comms.discovery import get_neighbors
+from lc.blockchain import BlockChain
 import requests
-import colors
+#import colors
+from lc.util.info import comms_info as info
 
-def info(*args, **kwargs):
-    print(f'{colors.CYAN}<COMMS📶>{colors.RESET}', *args, **kwargs)
 
 def broadcast_chain(chain: BlockChain):
     neighbors = get_neighbors()

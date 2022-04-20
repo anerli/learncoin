@@ -1,46 +1,11 @@
-from primitives import PublicKey, PrivateKey, serialize_private_key, deserialize_public_key, secure_hash
-from conversions import float_from_bytes
-from sanic import Blueprint, Request
-from sanic.response import json
+from lc.cryptography.primitives import PublicKey, PrivateKey, serialize_private_key, deserialize_public_key, secure_hash
+from lc.util.conversions import float_from_bytes
+
 from cryptography.exceptions import InvalidSignature
-import colors
 
-def info(*args, **kwargs):
-    print(f'{colors.YELLOW}<TRANSACTIONS🪙>{colors.RESET}', *args, **kwargs)
 
-# ▼▼▼▼▼ Transaction Endpoints ▼▼▼▼▼
-transactions_bp = Blueprint('transactions', url_prefix='/transactions')
+# def make_transaction(transaction: Transaction):
 
-@transactions_bp.post('/')
-def add_transaction(request: Request):
-    # Sender public key
-    sender = request.json['sender']
-    # Receiver public key
-    receiver = request.json['receiver']
-    # Amount of LC as an IEEE 754 encoded float
-    amount = request.json['amount']#float(request.json['amount'])
-    # Signature
-    signature = request.json['signature']
-
-    sender_bytes = bytes.fromhex(sender)
-    receiver_bytes = bytes.fromhex(receiver)
-    amount_bytes = bytes.fromhex(amount)
-    signature_bytes = bytes.fromhex(signature)
-
-    # sender_key = deserialize_public_key(sender_bytes)
-    # receiver_key = deserialize_public_key(receiver_key)
-
-    transaction = Transaction(sender_bytes, receiver_bytes, amount_bytes, signature_bytes)
-    info(f'Received transaction:')
-    print(f'\tsender: {transaction.sender.hex()}')
-    print(f'\treceiver: {transaction.receiver.hex()}')
-    print(f'\tamount: {transaction.amount.hex()} -> {float_from_bytes(transaction.amount)}')
-    print(f'\tsignature: {transaction.signature.hex()}')
-
-    info(f'Is valid? {transaction.is_valid()}')
-
-    return json({'valid': transaction.is_valid()})
-# ▲▲▲▲▲ Transaction Endpoints ▲▲▲▲▲
 
 
 class Transaction:
@@ -49,6 +14,12 @@ class Transaction:
         self.receiver = receiver
         self.amount = amount
         self.signature = signature
+    
+    # @classmethod
+    # def block_reward(cls, receiver: bytes) -> 'Transaction':
+    #     transaction = cls()
+    #     transaction.sender = None
+    #     tranaction.signature = 
     
     def __repr__(self):
         # print('amount: ', self.amount.hex())
@@ -64,6 +35,7 @@ class Transaction:
     def is_valid(self) -> bool:
         '''
         Verifies that the given signature authenticates this transaction.
+        Assumes that this is a standard transaction, not a block reward.
         '''
 
         # For easier consistency across Python / JS, we defined the combined byte value

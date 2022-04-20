@@ -1,14 +1,13 @@
-from block import Block, BlockHeader
-from chain import GENESIS_HASH, BlockChain
-import communication
-from conversions import int_to_bytes
-import puzzle
-import colors
+from lc.blockchain.block import Block, BlockHeader
+from lc.blockchain import GENESIS_HASH, BlockChain
+from lc.comms import communication
+from lc.util.conversions import int_to_bytes
+from lc.cryptography import puzzle
 import random
 
-def info(*args, **kwargs):
-    # ⛓
-    print(f'{colors.YELLOW}<MINING⛏>{colors.RESET}', *args, **kwargs)
+from lc.util.info import mining_info as info
+from lc.util import colors
+
 
 def mine(chain):
     #global chain
