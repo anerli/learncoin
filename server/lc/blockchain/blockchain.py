@@ -1,4 +1,5 @@
-from lc.blockchain.block import Block, BlockHeader
+from lc.blockchain.block.block import Block
+from lc.blockchain.block.block_header import BlockHeader
 
 from typing import List
 

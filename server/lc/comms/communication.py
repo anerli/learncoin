@@ -1,5 +1,5 @@
 from lc.comms.discovery import get_neighbors
-from lc.blockchain import BlockChain
+from lc.blockchain.blockchain import BlockChain
 import requests
 #import colors
 from lc.util.info import comms_info as info

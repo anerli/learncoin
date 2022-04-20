@@ -1,5 +1,6 @@
-from lc.blockchain.block import Block, BlockHeader
-from lc.blockchain import GENESIS_HASH, BlockChain
+from lc.blockchain.block.block import Block
+from lc.blockchain.block.block_header import BlockHeader
+from lc.blockchain.blockchain import GENESIS_HASH, BlockChain
 from lc.comms import communication
 from lc.util.conversions import int_to_bytes
 from lc.cryptography import puzzle

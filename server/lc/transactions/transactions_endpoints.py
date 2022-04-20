@@ -1,9 +1,10 @@
 from sanic import Blueprint, Request
 from sanic.response import json
 #from lc.transactions import Transaction
-#from . import Transaction
-from lc.transactions.transaction import Transaction
+from .transaction import Transaction
+#from lc.transactions.transaction import Transaction
 from lc.util.conversions import float_from_bytes
+from lc.blockchain import chain_manager
 
 from lc.util.info import transactions_info as info
 
@@ -38,6 +39,6 @@ def add_transaction(request: Request):
     info(f'Is valid? {transaction.is_valid()}')
 
     # ?
-    #chain_manager.make_transaction(transaction)
+    chain_manager.make_transaction(transaction)
 
     return json({'valid': transaction.is_valid()})

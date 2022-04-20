@@ -1,4 +1,4 @@
-from lc.transactions import Transaction
+from lc.transactions.transaction import Transaction
 from typing import List
 from lc.cryptography.primitives import secure_hash
 from lc.cryptography.puzzle import is_valid_proof

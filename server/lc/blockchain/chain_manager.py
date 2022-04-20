@@ -6,6 +6,8 @@ from lc.util.conversions import float_from_bytes
 
 from lc.util.info import chain_info as info
 
+from lc.transactions.transaction import Transaction
+
 # Important shared object
 chain = BlockChain()
 
@@ -49,13 +51,13 @@ async def get_chain(request):
 
 
 
-# def make_transaction(transaction: Transaction):
-#     '''
-#     Make a transaction by adding it to the latest block and notifying neighbors of it.
-#     '''
-#     info(f'Making transaction:')
-#     print(f'\tsender: {transaction.sender.hex()}')
-#     print(f'\treceiver: {transaction.receiver.hex()}')
-#     print(f'\tamount: {float_from_bytes(transaction.amount)}')
-#     print(f'\tsignature: {transaction.signature.hex()}')
-#     info(f'Is valid? {transaction.is_valid()}')
+def make_transaction(transaction: Transaction):
+    '''
+    Make a transaction by adding it to the latest block and notifying neighbors of it.
+    '''
+    info(f'Making transaction:')
+    print(f'\tsender: {transaction.sender.hex()}')
+    print(f'\treceiver: {transaction.receiver.hex()}')
+    print(f'\tamount: {float_from_bytes(transaction.amount)}')
+    print(f'\tsignature: {transaction.signature.hex()}')
+    info(f'Is valid? {transaction.is_valid()}')

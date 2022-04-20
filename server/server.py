@@ -1,11 +1,11 @@
 from sanic import Sanic
 from sanic.response import json, text, file
-from lc.blockchain import BlockChain
+from lc.blockchain.blockchain import BlockChain
 from argparse import ArgumentParser
 from lc.comms import discovery
 from threading import Thread
 from lc.comms import communication
-from lc import transactions
+from lc.transactions import transactions_endpoints
 import time
 from lc.mining.miner import mine
 #from chain_manager import chain
@@ -19,7 +19,7 @@ app = Sanic("learncoin_full_node")
 
 # ===== Attach blueprints =====
 app.blueprint(discovery.discovery_bp)
-app.blueprint(transactions.transactions_bp)
+app.blueprint(transactions_endpoints.transactions_bp)
 app.blueprint(chain_manager.chain_bp)
 # ^^^^^ Attach blueprints ^^^^^
 
