@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Block from "../components/Block"
 
 const Blockchain = () => {
     return (
@@ -7,10 +8,11 @@ const Blockchain = () => {
             <h1>Blockchain Viewer</h1>
 
             <div className="chain">
-                <div className="block">
-                    <div className="pow"></div>
-                    <button type="button"></button>
-                </div>
+            <Block/>
+            <Block/>
+            <Block/>
+            <Block/>
+            <Block/>
             </div>
         </div>
     )
