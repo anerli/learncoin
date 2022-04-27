@@ -79,6 +79,7 @@ def get_my_external_ip():
 def test_neighbors():
     global neighbors
     while True:
+        #print(neighbors)
         time.sleep(60)
         #print('=== TESTING NEIGHBORS ===')
         for neighbor in neighbors:
