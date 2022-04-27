@@ -8,9 +8,9 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo512.png",
+      "src": "learncoin.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "168x28"
     }
   ],
   "start_url": ".",

@@ -1,5 +1,4 @@
 import Module from "../components/Module";
-import Send from "../components/Send";
 import Balance from "../components/Balance";
 import Redirect1 from "../components/Redirect1";
 import Redirect2 from "../components/Redirect2";

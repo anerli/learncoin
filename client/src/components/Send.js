@@ -7,7 +7,6 @@ function Send() {
     //     console.log("amt: " + document.getElementById('amount').value);
     //     console.log("receiver: " + document.getElementById('receiver').value); 
     // }
-
     const triggerTransaction = async () => {
       const amount = parseFloat(document.getElementById('amount').value);
       const receiverPublicKey = document.getElementById('receiver').value;

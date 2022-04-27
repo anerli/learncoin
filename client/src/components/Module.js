@@ -7,8 +7,8 @@ function Module(props) {
     return (
         <div>
             <h2 className="card_title">{props.text}</h2>
-            <div class="float-container">
-            <div class="float-child">
+            <div className="float-container">
+            <div className="float-child">
                 <InfoModal text="This is your Wallet. Here, you can create transactions that will be broadcasted to the blockchain."/>
             <div className="card">
                 <div className="card_items">
