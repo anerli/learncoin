@@ -4,6 +4,9 @@ function Redirect2() {
     return (
       <div>
         <div className="redirect">
+        <div class="info_modal" title="A wallet interface allows for the exchange of cryptocurrency (LearnCoin). Users should specify the amount of LC to send in the left textbox. Users should also enter the private key identification number of the receiver in the right text box.">
+                <img src="https://drive.google.com/uc?export=download&id=1A1ZS6cN2rRB2mDvqjICdxECrD8GxOA4R"/>
+            </div>
           <Link to="/mining">
             <img
               className="redirect_decal"

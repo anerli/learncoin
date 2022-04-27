@@ -75,7 +75,7 @@ const Signup = () => {
                     <button className='login_btn'>Login using this private key</button>
                 </Link>}
                 </div>
-                <img src="login_bg.jpg" className="login_bg"></img>
+                <img src="login_bg.jpg" className="login_bg" alt="login button"></img>
             </div>
         </div>
     );

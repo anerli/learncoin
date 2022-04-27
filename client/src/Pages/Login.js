@@ -36,7 +36,7 @@ const Login = () => {
           or &nbsp;
           <Link to="/homepage">Guest Login</Link> &nbsp;
         </h3>
-        <img src="login_bg.jpg" className="login_bg"></img>
+        <img src="login_bg.jpg" className="login_bg" alt="login button"></img>
         </div>
         
         

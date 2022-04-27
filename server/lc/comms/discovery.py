@@ -3,6 +3,7 @@ from typing import List
 from sanic import Blueprint
 from sanic.response import text, json
 from lc.util import colors
+import time
 from requests.exceptions import ConnectionError
 
 def info(*args, error=False, **kwargs):
@@ -76,15 +77,23 @@ def get_my_external_ip():
     pass
 
 def test_neighbors():
-    print('=== TESTING NEIGHBORS ===')
-    for neighbor in neighbors:
-        print('Testing neighbor: ' + neighbor)
-        resp = requests.get('http://' + neighbor)
-        # Should get hello
-        if (resp.text == 'hello'):
-            print('Test successful')
-        else:
-            print('Invalid response: ' + resp.text)
-    print('=== DONE TESTING NEIGHBORS ===')
+    global neighbors
+    while True:
+        time.sleep(60)
+        #print('=== TESTING NEIGHBORS ===')
+        for neighbor in neighbors:
+            try:
+                #print('Testing neighbor: ' + neighbor)
+                resp = requests.get('http://' + neighbor)
+                # Should get hello
+                if (resp.text == 'hello'):
+                    continue
+                else:
+                    neighbors.remove(neighbor)
+                    #print('Invalid response: ' + resp.text)
+            except ConnectionError:
+                neighbors.remove(neighbor)
+
+    # print('=== DONE TESTING NEIGHBORS ===')
 
 

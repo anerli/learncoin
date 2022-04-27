@@ -5,6 +5,10 @@ const Blockchain = () => {
         <div>
             <Link to='/homepage'>BACK</Link>
             <h1>Blockchain Viewer</h1>
+
+            <div className="chain">
+                
+            </div>
         </div>
     )
 };

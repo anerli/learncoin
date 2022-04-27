@@ -65,6 +65,12 @@ def start_mining(chain):
         time.sleep(1)
     mine(chain)
 
+def check_neighbors():
+    while not app.is_running:
+        time.sleep(1)
+    discovery.test_neighbors()
+
+
 if __name__ == '__main__':
     argp = ArgumentParser()
     argp.add_argument('--mine', '-m', action='store_true', dest='mine')
@@ -88,6 +94,9 @@ if __name__ == '__main__':
         mining_thread.start()
 
     discovery.discover_more_neighbors()
+    neighbor_thread = Thread(target=check_neighbors)
+    neighbor_thread.daemon = True
+    neighbor_thread.start()
 
     app.run(host='0.0.0.0', debug=True, port=int(args.port))
 
