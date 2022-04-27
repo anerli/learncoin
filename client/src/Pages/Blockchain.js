@@ -7,7 +7,10 @@ const Blockchain = () => {
             <h1>Blockchain Viewer</h1>
 
             <div className="chain">
-                
+                <div className="block">
+                    <div className="pow"></div>
+                    <button type="button"></button>
+                </div>
             </div>
         </div>
     )
