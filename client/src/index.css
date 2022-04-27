@@ -83,7 +83,7 @@ label {
   color: #BCED09;
 }
 
-.btn {
+.send_btn {
   font: inherit;
   width: 40%;
   padding: 0.5rem 1.5rem;
@@ -92,7 +92,6 @@ label {
   background-color: #000A24;
   color: #BCED09;
   border: 3.5px solid #BCED09;
-  margin: 3rem;
 }
 
 .send_btn:hover {
@@ -104,12 +103,12 @@ label {
   max-width: 7rem;
 }
 
-.btn:hover {
+.send_btn:hover {
   background-color: #BCED09;
   color: #000A24;
 }
 
-.btn--alt {
+.send_btn--alt {
   background-color: transparent;
   color: #800040;
 }
@@ -135,7 +134,7 @@ label {
   cursor: grab;
   opacity: 80%;
 }
-.btn--alt:hover {
+.send_btn--alt:hover {
   background-color: #f8dae9;
 }
 
@@ -250,7 +249,7 @@ label {
   margin-left: auto;
   margin-right: auto;
   width: 40%;
-  margin-top: 25px;
+  margin-top: 40px;
 }
 
 .card_title {

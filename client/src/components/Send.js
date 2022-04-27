@@ -19,7 +19,7 @@ function Send() {
 
     return (
         <div>
-            <btn><img className="send_btn" onClick={triggerTransaction} src="https://drive.google.com/uc?export=download&id=1sfdEiJeWUXHutNSO_maOCMU0L0z07rRK" alt="send icon"/></btn>
+            <button className="send_btn" onClick={triggerTransaction}>SEND</button>
         </div>
     );
 }
