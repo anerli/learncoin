@@ -1,5 +1,6 @@
 import Module from "../components/Module";
 import Send from "../components/Send";
+import Balance from "../components/Balance";
 import Redirect1 from "../components/Redirect1";
 import Redirect2 from "../components/Redirect2";
 
@@ -26,19 +27,9 @@ const Homepage = () => {
     return (
         <div>
             <h1> LearnCoin </h1>
+            <Balance text="1,000 LC"/>
             {publicKey !== '' && <h2 className='public_key'> Your public key: {publicKey}</h2>}
-            <Module text="WALLET" />
-            <img
-                className="banner"
-                src="https://drive.google.com/uc?export=download&id=1eiGCCpQiiHu4QxpJhR2PZ-l5YHJc-mqU"
-                alt="homepage banner"
-            />
-            <Send />
-            <img
-                className="banner"
-                src="https://drive.google.com/uc?export=download&id=113hYCr2JAlQ4Ym5RMujNNEQa2rLCqmh3"
-                alt="homepage banner"
-            />
+            <Module/>
             <Redirect1 />
             <Redirect2 />
         </div>
