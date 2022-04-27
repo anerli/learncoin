@@ -6,8 +6,8 @@ function Module(props) {
         <div>
             <h2 className="card_title">{props.text}</h2>
         
-            <div class="float-container">
-            <div class="float-child">
+            <div className="float-container">
+            <div className="float-child">
             <div className="card">
                 <div className="card_items">
                     <h3>AMOUNT</h3>
@@ -20,8 +20,8 @@ function Module(props) {
             </div>
             </div>
             <div className="float-child">
-            <div class="info_modal" title="So basically this is a thing that we can do... and so like the reason...">
-                <img src="https://drive.google.com/uc?export=download&id=1A1ZS6cN2rRB2mDvqjICdxECrD8GxOA4R"/>
+            <div className="info_modal" title="So basically this is a thing that we can do... and so like the reason...">
+                <img src="https://drive.google.com/uc?export=download&id=1A1ZS6cN2rRB2mDvqjICdxECrD8GxOA4R" alt="Question mark"/>
             </div>
             </div>
 
