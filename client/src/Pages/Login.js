@@ -1,24 +1,34 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-
-let valid = false;
-
-function checkLogin(formid) {
-    console.log("submitted: ", document.getElementById("key").value);
-
-    if(document.getElementById("key").value !== ""){
-        valid = true;
-    }
-
-    if(valid){
-        document.getElementById(formid).submit();
-    }
-    else{
-        alert("Invalid Private Key");
-    }
-};
+import {useCookies} from "react-cookie";
+import * as ed from "@noble/ed25519";
 
 const Login = () => {
+    const [cookies] = useCookies(['privateKey']);
+    const [publicKey, setPublicKey] = useState('');
+    const [valid, setValid] = useState(false);
+
+    const checkLogin = (formid) => {
+        const privKey = document.getElementById("key").value;
+        console.log("submitted: ", privKey);
+        const uint8PrivKey = new TextEncoder("utf-8").encode(privKey);
+        const hexPrivateKey = ed.utils.bytesToHex(uint8PrivKey);
+        ed.getPublicKey(hexPrivateKey).then(
+            (publicKey) => {
+                let hexPublicKey = ed.utils.bytesToHex(publicKey);
+                setPublicKey(hexPublicKey);
+            }
+        )
+        setValid(!valid);
+
+        if(valid){
+            document.getElementById(formid).submit();
+        }
+        else{
+            alert("Invalid Private Key");
+        }
+    };
+
     return (
         <div>
             <a href="#">
