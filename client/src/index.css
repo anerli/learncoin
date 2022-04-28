@@ -222,9 +222,9 @@ label {
 
 .more_modal:hover:after {
   position: absolute;
+  right: 20%;
   content: attr(title);
-  width: 200px;
-  height: 100%;
+  width: auto;
   padding: 15px;
   background-color: black;
   border: 3px solid #BCED09;
