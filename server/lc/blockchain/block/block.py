@@ -2,6 +2,7 @@ from lc.transactions.transaction import Transaction
 from typing import List
 from lc.cryptography.primitives import secure_hash
 from lc.cryptography.puzzle import is_valid_proof
+from lc.util.conversions import float_from_bytes
 from .block_header import BlockHeader
 
 
@@ -90,3 +91,27 @@ class Block:
 
         # Everything is valid if we get here
         return True
+    
+    def calculate_addr_totals(self) -> dict:
+        # Calculate the total balance of each public key address according to the transactions
+        # in this block
+        totals = {}
+        for transaction in self.transactions:
+            # Reward or normal block, add to receiver's balance
+            receiver = transaction.receiver.hex()
+
+            if receiver in totals:
+                totals[receiver] += float_from_bytes(transaction.amount)
+            else:
+                totals[receiver] = float_from_bytes(transaction.amount)
+            
+            if not transaction.is_valid_reward():
+                # Non-Reward block, so make sure to subtract from sender's balance as well
+                sender = transaction.sender.hex()
+
+                if sender in totals:
+                    totals[sender] -= float_from_bytes(transaction.amount)
+                else:
+                    totals[sender] = float_from_bytes(transaction.amount)
+
+        return totals

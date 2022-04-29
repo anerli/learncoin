@@ -22,6 +22,10 @@ def bind(node):
         # ! for easy key generation for testing !
         key = PrivateKey.generate()
         return json({'priv': serialize_private_key(key).hex(), 'pub': serialize_public_key(key.public_key()).hex()})
+    
+    @bp.get("/balances")
+    async def get_balances(request):
+        return json({'balances': node.chain.calculate_addr_totals()})
 
     @bp.post("/keycheck")
     async def check_valid_key(request):

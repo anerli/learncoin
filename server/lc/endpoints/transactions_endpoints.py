@@ -1,5 +1,5 @@
 from sanic import Blueprint, Request
-from sanic.response import json
+from sanic.response import json, text
 
 from lc.transactions.transaction import Transaction
 from lc.util.conversions import float_from_bytes
@@ -43,14 +43,34 @@ def bind(node):
         valid = transaction.is_valid()
         info(f'Is valid? {valid}')
 
-        # ?
-        #chain_manager.make_transaction(transaction)
+        # Check that user has enough to spend
+        balance = node.chain.get_balance(transaction.sender.hex())
+
+        print('Sender balance:', balance)
+
+        if balance < float_from_bytes(transaction.amount):
+            info('User does not have enough to perform provided transaction')
+            return text('not enough LC to perform transaction', status=400)
+
         node.make_transaction(transaction)
-        # !FIXME
-        #make_transaction(transaction)
 
-        #if valid:
+        if valid:
+            return text('OK', status=200)
+        else:
+            return text('invalid transaction', status=400)
 
-        return json({'valid': valid})
+        #return json({'valid': valid})
+    
+    @transactions_bp.get('/balance/<pubkey>')
+    async def get_balance(request, pubkey):
+        # Get the total balance for the given hex public key address
+        #return text('asd')
+        # balances = node.chain.calculate_addr_totals()
+        # if pubkey not in balances:
+        #     balance = 0.0
+        # else:
+        #     balance = balances[pubkey]
+        balance = node.chain.get_balance(pubkey)
+        return json({'balance': balance})
     
     return transactions_bp

@@ -107,9 +107,9 @@ class DiscoveryComponent:
                 try:
                     resp = requests.post(url, json=transaction_data)
 
-                    if resp.json()['valid']:
+                    if resp.status_code == 200:
                         info('Transaction was accepted by neighbor.')
                     else:
-                        err('Transaction not accepted by neighbor.')
+                        err('Transaction not accepted by neighbor; reason:', resp.text)
                 except requests.exceptions.ConnectionError:
                     info('Could not forward transaction to neighbor at:', url)
