@@ -44,6 +44,7 @@ def bind(node):
 
         # ?
         #chain_manager.make_transaction(transaction)
+        node.make_transaction(transaction)
         # !FIXME
         #make_transaction(transaction)
 

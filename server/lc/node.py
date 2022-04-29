@@ -1,4 +1,3 @@
-from mimetypes import init
 from threading import Thread
 from typing import List
 from sanic import Sanic
@@ -17,6 +16,7 @@ from lc.endpoints import chain_endpoints, discovery_endpoints, test_endpoints, t
 import time
 
 from lc.mining.miner import Miner
+from lc.transactions.transaction import Transaction
 
 
     
@@ -35,6 +35,13 @@ class Node:
 
         self.chain = BlockChain()
 
+        # Create miner whether or not we use it
+        self.miner = Miner(
+            lambda: self.chain.blocks[-1] if self.chain.blocks else None,
+            lambda block: self.chain.blocks.append(block),
+            lambda: self.dc.broadcast_chain(self.chain.to_json())
+        )
+
         self.app.blueprint(test_endpoints.bind(self))
         self.app.blueprint(discovery_endpoints.bind(self.dc))
         self.app.blueprint(chain_endpoints.bind(self))
@@ -46,12 +53,8 @@ class Node:
         # Make sure server is running before we start mining
         while not self.app.is_running:
             time.sleep(1)
-        miner = Miner(
-            lambda: self.chain.blocks[-1] if self.chain.blocks else None,
-            lambda block: self.chain.blocks.append(block),
-            lambda: self.dc.broadcast_chain(self.chain.to_json())
-        )
-        miner.mine()
+        
+        self.miner.mine()
     
     def check_neighbors(self):
         while not self.app.is_running:
@@ -72,6 +75,16 @@ class Node:
 
         # Redirect to Sanic app run() function
         self.app.run(*args, **kwargs)
+    
+    def make_transaction(self, transaction: Transaction):
+        if self.miner.is_mining:
+            # Add transaction to miner's current block
+            self.miner.current_block.add_transaction(transaction)
+            self.miner.current_block_changed = True
+
+
+        # TODO: Broadcast transaction
+        pass
     
     #def blueprint(self, bp: Blueprint):
     #    self.app.blueprint(bp)

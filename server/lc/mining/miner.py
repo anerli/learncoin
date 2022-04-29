@@ -26,10 +26,8 @@ class Miner:
 
         self.is_mining = False
 
-    def mine(self):
-        info('Beginning mining...')
-
-        self.get_latest_block()
+        self.current_block = None
+        self.current_block_changed = False
 
     def mine(self):
         self.is_mining = True
@@ -40,28 +38,28 @@ class Miner:
 
             if last_block is None:
                 # Chain is empty, create genesis block
-                current_block = Block(BlockHeader(GENESIS_HASH))
+                self.current_block = Block(BlockHeader(GENESIS_HASH))
             else:
                 # Otherwise, the new block we mine has the last proven block's hash in its header
-                current_block = Block(BlockHeader(last_block.to_puzzle_hash()))
+                self.current_block = Block(BlockHeader(last_block.to_puzzle_hash()))
             
-            info(f'Starting proof of block with {len(current_block.transactions)} transactions.')
+            info(f'Starting proof of block with {len(self.current_block.transactions)} transactions.')
 
             # === Prove the block ===
-            if self.prove(current_block):
+            if self.prove(self.current_block):
                 # Add our newly proven block to our local chain
-                self.add_block_to_chain(current_block)
+                self.add_block_to_chain(self.current_block)
 
                 # Broadcast the (theoretically) new longest chain
                 #communication.broadcast_chain(chain)
                 self.trigger_broadcast()
 
                 # Create a new block to prove
-                current_block = Block(BlockHeader(current_block.to_puzzle_hash()))
+                self.current_block = Block(BlockHeader(self.current_block.to_puzzle_hash()))
             else:
                 # Get hash of newest received block
                 #new_block = Block(BlockHeader(chain.blocks[-1].to_puzzle_hash()))
-                current_block = Block(BlockHeader(self.get_latest_block().to_puzzle_hash()))
+                self.current_block = Block(BlockHeader(self.get_latest_block().to_puzzle_hash()))
 
 
     def prove(self, block: Block) -> bool:
@@ -73,13 +71,15 @@ class Miner:
         current_block_hash = block.to_puzzle_hash()
 
         while True:
-            # if current_block_changed:
-            #     # Recompute block hash if needed
-            #     current_block_hash = block.to_puzzle_hash()
-            #     current_block_changed = False
+            if self.current_block_changed:
+                # Recompute block hash if needed
+                info(f'Received new transaction, now mining block with {len(self.current_block.transactions)} transactions')
+                current_block_hash = block.to_puzzle_hash()
+                self.current_block_changed = False
 
             #if len(chain) > init_chain_len:
 
+            # TODO: improve below speed
             # Make sure latest block not None and then check if hashes match
             if self.get_latest_block() and block.header.previous_block_hash != self.get_latest_block().to_puzzle_hash():
                 info(f'Detected updated chain, interrupting proof of block.')
