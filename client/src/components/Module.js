@@ -15,7 +15,7 @@ function Module(props) {
                     <img className="graphic" src="https://drive.google.com/uc?export=download&id=1f8ItY1h0uVrjcaBBtbJ7Q69fzwNSrzd9" alt="LearnCoin logo"/>
                     <input id="amount" type="text" placeholder="Amount of LC to Send"></input>
                     <img className="graphic" src="https://drive.google.com/uc?export=download&id=1Km7Z7WEm5Ydd8i9BfNsMcMFWu4k3xRqH" alt="wallet icon"/>
-                    <input id="receiver" type="text" placeholder="Private Address of Recipient"></input>
+                    <input id="receiver" type="text" placeholder="Public Address of Recipient"></input>
                    <Send />
                 </div>
             </div>
