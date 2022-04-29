@@ -7,7 +7,6 @@ def bind(node):
     # Deferred import avoids circular dependencies
     from lc.node import Node
     from lc.cryptography.primitives import PrivateKey, deserialize_private_key, serialize_public_key, serialize_private_key
-    from lc.comms import discovery
 
     node = cast(Node, node)
 
@@ -16,11 +15,6 @@ def bind(node):
     @bp.get("/")
     async def hello(request):
         return text("hello")
-
-    @bp.get("/test")
-    async def test(request):
-        discovery.test_neighbors()
-        return text('aight')
 
     @bp.get("/genkeypair")
     async def generate_private_key(request):
@@ -39,7 +33,6 @@ def bind(node):
         except ValueError:
             valid = False
         return json({'valid': valid})
-
 
     @bp.route("/node")
     async def test2(request):
