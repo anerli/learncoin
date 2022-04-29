@@ -35,6 +35,9 @@ class Node:
         self.app.blueprint(discovery_endpoints.bind(self.dc))
         self.app.blueprint(chain_endpoints.bind(self))
         self.app.blueprint(transactions_endpoints.bind(self))
+
+        # For ensuring we don't infinitely bounce transactions
+        self.seen_transaction_hashes = set()
     
     def start_mining(self):
         # Make sure server is running before we start mining
@@ -88,12 +91,21 @@ class Node:
         self.app.run(*args, **kwargs)
     
     def make_transaction(self, transaction: Transaction):
+        transaction_bytes = transaction.to_puzzle_bytes()
+
+        if transaction_bytes in self.seen_transaction_hashes:
+            # We can assume we have already processed this request
+            return
+        else:
+            self.seen_transaction_hashes.add(transaction_bytes)
+
+        if not transaction.is_valid():
+            return
+        
         if self.miner.is_mining:
             # Add transaction to miner's current block
             self.miner.current_block.add_transaction(transaction)
             self.miner.current_block_changed = True
 
-
-        # TODO: Broadcast transaction
-        pass
+        self.dc.broadcast_transaction(transaction.to_json())
     

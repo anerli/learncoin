@@ -97,3 +97,19 @@ class DiscoveryComponent:
                         info('Chain not accepted by neighbor; reason:', resp.text)
                 except requests.exceptions.ConnectionError:
                     info('Could not broadcast chain to neighbor at:', url)
+    
+    def broadcast_transaction(self, transaction_data: dict):
+        # We can make transactions as if we were a user to the other nodes
+        with self.lock:
+            for neighbor in self.neighbors:
+                url = 'http://' + neighbor + '/transactions'
+                info('Forwarding transaction to:', url)
+                try:
+                    resp = requests.post(url, json=transaction_data)
+
+                    if resp.json()['valid']:
+                        info('Transaction was accepted by neighbor.')
+                    else:
+                        err('Transaction not accepted by neighbor.')
+                except requests.exceptions.ConnectionError:
+                    info('Could not forward transaction to neighbor at:', url)

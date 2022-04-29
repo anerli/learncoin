@@ -40,7 +40,8 @@ def bind(node):
         print(f'\tamount: {transaction.amount.hex()} -> {float_from_bytes(transaction.amount)}')
         print(f'\tsignature: {transaction.signature.hex()}')
 
-        info(f'Is valid? {transaction.is_valid()}')
+        valid = transaction.is_valid()
+        info(f'Is valid? {valid}')
 
         # ?
         #chain_manager.make_transaction(transaction)
@@ -48,6 +49,8 @@ def bind(node):
         # !FIXME
         #make_transaction(transaction)
 
-        return json({'valid': transaction.is_valid()})
+        #if valid:
+
+        return json({'valid': valid})
     
     return transactions_bp
