@@ -76,6 +76,7 @@ class Miner:
             #print('verify result:', self.public_key.verify(signature, combined_hash))
 
             block_reward = Transaction(
+                    Transaction.BLOCK_REWARD_ID,
                     sender,
                     receiver,
                     amt,

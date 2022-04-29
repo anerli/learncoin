@@ -5,11 +5,13 @@ from cryptography.exceptions import InvalidSignature
 
 class Transaction:
     # Special constants for block reward transactions
+    BLOCK_REWARD_ID = b'\0'*16
     BLOCK_REWARD_SENDER = b'\0'*32
     BLOCK_REWARD_SIGNATURE = b'\0'*64
     BLOCK_REWARD_AMOUNT = 1.0
 
-    def __init__(self, sender: bytes, receiver: bytes, amount: bytes, signature: bytes):
+    def __init__(self, _id: bytes, sender: bytes, receiver: bytes, amount: bytes, signature: bytes):
+        self.id = _id
         self.sender = sender
         self.receiver = receiver
         self.amount = amount
@@ -24,7 +26,7 @@ class Transaction:
     def __repr__(self):
         # print('amount: ', self.amount.hex())
         # print('amount float: ', float_from_bytes(self.amount))
-        return f'<Transaction sender={self.sender.hex()} receiver={self.receiver.hex()} amount={float_from_bytes(self.amount)} signature={self.signature.hex()}>'
+        return f'<Transaction id={self.id.hex()} sender={self.sender.hex()} receiver={self.receiver.hex()} amount={float_from_bytes(self.amount)} signature={self.signature.hex()}>'
 
     # def sender_hex(self):
     #     return self.sender.hex()
@@ -40,7 +42,7 @@ class Transaction:
 
         # For easier consistency across Python / JS, we defined the combined byte value
         # of the transaction components as the concatenation of their hex values
-        combined_hex = self.sender.hex() + self.receiver.hex() + self.amount.hex()
+        combined_hex = self.id.hex() + self.sender.hex() + self.receiver.hex() + self.amount.hex()
         #print('Combined bytes as hex:', combined_hex)
         combined_bytes = bytes.fromhex(combined_hex)
         transaction_hash = secure_hash(combined_bytes)
@@ -57,7 +59,7 @@ class Transaction:
         #print(self.sender)
         #print(self.sender == b'\0'*32)
         #print(self.signature == b'\0'*64)
-        return self.sender == Transaction.BLOCK_REWARD_SENDER and self.signature == Transaction.BLOCK_REWARD_SIGNATURE and float_from_bytes(self.amount) == Transaction.BLOCK_REWARD_AMOUNT
+        return self.id == Transaction.BLOCK_REWARD_ID and self.sender == Transaction.BLOCK_REWARD_SENDER and self.signature == Transaction.BLOCK_REWARD_SIGNATURE and float_from_bytes(self.amount) == Transaction.BLOCK_REWARD_AMOUNT
 
     def to_puzzle_bytes(self) -> bytes:
         '''
@@ -68,6 +70,7 @@ class Transaction:
     
     def to_json(self) -> dict:
         return dict(
+            id=self.id.hex(),
             sender=self.sender.hex(),
             receiver=self.receiver.hex(),
             amount=self.amount.hex(),
@@ -77,6 +80,7 @@ class Transaction:
     @classmethod
     def from_json(cls, data: dict) -> 'Transaction':
         return Transaction(
+            _id=bytes.fromhex(data['id']),
             sender=bytes.fromhex(data['sender']),
             receiver=bytes.fromhex(data['receiver']),
             amount=bytes.fromhex(data['amount']),

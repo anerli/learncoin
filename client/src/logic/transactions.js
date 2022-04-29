@@ -7,6 +7,11 @@ import * as ed from '@noble/ed25519';
 // ! temporary
 const SERV_URL = 'http://localhost:8000';
 
+function generateID() {
+  // Generate a random ID, as hex
+  return CryptoJS.enc.Hex.stringify(CryptoJS.lib.WordArray.random(16));
+}
+
 export async function makeTransaction(senderPrivateKey, receiverPublicKey, amount) {
     /*
     sender: sender's public key as hex
@@ -15,7 +20,10 @@ export async function makeTransaction(senderPrivateKey, receiverPublicKey, amoun
     */
     const senderPublicKey = ed.utils.bytesToHex(await ed.getPublicKey(senderPrivateKey));
 
+    const id = generateID();
+
     console.log('Making Transaction');
+    console.log('id: ', id);
     console.log('sender priv: ', senderPrivateKey);
     console.log('sender pub: ', senderPublicKey);
     console.log('receiver pub: ', receiverPublicKey);
@@ -27,7 +35,7 @@ export async function makeTransaction(senderPrivateKey, receiverPublicKey, amoun
     //const amountBytes = CryptoJS.enc.Hex.parse(floatToHex(amount));
 
     //const combined = senderBytes + receiverBytes;
-    const combinedHex = senderPublicKey + receiverPublicKey + floatToHex(amount);
+    const combinedHex = id + senderPublicKey + receiverPublicKey + floatToHex(amount);
 
     console.log('combined hex: ', combinedHex);
 
@@ -55,6 +63,7 @@ export async function makeTransaction(senderPrivateKey, receiverPublicKey, amoun
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          id: id,
           sender: senderPublicKey,
           receiver: receiverPublicKey,
           amount: floatToHex(amount),

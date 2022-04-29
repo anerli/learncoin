@@ -1,7 +1,7 @@
 import { useCookies } from 'react-cookie';
 import { makeTransaction } from "../logic/transactions";
 
-function Send() {
+function Send(props) {
     const [cookies] = useCookies(['privateKey']);
     // function logWalletData() {
     //     console.log("amt: " + document.getElementById('amount').value);
@@ -21,6 +21,8 @@ function Send() {
         console.log(msg);
         alert(msg);
       }
+
+      props.fetchBalanceCallback();
     }
 
     return (

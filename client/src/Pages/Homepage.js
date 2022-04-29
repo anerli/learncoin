@@ -14,6 +14,7 @@ const Homepage = () => {
     const [balance, setBalance] = useState(0.0);
 
     const fetchBalance = async () => {
+      console.log("fetching balance")
       // ! url TMP
       const SERV_URL = 'http://localhost:8000';
       const response = await fetch(
@@ -24,6 +25,8 @@ const Homepage = () => {
         }
       );
       let data = await response.json();
+      console.log(data);
+      // FIXME: Probably not good to reload whole page, should separate into balance component
       setBalance(data.balance);
     }
 
@@ -34,9 +37,9 @@ const Homepage = () => {
     useEffect(() => {
       const interval = setInterval(() => {
         fetchBalance();
-      }, 1000);
+      }, 5000);
       return () => clearInterval(interval);
-    }, []);
+    }, [publicKey]);
     
 
     useEffect(() => {
@@ -60,7 +63,7 @@ const Homepage = () => {
                 <h2 className='public_key'>
                 Your public key: {publicKey}
             </h2>}
-            <Module/>
+            <Module fetchBalanceCallback={fetchBalance}/>
             <Redirect1 />
             <Redirect2 />
         </div>

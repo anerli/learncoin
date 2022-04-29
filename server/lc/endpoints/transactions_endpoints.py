@@ -18,6 +18,8 @@ def bind(node):
 
     @transactions_bp.post('/')#, methods=['POST', 'OPTIONS'])
     def add_transaction(request: Request):
+        # Transaction id
+        _id = request.json['id']
         # Sender public key
         sender = request.json['sender']
         # Receiver public key
@@ -27,6 +29,7 @@ def bind(node):
         # Signature
         signature = request.json['signature']
 
+        id_bytes = bytes.fromhex(_id)
         sender_bytes = bytes.fromhex(sender)
         receiver_bytes = bytes.fromhex(receiver)
         amount_bytes = bytes.fromhex(amount)
@@ -35,8 +38,9 @@ def bind(node):
         # sender_key = deserialize_public_key(sender_bytes)
         # receiver_key = deserialize_public_key(receiver_key)
 
-        transaction = Transaction(sender_bytes, receiver_bytes, amount_bytes, signature_bytes)
-        info(f'Received transaction:')
+        transaction = Transaction(id_bytes, sender_bytes, receiver_bytes, amount_bytes, signature_bytes)
+        info(f'Received transaction with id {_id}')
+        #info(f'Received transaction:')
         print(f'\tsender: {transaction.sender.hex()}')
         print(f'\treceiver: {transaction.receiver.hex()}')
         print(f'\tamount: {transaction.amount.hex()} -> {float_from_bytes(transaction.amount)}')
