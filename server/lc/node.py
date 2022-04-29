@@ -56,10 +56,9 @@ class Node:
         #discovery.discover_more_neighbors()
         self.dc.discover_more_neighbors()
 
-        # !tmp, was having problems
-        # neighbor_thread = Thread(target=self.check_neighbors)
-        # neighbor_thread.daemon = True
-        # neighbor_thread.start()
+        neighbor_thread = Thread(target=self.check_neighbors)
+        neighbor_thread.daemon = True
+        neighbor_thread.start()
 
         # Redirect to Sanic app run() function
         self.app.run(*args, **kwargs)
