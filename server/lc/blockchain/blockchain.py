@@ -55,7 +55,7 @@ class BlockChain:
            raise Exception("Attempted to add invalid block to chain!")
         self.blocks.append(block)
     
-    def is_valid(self):
+    def is_valid(self) -> bool:
         # Verify all blocks as a proof chain
 
         last_hash = GENESIS_HASH
@@ -70,3 +70,27 @@ class BlockChain:
         
         # If all blocks and prev hashes are valid, the chain is valid
         return True
+    
+    def calculate_addr_totals(self) -> dict:
+        # Calculate the total balance of each public key address
+        # Not particularly efficient
+        # TODO: Should cache previous results and accumulate totals
+        totals = {}
+        for block in self.blocks:
+            #for transaction in block.transactions:
+            block_totals = block.calculate_addr_totals()
+            for k, v in block_totals.items():
+                if k not in totals:
+                    totals[k] = v
+                else:
+                    totals[k] += v
+        return totals
+    
+    def get_balance(self, pubkey: str) -> float:
+        # Get balance of hex addr
+        balances = self.calculate_addr_totals()
+        if pubkey not in balances:
+            balance = 0.0
+        else:
+            balance = balances[pubkey]
+        return balance#json({'balance': balance})
