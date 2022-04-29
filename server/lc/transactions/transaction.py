@@ -7,6 +7,7 @@ class Transaction:
     # Special constants for block reward transactions
     BLOCK_REWARD_SENDER = b'\0'*32
     BLOCK_REWARD_SIGNATURE = b'\0'*64
+    BLOCK_REWARD_AMOUNT = 1.0
 
     def __init__(self, sender: bytes, receiver: bytes, amount: bytes, signature: bytes):
         self.sender = sender
@@ -40,10 +41,10 @@ class Transaction:
         # For easier consistency across Python / JS, we defined the combined byte value
         # of the transaction components as the concatenation of their hex values
         combined_hex = self.sender.hex() + self.receiver.hex() + self.amount.hex()
-        print('Combined bytes as hex:', combined_hex)
+        #print('Combined bytes as hex:', combined_hex)
         combined_bytes = bytes.fromhex(combined_hex)
         transaction_hash = secure_hash(combined_bytes)
-        print('Hash as hex:', transaction_hash.hex())
+        #print('Hash as hex:', transaction_hash.hex())
 
         try:
             self.sender_key().verify(self.signature, transaction_hash)
@@ -51,12 +52,12 @@ class Transaction:
         except InvalidSignature:
             return False
     
-    def is_reward(self) -> bool:
+    def is_valid_reward(self) -> bool:
         # Is this a block reward transaction?
         #print(self.sender)
         #print(self.sender == b'\0'*32)
         #print(self.signature == b'\0'*64)
-        return self.sender == Transaction.BLOCK_REWARD_SENDER and self.signature == Transaction.BLOCK_REWARD_SIGNATURE
+        return self.sender == Transaction.BLOCK_REWARD_SENDER and self.signature == Transaction.BLOCK_REWARD_SIGNATURE and float_from_bytes(self.amount) == Transaction.BLOCK_REWARD_AMOUNT
 
     def to_puzzle_bytes(self) -> bytes:
         '''

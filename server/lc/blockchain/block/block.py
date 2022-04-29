@@ -74,8 +74,13 @@ class Block:
         
 
         # TODO: Account for block reward
+        seen_block_reward = False
         # === Verify transaction signatures ===
         for transaction in self.transactions:
+            # Can have at most one block reward
+            if not seen_block_reward and transaction.is_valid_reward():
+                seen_block_reward = True
+                continue
             if not transaction.is_valid():
                 print('Invalid block: Invalid transaction:', transaction)
                 return False

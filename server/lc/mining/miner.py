@@ -80,8 +80,8 @@ class Miner:
             !!! The sender has to sign it, not the receiver!!! silly!!!!
             for special block rewards though a sender signature is unnecessary, so we can blank out the signature field?
             '''
-            print('block reward valid (shouldnt be)?', block_reward.is_valid())
-            print('block reward a block reward?', block_reward.is_reward())
+            #print('block reward valid (shouldnt be)?', block_reward.is_valid())
+            #print('block reward a block reward?', block_reward.is_reward())
 
             self.current_block.add_transaction(
                 block_reward
