@@ -1,6 +1,7 @@
 from threading import Thread
 from typing import List
 from sanic import Sanic
+import inspect
 
 from lc.comms import communication, discovery
 from lc.blockchain import chain_manager
@@ -46,15 +47,23 @@ class Node:
         # Redirect to Sanic app run() function
         self.app.run(*args, **kwargs)
 
-    def route(self, f):
+    def route(self, *args, **kwargs):
         # f: like a normal route function but can also take a Node first param, which will be this node
         '''
         e.g.
-
         @node.route('/chain')
         async def get_chain(node: Node, request):
             return node.chain.to_json()
         '''
-        #def wrapper()
-        # TODO
-        pass
+        def wrapper_wrapper(f):
+            if inspect.iscoroutinefunction(f):
+                async def wrapper(*args, **kwargs):
+                    return await f(self, *args, **kwargs)
+            else:
+                def wrapper(*args, **kwargs):
+                    return f(self, *args, **kwargs)
+            
+            self.app.add_route(wrapper, *args, **kwargs)
+
+        return wrapper_wrapper
+

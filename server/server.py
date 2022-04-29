@@ -14,30 +14,6 @@ from lc.blockchain import chain_manager
 
 from lc.util.info import server_info as info
 
-#app = Sanic("learncoin_full_node")
-
-
-
-
-
-# def start_mining(chain):
-#     # Make sure server is running before we start mining
-#     while not app.is_running:
-#         time.sleep(1)
-#     #mine(chain)
-#     miner = Miner(
-#         lambda: chain_manager.chain.blocks[-1] if chain_manager.chain.blocks else None,
-#         lambda block: chain_manager.chain.blocks.append(block),
-#         lambda: communication.broadcast_chain(chain_manager.chain)
-#     )
-#     miner.mine()
-
-# def check_neighbors():
-#     while not app.is_running:
-#         time.sleep(1)
-#     discovery.test_neighbors()
-
-
 if __name__ == '__main__':
     argp = ArgumentParser()
     argp.add_argument('--mine', '-m', action='store_true', dest='mine')
@@ -97,13 +73,6 @@ if __name__ == '__main__':
         discovery.test_neighbors()
         return text('aight')
 
-
-    # @app.get("/genprivkey")
-    # async def generate_private_key(request):
-    #     # ! unsafe !
-    #     key = PrivateKey.generate()
-    #     return json({'key': serialize_private_key(key).hex()})
-
     @app.get("/genkeypair")
     async def generate_private_key(request):
         # ! unsafe !
@@ -123,7 +92,10 @@ if __name__ == '__main__':
         return json({'valid': valid})
 
 
-
+    @node.route("/node")
+    async def test2(node: Node, request):
+        print(node)
+        return text('ok')
 
 
 
