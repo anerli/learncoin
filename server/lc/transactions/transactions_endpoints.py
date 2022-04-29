@@ -6,7 +6,7 @@ from .transaction import Transaction
 from lc.util.conversions import float_from_bytes
 #from lc.blockchain import chain_manager
 #from lc.transactions.transaction_logic import make_transaction
-from lc.mining.miner import make_transaction
+#from lc.mining.miner import make_transaction
 
 from lc.util.info import transactions_info as info
 
@@ -42,6 +42,7 @@ def add_transaction(request: Request):
 
     # ?
     #chain_manager.make_transaction(transaction)
-    make_transaction(transaction)
+    # !FIXME
+    #make_transaction(transaction)
 
     return json({'valid': transaction.is_valid()})

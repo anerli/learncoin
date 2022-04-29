@@ -7,7 +7,7 @@ from threading import Thread
 from lc.comms import communication
 from lc.transactions import transactions_endpoints
 import time
-from lc.mining.miner import mine
+from lc.mining.miner import Miner
 #from chain_manager import chain
 from lc.cryptography.primitives import PrivateKey, deserialize_private_key, serialize_private_key, serialize_public_key
 from lc.blockchain import chain_manager
@@ -63,7 +63,13 @@ def start_mining(chain):
     # Make sure server is running before we start mining
     while not app.is_running:
         time.sleep(1)
-    mine(chain)
+    #mine(chain)
+    miner = Miner(
+        lambda: chain_manager.chain.blocks[-1] if chain_manager.chain.blocks else None,
+        lambda block: chain_manager.chain.blocks.append(block),
+        lambda: communication.broadcast_chain(chain_manager.chain)
+    )
+    miner.mine()
 
 def check_neighbors():
     while not app.is_running:
