@@ -12,7 +12,7 @@ from sanic import Blueprint
 from lc.discovery import DiscoveryComponent
 
 #from lc.endpoints.node_bp import NodeBlueprint
-from lc.endpoints import chain_endpoints, discovery_endpoints, test_endpoints
+from lc.endpoints import chain_endpoints, discovery_endpoints, test_endpoints, transactions_endpoints
 
 import time
 
@@ -38,6 +38,7 @@ class Node:
         self.app.blueprint(test_endpoints.bind(self))
         self.app.blueprint(discovery_endpoints.bind(self.dc))
         self.app.blueprint(chain_endpoints.bind(self))
+        self.app.blueprint(transactions_endpoints.bind(self))
 
         
     

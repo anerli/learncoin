@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 from lc.comms import discovery
 from threading import Thread
 from lc.comms import communication
-from lc.transactions import transactions_endpoints
+#from lc.endpoints import transactions_endpoints
 import time
 from lc.mining.miner import Miner
 #from chain_manager import chain
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     # ===== Attach blueprints =====
     #app.blueprint(discovery.discovery_bp)
-    app.blueprint(transactions_endpoints.transactions_bp)
+    #app.blueprint(transactions_endpoints.transactions_bp)
     #app.blueprint(chain_manager.chain_bp)
     # ^^^^^ Attach blueprints ^^^^^
 
