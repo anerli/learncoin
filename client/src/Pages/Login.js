@@ -1,24 +1,53 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
+import {useCookies} from "react-cookie";
+import * as ed from "@noble/ed25519";
 
-let valid = false;
 
-function checkLogin(formid) {
-    console.log("submitted: ", document.getElementById("key").value);
-
-    if(document.getElementById("key").value !== ""){
-        valid = true;
-    }
-
-    if(valid){
-        document.getElementById(formid).submit();
-    }
-    else{
-        alert("Invalid Private Key");
-    }
-};
+// Convert a hex string to a byte array
+function hexToBytes(hex) {
+  for (var bytes = [], c = 0; c < hex.length; c += 2)
+      bytes.push(parseInt(hex.substr(c, 2), 16));
+  return bytes;
+}
 
 const Login = () => {
+    const [cookies, setCookie] = useCookies(['privateKey']);
+    const [publicKey, setPublicKey] = useState('');
+    //const [valid, setValid] = useState(false);
+
+    const checkLogin = async (formid) =>  {
+        const hexPrivateKey = document.getElementById("key").value;
+        console.log("submitted: ", hexPrivateKey);
+        //const uint8PrivKey = new TextEncoder("utf-8").encode(privKey);
+        //const uint8PrivKey = hexToBytes(privKey);
+
+        //const hexPrivateKey = ed.utils.bytesToHex(uint8PrivKey);
+        let valid;
+        try {
+          let publicKey = await ed.getPublicKey(hexPrivateKey);
+          let hexPublicKey = ed.utils.bytesToHex(publicKey);
+          console.log(hexPublicKey)
+          setPublicKey(hexPublicKey);
+          setCookie('privateKey', hexPrivateKey, { path: '/' });
+          //setValid(true);
+          valid = true;
+        } catch (err){
+          console.log("Error", err.message);
+          //setValid(false);
+          valid = false;
+        }
+
+        //setValid(!valid);
+
+        if(valid){
+            document.getElementById(formid).submit();
+        }
+        else{
+            alert("Invalid Private Key");
+        }
+    };
+
     return (
         <div>
             <a href="#">
