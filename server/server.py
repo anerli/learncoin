@@ -64,38 +64,7 @@ if __name__ == '__main__':
     # ^^^^^ Attach blueprints ^^^^^
 
 
-    @app.get("/")
-    async def hello(request):
-        return text("hello")
-
-    @app.get("/test")
-    async def test(request):
-        discovery.test_neighbors()
-        return text('aight')
-
-    @app.get("/genkeypair")
-    async def generate_private_key(request):
-        # ! unsafe !
-        # ! for easy key generation for testing !
-        key = PrivateKey.generate()
-        return json({'priv': serialize_private_key(key).hex(), 'pub': serialize_public_key(key.public_key()).hex()})
-
-    @app.post("/keycheck")
-    async def check_valid_key(request):
-        key = request.json['key']
-        valid = True
-        print(key)
-        try:
-            deserialize_private_key(bytes.fromhex(key))
-        except ValueError:
-            valid = False
-        return json({'valid': valid})
-
-
-    @node.route("/node")
-    async def test2(node: Node, request):
-        print(node)
-        return text('ok')
+    
 
 
 

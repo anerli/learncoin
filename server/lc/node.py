@@ -6,13 +6,26 @@ import inspect
 from lc.comms import communication, discovery
 from lc.blockchain import chain_manager
 
+from sanic import Blueprint
+
+from lc.endpoints.node_bp import NodeBlueprint
+from lc.endpoints import test_endpoints
+
 import time
 
 from lc.mining.miner import Miner
 
+
+    
+    #def bind(self, Node: node):
+
+
+
 class Node:
     def __init__(self, pub_addr: str, initial_neighbors: List[str], mine: bool):
         self.app = Sanic("learncoin_full_node")
+
+        self.blueprint(test_endpoints.build())
 
         # !tmp
         for n in initial_neighbors:
@@ -46,24 +59,31 @@ class Node:
     def run(self, *args, **kwargs):
         # Redirect to Sanic app run() function
         self.app.run(*args, **kwargs)
-
-    def route(self, *args, **kwargs):
-        # f: like a normal route function but can also take a Node first param, which will be this node
-        '''
-        e.g.
-        @node.route('/chain')
-        async def get_chain(node: Node, request):
-            return node.chain.to_json()
-        '''
-        def wrapper_wrapper(f):
-            if inspect.iscoroutinefunction(f):
-                async def wrapper(*args, **kwargs):
-                    return await f(self, *args, **kwargs)
-            else:
-                def wrapper(*args, **kwargs):
-                    return f(self, *args, **kwargs)
-            
+    
+    def blueprint(self, bp: NodeBlueprint):
+        for route in bp.routes:
+            wrapper = route[0]
+            args = route[1]
+            kwargs = route[2]
             self.app.add_route(wrapper, *args, **kwargs)
 
-        return wrapper_wrapper
+    # def route(self, *args, **kwargs):
+    #     # f: like a normal route function but can also take a Node first param, which will be this node
+    #     '''
+    #     e.g.
+    #     @node.route('/chain')
+    #     async def get_chain(node: Node, request):
+    #         return node.chain.to_json()
+    #     '''
+    #     def wrapper_wrapper(f):
+    #         if inspect.iscoroutinefunction(f):
+    #             async def wrapper(*args, **kwargs):
+    #                 return await f(self, *args, **kwargs)
+    #         else:
+    #             def wrapper(*args, **kwargs):
+    #                 return f(self, *args, **kwargs)
+            
+    #         self.app.add_route(wrapper, *args, **kwargs)
+
+    #     return wrapper_wrapper
 
