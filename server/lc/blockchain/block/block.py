@@ -30,7 +30,7 @@ class Block:
     def from_json(cls, data: dict) -> 'Block':
         return Block(
             header=BlockHeader.from_json(data['header']),
-            transactions=data['transactions']
+            transactions=[Transaction.from_json(j) for j in data['transactions']]
         )
     
     def to_puzzle_bytes(self) -> bytes:
@@ -77,7 +77,7 @@ class Block:
         # === Verify transaction signatures ===
         for transaction in self.transactions:
             if not transaction.is_valid():
-                print('Invalid block: Invalid transaction: ' + transaction)
+                print('Invalid block: Invalid transaction:', transaction)
                 return False
 
         # === Verify address sums ===
