@@ -14,7 +14,9 @@ def bind(node):
     transactions_bp = Blueprint('transactions', url_prefix='/transactions')
     node = cast(Node, node)
 
-    @transactions_bp.post('/')
+
+
+    @transactions_bp.post('/')#, methods=['POST', 'OPTIONS'])
     def add_transaction(request: Request):
         # Sender public key
         sender = request.json['sender']
@@ -43,6 +45,8 @@ def bind(node):
         valid = transaction.is_valid()
         info(f'Is valid? {valid}')
 
+        #headers={"Access-Control-Allow-Origin": "*"}
+
         if not valid:
             return text('invalid transaction', status=400)
 
@@ -53,7 +57,7 @@ def bind(node):
 
         if balance < float_from_bytes(transaction.amount):
             info('User does not have enough to perform provided transaction')
-            return text('not enough LC to perform transaction', status=400)
+            return text('not enough LC to perform transaction', status=400) 
 
         node.make_transaction(transaction)
 

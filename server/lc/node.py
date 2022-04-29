@@ -1,6 +1,7 @@
 from threading import Thread
 from typing import List
 from sanic import Sanic
+from sanic_cors import CORS, cross_origin
 from lc.blockchain.blockchain import BlockChain
 
 from lc.discovery import DiscoveryComponent
@@ -16,6 +17,9 @@ from lc.transactions.transaction import Transaction
 class Node:
     def __init__(self, pub_addr: str, initial_neighbors: List[str], mine: bool):
         self.app = Sanic("learncoin_full_node")
+
+        #!fixme: potential security issues for sure
+        CORS(self.app, resources={r"/*": {"origins": "*"}})
         #self.pub_addr = pub_addr
         #self.neighbors = initial_neighbors
         self.mine = mine
@@ -36,6 +40,15 @@ class Node:
         self.app.blueprint(chain_endpoints.bind(self))
         self.app.blueprint(transactions_endpoints.bind(self))
 
+        # CORS crap
+        # def add_cors_headers(response, methods):
+        #     response.headers.extend({
+        #         "Access-Control-Allow-Origin": "*",
+        #     })
+        
+        # self.app.register_middleware(add_cors_headers, "response")
+        
+
         # For ensuring we don't infinitely bounce transactions
         self.seen_transaction_hashes = set()
     
@@ -52,17 +65,6 @@ class Node:
         self.dc.monitor_neighbors()
 
     def run(self, *args, **kwargs):
-        # if self.mine:
-        #     mining_thread = Thread(target=self.start_mining)
-        #     mining_thread.daemon = True
-        #     mining_thread.start()
-        # #discovery.discover_more_neighbors()
-        
-
-        # neighbor_thread = Thread(target=self.check_neighbors)
-        # neighbor_thread.daemon = True
-        # neighbor_thread.start()
-
         @self.app.after_server_start
         async def l1(app, loop):
             #print('L1')

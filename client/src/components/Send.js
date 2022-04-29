@@ -13,7 +13,14 @@ function Send() {
       
       // TODO: handle guest mode
       const privateKey = cookies.privateKey;
-      await makeTransaction(privateKey, receiverPublicKey, amount);
+      let resp = await makeTransaction(privateKey, receiverPublicKey, amount);
+      console.log('resp:');
+      console.log(resp);
+      if (resp.status != 200) {
+        let msg = await resp.text();
+        console.log(msg);
+        alert(msg);
+      }
     }
 
     return (

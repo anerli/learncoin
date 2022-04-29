@@ -50,7 +50,7 @@ export async function makeTransaction(senderPrivateKey, receiverPublicKey, amoun
       SERV_URL + '/transactions',
       {
         method: 'POST',
-        mode: 'no-cors',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -60,8 +60,18 @@ export async function makeTransaction(senderPrivateKey, receiverPublicKey, amoun
           amount: floatToHex(amount),
           signature: signature
         })
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   'Access-Control-Allow-Origin': '*'
+        // },
+        // body: JSON.stringify({
+        //   sender: senderPublicKey,
+        //   receiver: receiverPublicKey,
+        //   amount: floatToHex(amount),
+        //   signature: signature
+        // })
       }
     );
 
-    return await response.json();
+    return response;//await response.json();
 }
