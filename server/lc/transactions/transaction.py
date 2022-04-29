@@ -3,11 +3,6 @@ from lc.util.conversions import float_from_bytes
 
 from cryptography.exceptions import InvalidSignature
 
-
-# def make_transaction(transaction: Transaction):
-
-
-
 class Transaction:
     def __init__(self, sender: bytes, receiver: bytes, amount: bytes, signature: bytes):
         self.sender = sender
