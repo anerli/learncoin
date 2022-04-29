@@ -2,7 +2,7 @@ from typing import Callable
 import random
 
 from lc.blockchain.block.block import Block
-from lc.cryptography.primitives import PrivateKey, secure_hash, serialize_private_key, serialize_public_key
+from lc.cryptography.primitives import PrivateKey, deserialize_private_key, secure_hash, serialize_private_key, serialize_public_key
 from lc.transactions.transaction import Transaction
 from lc.util.info import mining_info as info
 from lc.util import colors
@@ -20,7 +20,9 @@ class Miner:
         # Should add provided block to chain
         add_block_to_chain: Callable[[Block], None],
         # Should trigger a broadcast of the chain to the network
-        trigger_broadcast: Callable[[], None]
+        trigger_broadcast: Callable[[], None],
+        # Private key to pay rewards to
+        key=None
         ):
         self.get_latest_block = get_latest_block
         self.add_block_to_chain = add_block_to_chain
@@ -33,7 +35,11 @@ class Miner:
 
         # For now, just generate
         # TODO: allow user to enter this instead
-        self.private_key = PrivateKey.generate()
+
+        if key:
+            self.private_key = deserialize_private_key(bytes.fromhex(key))
+        else:
+            self.private_key = PrivateKey.generate()
         self.public_key = self.private_key.public_key()
 
         info('Private Key:', serialize_private_key(self.private_key).hex())

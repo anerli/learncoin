@@ -14,9 +14,7 @@ const Homepage = () => {
     const [balance, setBalance] = useState(0.0);
 
     const fetchBalance = async () => {
-      setBalance(123.456);
-
-      // ! TMP
+      // ! url TMP
       const SERV_URL = 'http://localhost:8000';
       const response = await fetch(
         SERV_URL + '/transactions/balance/' + publicKey,
@@ -44,7 +42,9 @@ const Homepage = () => {
         }
         console.log('pub key: ', publicKey);
 
-        
+        setInterval(() => {
+          fetchBalance();
+        }, 1000);
     });
 
     return (

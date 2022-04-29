@@ -15,7 +15,7 @@ from lc.transactions.transaction import Transaction
 
 
 class Node:
-    def __init__(self, pub_addr: str, initial_neighbors: List[str], mine: bool):
+    def __init__(self, pub_addr: str, initial_neighbors: List[str], mine: bool, mining_key: str):
         # FIXME: Happens twice for some reason?
         print('Initializing node...')
         self.app = Sanic("learncoin_full_node")
@@ -34,7 +34,8 @@ class Node:
         self.miner = Miner(
             lambda: self.chain.blocks[-1] if self.chain.blocks else None,
             lambda block: self.chain.blocks.append(block),
-            lambda: self.dc.broadcast_chain(self.chain.to_json())
+            lambda: self.dc.broadcast_chain(self.chain.to_json()),
+            mining_key
         )
 
         self.app.blueprint(test_endpoints.bind(self))
