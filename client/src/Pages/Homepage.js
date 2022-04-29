@@ -27,9 +27,17 @@ const Homepage = () => {
       setBalance(data.balance);
     }
 
+    // useEffect(() => {
+    //   fetchBalance();
+    // }, [publicKey]);
+
     useEffect(() => {
-      fetchBalance();
-    }, [publicKey]);
+      const interval = setInterval(() => {
+        fetchBalance();
+      }, 1000);
+      return () => clearInterval(interval);
+    }, []);
+    
 
     useEffect(() => {
         if ('privateKey' in cookies) {
@@ -41,10 +49,6 @@ const Homepage = () => {
             );
         }
         console.log('pub key: ', publicKey);
-
-        setInterval(() => {
-          fetchBalance();
-        }, 1000);
     });
 
     return (
