@@ -87,7 +87,11 @@ class Block:
                 return False
 
         # === Verify address sums ===
-        # TODO
+        balances = self.calculate_addr_totals()
+        for k, v in balances:
+            if v < 0.0:
+                print(f'Invalid block: Negative balance {v} for addr {k}.')
+                return False
 
         # Everything is valid if we get here
         return True
