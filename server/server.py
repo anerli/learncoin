@@ -23,37 +23,12 @@ if __name__ == '__main__':
         help='Initial neighbor nodes to use. An example of the format would be `127.0.0.1:8000`.')
     args = argp.parse_args()
 
-    # if args.neighbors is not None:
-    #     for n in args.neighbors:
-    #         discovery.add_neighbor(n)
-    
-    # # ! tmp
-    # discovery.me = f'{args.addr}:{args.port}'
-
-    # print('Neighbors:', discovery.neighbors)
-
-    # if args.mine:
-    #     mining_thread = Thread(target=start_mining, args=[chain_manager.chain])
-    #     mining_thread.daemon = True
-    #     mining_thread.start()
-
-    # discovery.discover_more_neighbors()
-    # neighbor_thread = Thread(target=check_neighbors)
-    # neighbor_thread.daemon = True
-    # neighbor_thread.start()
-
-    # app.run(host='0.0.0.0', debug=True, port=int(args.port))
-
     from lc.node import Node
     node = Node(
         pub_addr=f'{args.addr}:{args.port}',
         initial_neighbors=args.neighbors if args.neighbors else [],
         mine=args.mine
     )
-
-
-
-
 
     app = node.app
 
@@ -63,13 +38,5 @@ if __name__ == '__main__':
     app.blueprint(chain_manager.chain_bp)
     # ^^^^^ Attach blueprints ^^^^^
 
-
-    
-
-
-
     node.run(host='0.0.0.0', debug=True, port=int(args.port))
     
-
-
-
