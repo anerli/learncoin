@@ -27,22 +27,26 @@ class DiscoveryComponent:
         if len(self.neighbors) == 0:
             return
         
-        print(self.neighbors)
+        #print(self.neighbors)
 
         changes_made = True
 
         while changes_made:
+            #print(self.neighbors)
             changes_made = False
             to_add = set()
 
             with self.lock:
-                print(self.neighbors)
+                #print(self.neighbors)
                 for n in self.neighbors:
+                    #print('n:', n)
                     try:
                         resp = requests.get(f'http://{n}/discovery')
+                        #print('received json:', resp.json())
                         addrs = resp.json()['neighbors']
                         info(f"Got neighbors {addrs} from {n}")
                         for addr in addrs:
+                            #print('addr:', addr)
                             if addr not in self.neighbors and addr != self.pub_addr:
                                 changes_made = True
                                 to_add.add(addr)
@@ -56,10 +60,10 @@ class DiscoveryComponent:
                 print(self.neighbors)
 
     def json_neighbors(self):
-        print('json:', {'neighbors': list(self.neighbors) + [self.pub_addr]})
+        #print('json:', {'neighbors': list(self.neighbors) + [self.pub_addr]})
         return {'neighbors': list(self.neighbors) + [self.pub_addr]}
 
-    def update_neighbors(self):
+    def monitor_neighbors(self):
         while True:
             #print(neighbors)
             time.sleep(60)
@@ -75,7 +79,8 @@ class DiscoveryComponent:
                         else:
                             self.neighbors.remove(neighbor)
                             #print('Invalid response: ' + resp.text)
-                    except ConnectionError:
+                    except requests.exceptions.ConnectionError:
+                        err(f'Failed to connect to neighbor {neighbor}, removing')
                         self.neighbors.remove(neighbor)
     
     def broadcast_chain(self, chain_data: dict):

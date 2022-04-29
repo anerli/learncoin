@@ -46,19 +46,43 @@ class Node:
     def check_neighbors(self):
         while not self.app.is_running:
             time.sleep(1)
-        self.dc.update_neighbors()
+        self.dc.monitor_neighbors()
 
     def run(self, *args, **kwargs):
-        if self.mine:
-            mining_thread = Thread(target=self.start_mining)
-            mining_thread.daemon = True
-            mining_thread.start()
-        #discovery.discover_more_neighbors()
-        self.dc.discover_more_neighbors()
+        # if self.mine:
+        #     mining_thread = Thread(target=self.start_mining)
+        #     mining_thread.daemon = True
+        #     mining_thread.start()
+        # #discovery.discover_more_neighbors()
+        
 
-        neighbor_thread = Thread(target=self.check_neighbors)
-        neighbor_thread.daemon = True
-        neighbor_thread.start()
+        # neighbor_thread = Thread(target=self.check_neighbors)
+        # neighbor_thread.daemon = True
+        # neighbor_thread.start()
+
+        @self.app.after_server_start
+        async def l1(app, loop):
+            #print('L1')
+            discover_thread = Thread(target=self.dc.discover_more_neighbors)
+            discover_thread.daemon = True
+            discover_thread.start()
+            #self.dc.discover_more_neighbors()
+        
+        @self.app.after_server_start
+        async def l2(app, loop):
+            #print('L2')
+            if self.mine:
+                mining_thread = Thread(target=self.miner.mine)
+                mining_thread.daemon = True
+                mining_thread.start()
+            
+        @self.app.after_server_start
+        async def l3(app, loop):
+            #print('L3')
+            neighbor_monitor_thread = Thread(target=self.dc.monitor_neighbors)
+            neighbor_monitor_thread.daemon = True
+            neighbor_monitor_thread.start()
+            #self.dc.monitor_neighbors()
 
         # Redirect to Sanic app run() function
         self.app.run(*args, **kwargs)
