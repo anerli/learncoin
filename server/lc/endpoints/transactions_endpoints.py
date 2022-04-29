@@ -43,6 +43,9 @@ def bind(node):
         valid = transaction.is_valid()
         info(f'Is valid? {valid}')
 
+        if not valid:
+            return text('invalid transaction', status=400)
+
         # Check that user has enough to spend
         balance = node.chain.get_balance(transaction.sender.hex())
 
@@ -54,11 +57,7 @@ def bind(node):
 
         node.make_transaction(transaction)
 
-        if valid:
-            return text('OK', status=200)
-        else:
-            return text('invalid transaction', status=400)
-
+        return text('OK', status=200)
         #return json({'valid': valid})
     
     @transactions_bp.get('/balance/<pubkey>')
