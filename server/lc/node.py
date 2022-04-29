@@ -16,6 +16,8 @@ from lc.transactions.transaction import Transaction
 
 class Node:
     def __init__(self, pub_addr: str, initial_neighbors: List[str], mine: bool):
+        # FIXME: Happens twice for some reason?
+        print('Initializing node...')
         self.app = Sanic("learncoin_full_node")
 
         #!fixme: potential security issues for sure

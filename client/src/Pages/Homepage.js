@@ -11,6 +11,27 @@ import InfoModal from "../components/InfoModal";
 const Homepage = () => {
     const [cookies] = useCookies(['privateKey']);
     const [publicKey, setPublicKey] = useState('');
+    const [balance, setBalance] = useState(0.0);
+
+    const fetchBalance = async () => {
+      setBalance(123.456);
+
+      // ! TMP
+      const SERV_URL = 'http://localhost:8000';
+      const response = await fetch(
+        SERV_URL + '/transactions/balance/' + publicKey,
+        {
+          method: 'GET',
+          mode: 'cors',
+        }
+      );
+      let data = await response.json();
+      setBalance(data.balance);
+    }
+
+    useEffect(() => {
+      fetchBalance();
+    }, [publicKey]);
 
     useEffect(() => {
         if ('privateKey' in cookies) {
@@ -22,12 +43,14 @@ const Homepage = () => {
             );
         }
         console.log('pub key: ', publicKey);
+
+        
     });
 
     return (
         <div>
             <h1> LearnCoin </h1>
-            <Balance text="1,000 LC"/>
+            <Balance text={balance + " LC"}/>
             <InfoModal className='pub_key_text' text="Your public key is how other users can identify you in transactions."/>
             {publicKey !== '' &&
                 <h2 className='public_key'>

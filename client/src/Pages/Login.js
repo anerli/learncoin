@@ -4,8 +4,9 @@ import {useCookies} from "react-cookie";
 import * as ed from "@noble/ed25519";
 
 const Login = () => {
-    const [setCookie] = useCookies(['privateKey']);
-    const [setPublicKey] = useState('');
+    const [cookies, setCookie] = useCookies(['privateKey']);
+    // Do NOT remove items from useState tuples
+    const [publicKey, setPublicKey] = useState('');
 
     const checkLogin = async (formid) =>  {
         const hexPrivateKey = document.getElementById("key").value;
