@@ -6,6 +6,7 @@ import Redirect2 from "../components/Redirect2";
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import * as ed from '@noble/ed25519';
+import InfoModal from "../components/InfoModal";
 
 const Homepage = () => {
     const [cookies] = useCookies(['privateKey']);
@@ -27,7 +28,11 @@ const Homepage = () => {
         <div>
             <h1> LearnCoin </h1>
             <Balance text="1,000 LC"/>
-            {publicKey !== '' && <h2 className='public_key'> Your public key: {publicKey}</h2>}
+            <InfoModal className='pub_key_text' text="Your public key is how other users can identify you in transactions."/>
+            {publicKey !== '' &&
+                <h2 className='public_key'>
+                Your public key: {publicKey}
+            </h2>}
             <Module/>
             <Redirect1 />
             <Redirect2 />

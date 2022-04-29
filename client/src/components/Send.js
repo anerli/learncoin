@@ -2,7 +2,7 @@ import { useCookies } from 'react-cookie';
 import { makeTransaction } from "../logic/transactions";
 
 function Send() {
-    const [cookies, setCookie] = useCookies(['privateKey']);
+    const [cookies] = useCookies(['privateKey']);
     // function logWalletData() {
     //     console.log("amt: " + document.getElementById('amount').value);
     //     console.log("receiver: " + document.getElementById('receiver').value); 

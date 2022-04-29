@@ -4,16 +4,33 @@ const Mining = () => {
     return (
         <div>
             <Link to='/homepage'>BACK</Link>
-            <h1>Learn how to mine here!</h1>
+            <h1 align='center'>Mining 101!</h1>
+            <br/>
+            <h2>What is mining a cryptocurrency?</h2>
+            <p className='mining'>
+                &emsp; When mining a cryptocurrency, you are exchanging some of your computer's power in order to secure transactions with the cryptocurrency.
+                In return for your computers computational power, you are rewarded with some of the crypto being mined!
+                Many cryptos will then let you make transactions with other users.
+                All transactions get encrypted for security and passed to all other miners on the cryptocurrency's network.
+            </p>
             <h2>So you'd like to mine LearnCoin… Here's how you get started.</h2>
-            <br></br>
-After you have the learn coin codebase set up, you're going to want to navigate to the learncoin/server directory in your terminal. From here, you should be able to see a file called server.py. You're going to want to run this with the --mine tag, allowing you to mine learncoin. You'll also want to make sure to connect with another learncoin node. You can do this with the --neighbors tag. A couple of our university servers will be running and ready to connect with. The names of these servers are: coms-402-sd-23.class.las.iastate.edu. If this one doesn't work for some reason, you can change out the number 23 for any number in the range 23-27. 
-So, an example of the command to run to start mining will be:
-Python3 server.py --neighbors coms-402-sd-23.class.las.iastate.edu --mine
-
- <h2>How mining works:</h2>
- <br></br>
-By mining learnCoin, what you're essentially doing is exchanging some of your own computer's power in order to secure transactions made with learnCoin. In return for your computing power, you'll be rewarded with some learnCoin! You can then use this learnCoin to make transactions with other learnCoin users, and those transactions will be encrypted and secured by all of the other miners on the learnCoin network! 
+            <p className='mining'>
+                First, you will need to set up the LearnCoin codebase which can be found <a href='https://git.ece.iastate.edu/lie/learncoin'>here</a>.
+                <br/><br/>
+                After the learn coin codebase is set up, you will need to navigate to the learncoin/server directory in your terminal: <br/>
+                &emsp; 1) Find where you saved the codebase in your file explorer. <br/>
+                &emsp; 2) Right click on the folder and choose 'Open in terminal'. <br/>
+                &emsp; 3) Type 'cd server' to enter the server folder.
+                <br/>
+                From here, you should be able to see a file called server.py (type 'ls' to see everything inside the current folder).
+                <br/><br/>
+                Type 'Python3 server.py --neighbors coms-402-sd-23.class.las.iastate.edu --mine' to start mining!
+                <br/><br/>
+                'Python3 server.py' starts the LearnCoin server. <br/>
+                '--neighors coms-402-sd-23.class.las.iastate.edu' is a tag that connects your computer to the LearnCoin network through one of the University servers that is constantly running LearnCoin.
+                If this does not work, try one of the other servers by changing 23 to any other number from 23-27. <br/>
+                '--mine' is a tag that tells your LearnCoin server to start mining.
+            </p>
         </div>
     )
 };
