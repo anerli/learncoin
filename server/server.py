@@ -14,67 +14,28 @@ from lc.blockchain import chain_manager
 
 from lc.util.info import server_info as info
 
-app = Sanic("learncoin_full_node")
+#app = Sanic("learncoin_full_node")
 
 
-# ===== Attach blueprints =====
-app.blueprint(discovery.discovery_bp)
-app.blueprint(transactions_endpoints.transactions_bp)
-app.blueprint(chain_manager.chain_bp)
-# ^^^^^ Attach blueprints ^^^^^
 
 
-@app.get("/")
-async def hello(request):
-    return text("hello")
 
-@app.get("/test")
-async def test(request):
-    discovery.test_neighbors()
-    return text('aight')
+# def start_mining(chain):
+#     # Make sure server is running before we start mining
+#     while not app.is_running:
+#         time.sleep(1)
+#     #mine(chain)
+#     miner = Miner(
+#         lambda: chain_manager.chain.blocks[-1] if chain_manager.chain.blocks else None,
+#         lambda block: chain_manager.chain.blocks.append(block),
+#         lambda: communication.broadcast_chain(chain_manager.chain)
+#     )
+#     miner.mine()
 
-
-# @app.get("/genprivkey")
-# async def generate_private_key(request):
-#     # ! unsafe !
-#     key = PrivateKey.generate()
-#     return json({'key': serialize_private_key(key).hex()})
-
-@app.get("/genkeypair")
-async def generate_private_key(request):
-    # ! unsafe !
-    # ! for easy key generation for testing !
-    key = PrivateKey.generate()
-    return json({'priv': serialize_private_key(key).hex(), 'pub': serialize_public_key(key.public_key()).hex()})
-
-@app.post("/keycheck")
-async def check_valid_key(request):
-    key = request.json['key']
-    valid = True
-    print(key)
-    try:
-        deserialize_private_key(bytes.fromhex(key))
-    except ValueError:
-        valid = False
-    return json({'valid': valid})
-
-
-def start_mining(chain):
-    # Make sure server is running before we start mining
-    while not app.is_running:
-        time.sleep(1)
-    #mine(chain)
-    miner = Miner(
-        lambda: chain_manager.chain.blocks[-1] if chain_manager.chain.blocks else None,
-        lambda block: chain_manager.chain.blocks.append(block),
-        lambda: communication.broadcast_chain(chain_manager.chain)
-    )
-    miner.mine()
-
-def check_neighbors():
-    while not app.is_running:
-        time.sleep(1)
-    discovery.test_neighbors()
+# def check_neighbors():
+#     while not app.is_running:
+#         time.sleep(1)
+#     discovery.test_neighbors()
 
 
 if __name__ == '__main__':
@@ -86,26 +47,88 @@ if __name__ == '__main__':
         help='Initial neighbor nodes to use. An example of the format would be `127.0.0.1:8000`.')
     args = argp.parse_args()
 
-    if args.neighbors is not None:
-        for n in args.neighbors:
-            discovery.add_neighbor(n)
+    # if args.neighbors is not None:
+    #     for n in args.neighbors:
+    #         discovery.add_neighbor(n)
     
-    # ! tmp
-    discovery.me = f'{args.addr}:{args.port}'
+    # # ! tmp
+    # discovery.me = f'{args.addr}:{args.port}'
 
-    print('Neighbors:', discovery.neighbors)
+    # print('Neighbors:', discovery.neighbors)
 
-    if args.mine:
-        mining_thread = Thread(target=start_mining, args=[chain_manager.chain])
-        mining_thread.daemon = True
-        mining_thread.start()
+    # if args.mine:
+    #     mining_thread = Thread(target=start_mining, args=[chain_manager.chain])
+    #     mining_thread.daemon = True
+    #     mining_thread.start()
 
-    discovery.discover_more_neighbors()
-    neighbor_thread = Thread(target=check_neighbors)
-    neighbor_thread.daemon = True
-    neighbor_thread.start()
+    # discovery.discover_more_neighbors()
+    # neighbor_thread = Thread(target=check_neighbors)
+    # neighbor_thread.daemon = True
+    # neighbor_thread.start()
 
-    app.run(host='0.0.0.0', debug=True, port=int(args.port))
+    # app.run(host='0.0.0.0', debug=True, port=int(args.port))
+
+    from lc.node import Node
+    node = Node(
+        pub_addr=f'{args.addr}:{args.port}',
+        initial_neighbors=args.neighbors if args.neighbors else [],
+        mine=args.mine
+    )
+
+
+
+
+
+    app = node.app
+
+    # ===== Attach blueprints =====
+    app.blueprint(discovery.discovery_bp)
+    app.blueprint(transactions_endpoints.transactions_bp)
+    app.blueprint(chain_manager.chain_bp)
+    # ^^^^^ Attach blueprints ^^^^^
+
+
+    @app.get("/")
+    async def hello(request):
+        return text("hello")
+
+    @app.get("/test")
+    async def test(request):
+        discovery.test_neighbors()
+        return text('aight')
+
+
+    # @app.get("/genprivkey")
+    # async def generate_private_key(request):
+    #     # ! unsafe !
+    #     key = PrivateKey.generate()
+    #     return json({'key': serialize_private_key(key).hex()})
+
+    @app.get("/genkeypair")
+    async def generate_private_key(request):
+        # ! unsafe !
+        # ! for easy key generation for testing !
+        key = PrivateKey.generate()
+        return json({'priv': serialize_private_key(key).hex(), 'pub': serialize_public_key(key.public_key()).hex()})
+
+    @app.post("/keycheck")
+    async def check_valid_key(request):
+        key = request.json['key']
+        valid = True
+        print(key)
+        try:
+            deserialize_private_key(bytes.fromhex(key))
+        except ValueError:
+            valid = False
+        return json({'valid': valid})
+
+
+
+
+
+
+    node.run(host='0.0.0.0', debug=True, port=int(args.port))
+    
 
 
 
