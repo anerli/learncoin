@@ -3,14 +3,16 @@ from threading import Thread
 from typing import List
 from sanic import Sanic
 import inspect
+from lc.blockchain.blockchain import BlockChain
 
 from lc.comms import communication, discovery
-from lc.blockchain import chain_manager
+#from lc.blockchain import chain_manager
 
 from sanic import Blueprint
+from lc.discovery import DiscoveryComponent
 
 #from lc.endpoints.node_bp import NodeBlueprint
-from lc.endpoints import test_endpoints
+from lc.endpoints import chain_endpoints, discovery_endpoints, test_endpoints
 
 import time
 
@@ -25,11 +27,17 @@ from lc.mining.miner import Miner
 class Node:
     def __init__(self, pub_addr: str, initial_neighbors: List[str], mine: bool):
         self.app = Sanic("learncoin_full_node")
-        self.pub_addr = pub_addr
-        self.neighbors = initial_neighbors
+        #self.pub_addr = pub_addr
+        #self.neighbors = initial_neighbors
         self.mine = mine
 
+        self.dc = DiscoveryComponent(pub_addr, initial_neighbors)
+
+        self.chain = BlockChain()
+
         self.app.blueprint(test_endpoints.bind(self))
+        self.app.blueprint(discovery_endpoints.bind(self.dc))
+        self.app.blueprint(chain_endpoints.bind(self))
 
         
     
@@ -38,30 +46,28 @@ class Node:
         while not self.app.is_running:
             time.sleep(1)
         miner = Miner(
-            lambda: chain_manager.chain.blocks[-1] if chain_manager.chain.blocks else None,
-            lambda block: chain_manager.chain.blocks.append(block),
-            lambda: communication.broadcast_chain(chain_manager.chain)
+            lambda: self.chain.blocks[-1] if self.chain.blocks else None,
+            lambda block: self.chain.blocks.append(block),
+            lambda: self.dc.broadcast_chain(self.chain.to_json())
         )
         miner.mine()
     
     def check_neighbors(self):
         while not self.app.is_running:
             time.sleep(1)
-        discovery.test_neighbors()
+        self.dc.update_neighbors()
 
     def run(self, *args, **kwargs):
-        # !tmp
-        for n in self.neighbors:
-            discovery.add_neighbor(n)
-        discovery.me = self.pub_addr
         if self.mine:
             mining_thread = Thread(target=self.start_mining)
             mining_thread.daemon = True
             mining_thread.start()
-        discovery.discover_more_neighbors()
-        neighbor_thread = Thread(target=self.check_neighbors)
-        neighbor_thread.daemon = True
-        neighbor_thread.start()
+        #discovery.discover_more_neighbors()
+        self.dc.discover_more_neighbors()
+
+        # neighbor_thread = Thread(target=self.check_neighbors)
+        # neighbor_thread.daemon = True
+        # neighbor_thread.start()
 
         # Redirect to Sanic app run() function
         self.app.run(*args, **kwargs)

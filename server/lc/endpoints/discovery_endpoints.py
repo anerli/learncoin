@@ -1,6 +1,7 @@
 from sanic import Blueprint
 #from .node_bp import NodeBlueprint
 from sanic.response import json, text
+from lc.discovery import DiscoveryComponent
 from lc.util import colors
 from typing import cast
 
@@ -13,9 +14,9 @@ def info(*args, error=False, **kwargs):
 def err(*args, **kwargs):
     info(*args, **kwargs, error=True)
 
-def bind(node):
+def bind(dc):
     from lc.node import Node
-    node = cast(Node, node)
+    dc = cast(DiscoveryComponent, dc)
 
     discovery_bp = Blueprint('discovery', url_prefix='/discovery')
 
@@ -24,7 +25,7 @@ def bind(node):
         #global neighbors
         #return json({'neighbors': neighbors + [me]})
         return json({
-            'neighbors': node.neighbors + [node.pub_addr]
+            'neighbors': dc.json_neighbors()
         })
 
     @discovery_bp.post("/")
@@ -34,8 +35,8 @@ def bind(node):
             info("List was empty")
             return text("list was empty", status=400)
         for n in addrs:
-            if n not in node.neighbors and n != node.pub_addr:
-                node.neighbors.append(n)
+            if n not in dc.neighbors and n != dc.pub_addr:
+                dc.neighbors.add(n)
         msg = f"Received neighbors: {addrs}"
         info(msg)
         return text(msg, status=200)

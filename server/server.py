@@ -33,9 +33,9 @@ if __name__ == '__main__':
     app = node.app
 
     # ===== Attach blueprints =====
-    app.blueprint(discovery.discovery_bp)
+    #app.blueprint(discovery.discovery_bp)
     app.blueprint(transactions_endpoints.transactions_bp)
-    app.blueprint(chain_manager.chain_bp)
+    #app.blueprint(chain_manager.chain_bp)
     # ^^^^^ Attach blueprints ^^^^^
 
     node.run(host='0.0.0.0', debug=True, port=int(args.port))
