@@ -16,7 +16,7 @@ function Send(props) {
       let resp = await makeTransaction(privateKey, receiverPublicKey, amount);
       console.log('resp:');
       console.log(resp);
-      if (resp.status != 200) {
+      if (resp.status !== 200) {
         let msg = await resp.text();
         console.log(msg);
         alert(msg);

@@ -1,12 +1,11 @@
 import Module from "../components/Module";
 import Balance from "../components/Balance";
-import Redirect1 from "../components/Redirect1";
-import Redirect2 from "../components/Redirect2";
 
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import * as ed from '@noble/ed25519';
 import InfoModal from "../components/InfoModal";
+import {Link} from "react-router-dom";
 
 const Homepage = () => {
     const [cookies] = useCookies(['privateKey']);
@@ -56,6 +55,7 @@ const Homepage = () => {
 
     return (
         <div>
+            <Link to='/'>LOG OUT</Link>
             <h1> LearnCoin </h1>
             <Balance text={balance.toFixed(4) + " LC"}/>
             <InfoModal className='pub_key_text' text="Your public key is how other users can identify you in transactions."/>
@@ -64,8 +64,6 @@ const Homepage = () => {
                 Your public key: {publicKey}
             </h2>}
             <Module fetchBalanceCallback={fetchBalance}/>
-            <Redirect1 />
-            <Redirect2 />
         </div>
     );
 }

@@ -4,7 +4,7 @@ import Block from "../components/Block"
 const Blockchain = () => {
     return (
         <div>
-            <Link to='/homepage'>BACK</Link>
+            <Link to='/'>BACK</Link>
             <h1>Blockchain Viewer</h1>
 
             <div className="chain">

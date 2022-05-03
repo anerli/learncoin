@@ -35,6 +35,7 @@ const Login = () => {
 
     return (
         <div>
+            <Link to='/'>BACK</Link>
             <a href="#">
             <img src="learncoin.png" className="logo" alt="LearnCoin Logo" height="30" width="170"/>
             </a>
@@ -52,8 +53,6 @@ const Login = () => {
         </h3>
         <img src="login_bg.jpg" className="login_bg" alt="login button"></img>
         </div>
-        
-        
     )
 };
 
