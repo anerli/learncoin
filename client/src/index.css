@@ -227,8 +227,9 @@ label {
 
 .more_modal:hover:after {
   position: absolute;
+  right: 20%;
   content: attr(title);
-  width: 300px;
+  width: auto;
   padding: 15px;
   background-color: black;
   border: 3px solid #BCED09;
