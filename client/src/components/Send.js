@@ -22,6 +22,8 @@ function Send(props) {
         alert(msg);
       }
 
+      alert("Transaction Pending");
+
       props.fetchBalanceCallback();
     }
 
