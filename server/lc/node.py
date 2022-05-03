@@ -13,6 +13,8 @@ import time
 from lc.mining.miner import Miner
 from lc.transactions.transaction import Transaction
 
+from lc.util.info import server_info as info
+
 
 class Node:
     def __init__(self, pub_addr: str, initial_neighbors: List[str], mine: bool, mining_key: str):
@@ -100,17 +102,23 @@ class Node:
 
         if transaction_bytes in self.seen_transaction_hashes:
             # We can assume we have already processed this request
+            info(f'Already seen transaction {transaction}')
             return
         else:
+            info(f'Have not seen transaction {transaction}')
             self.seen_transaction_hashes.add(transaction_bytes)
 
+        info('A')
         if not transaction.is_valid():
             return
         
+        info('B')
         if self.miner.is_mining:
             # Add transaction to miner's current block
             self.miner.current_block.add_transaction(transaction)
             self.miner.current_block_changed = True
 
+        info('C')
         self.dc.broadcast_transaction(transaction.to_json())
+        info('D')
     

@@ -1,6 +1,6 @@
 from .primitives import secure_hash
 
-DIFFICULTY = 5
+DIFFICULTY = 4
 
 def is_valid_proof(block_hash: bytes, proof: bytes):
     # Do we even need to secure hash the block?

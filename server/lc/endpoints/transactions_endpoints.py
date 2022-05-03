@@ -5,6 +5,8 @@ from lc.transactions.transaction import Transaction
 from lc.util.conversions import float_from_bytes
 from typing import cast
 
+from threading import Thread
+
 
 from lc.util.info import transactions_info as info
 
@@ -17,7 +19,8 @@ def bind(node):
 
 
     @transactions_bp.post('/')#, methods=['POST', 'OPTIONS'])
-    def add_transaction(request: Request):
+    async def add_transaction(request: Request):
+        info('Add Transaction Request')
         # Transaction id
         _id = request.json['id']
         # Sender public key
@@ -63,7 +66,9 @@ def bind(node):
             info('User does not have enough to perform provided transaction')
             return text('not enough LC to perform transaction', status=400) 
 
-        node.make_transaction(transaction)
+        t = Thread(target=node.make_transaction, args=[transaction])
+        #node.make_transaction(transaction)
+        t.start()
 
         return text('OK', status=200)
         #return json({'valid': valid})
@@ -79,5 +84,15 @@ def bind(node):
         #     balance = balances[pubkey]
         balance = node.chain.get_balance(pubkey)
         return json({'balance': balance})
+    
+    @transactions_bp.get('/pending/<pubkey>')
+    async def get_pending(request, pubkey):
+        '''
+        Get the pending transactions for the given pubkey,
+        i.e. any transactions to or from the provided addr
+        which are on the current block but not yet on the chain (hasn't been mined).
+        '''
+        pass
+
     
     return transactions_bp
