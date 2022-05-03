@@ -105,7 +105,7 @@ class DiscoveryComponent:
         #    print('Lock acquired 1')
         for neighbor in self.neighbors:
             url = 'http://' + neighbor + '/chain'
-            info('BROADCASTING TO URL:', url)
+            info('Broadcasting chain to:', url)
             try:
                 resp = requests.post(url, json=chain_data)
 

@@ -23,6 +23,9 @@ class Node:
         self.app = Sanic("learncoin_full_node")
 
         #!fixme: potential security issues for sure
+
+        # Hack to disable annoying CORS logging
+        CORS.log = lambda *args, **kwargs: None
         CORS(self.app, resources={r"/*": {"origins": "*"}})
         #self.pub_addr = pub_addr
         #self.neighbors = initial_neighbors

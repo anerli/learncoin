@@ -18,5 +18,5 @@ if __name__ == '__main__':
         mining_key=args.key,
     )
 
-    node.run(host='0.0.0.0', debug=False, access_log=False, port=int(args.port))
+    node.run(host='0.0.0.0', debug=True, access_log=False, port=int(args.port))
     
