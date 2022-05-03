@@ -58,7 +58,7 @@ const Signup = () => {
     return (
         <div>
             <div>
-                <Link to='/'>BACK</Link>
+                <Link to='/login'>BACK</Link>
             </div>
             <div>
                 <a href="#">
