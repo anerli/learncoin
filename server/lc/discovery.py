@@ -122,13 +122,13 @@ class DiscoveryComponent:
         #with self.lock:
         #print('Lock acquired')
         for neighbor in self.neighbors:
-            print('Neighbor:', neighbor)
+            #print('Neighbor:', neighbor)
             url = 'http://' + neighbor + '/transactions'
             info('Forwarding transaction to:', url)
             try:
-                info('Posting')
+                #info('Posting')
                 resp = requests.post(url, json=transaction_data)
-                info('Done posting')
+                #info('Done posting')
 
                 if resp.status_code == 200:
                     info('Transaction was accepted by neighbor.')

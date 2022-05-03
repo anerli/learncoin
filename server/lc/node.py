@@ -102,23 +102,23 @@ class Node:
 
         if transaction_bytes in self.seen_transaction_hashes:
             # We can assume we have already processed this request
-            info(f'Already seen transaction {transaction}')
+            #info(f'Already seen transaction {transaction}')
             return
         else:
-            info(f'Have not seen transaction {transaction}')
+            #info(f'Have not seen transaction {transaction}')
             self.seen_transaction_hashes.add(transaction_bytes)
 
-        info('A')
+        #info('A')
         if not transaction.is_valid():
             return
         
-        info('B')
+        #info('B')
         if self.miner.is_mining:
             # Add transaction to miner's current block
             self.miner.current_block.add_transaction(transaction)
             self.miner.current_block_changed = True
 
-        info('C')
+        #info('C')
         self.dc.broadcast_transaction(transaction.to_json())
-        info('D')
+        #info('D')
     
