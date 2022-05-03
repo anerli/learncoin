@@ -33,7 +33,8 @@ def bind(node):
         # Replace chain
         info(f'Accepted chain of length {other_len}.')
 
-        node.chain.replace(other_chain)
+        #node.chain.replace(other_chain)
+        node.replace_chain(other_chain)
         return text('Chain Accepted')
 
     @chain_bp.get("/")

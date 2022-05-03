@@ -46,7 +46,7 @@ def bind(node):
         #info(f'Received transaction:')
         print(f'\tsender: {transaction.sender.hex()}')
         print(f'\treceiver: {transaction.receiver.hex()}')
-        print(f'\tamount: {transaction.amount.hex()} -> {float_from_bytes(transaction.amount)}')
+        print(f'\tamount: {transaction.amount.hex()} ({float_from_bytes(transaction.amount)} LC)')
         print(f'\tsignature: {transaction.signature.hex()}')
 
         valid = transaction.is_valid()
@@ -92,7 +92,19 @@ def bind(node):
         i.e. any transactions to or from the provided addr
         which are on the current block but not yet on the chain (hasn't been mined).
         '''
-        pass
+        if node.miner.is_mining:
+            transactions = node.miner.current_block.transactions
+        else:
+            transactions = node.pending_transactions
+        
+        relevant = []
+        for transaction in transactions:
+            sender = transaction.sender.hex()
+            receiver = transaction.receiver.hex()
+            if pubkey == sender or pubkey == receiver:
+                relevant.append(transaction.to_json())
+        
+        return json({'transactions': relevant})
 
     
     return transactions_bp

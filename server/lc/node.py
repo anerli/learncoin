@@ -39,6 +39,8 @@ class Node:
             lambda: self.dc.broadcast_chain(self.chain.to_json()),
             mining_key
         )
+        # Used if not mining to store pending transactions
+        self.pending_transactions = []
 
         self.app.blueprint(test_endpoints.bind(self))
         self.app.blueprint(discovery_endpoints.bind(self.dc))
@@ -97,6 +99,11 @@ class Node:
         # Redirect to Sanic app run() function
         self.app.run(*args, **kwargs)
     
+    def replace_chain(self, other: BlockChain):
+        self.chain.replace(other)
+        self.pending_transactions = []
+        # TODO: Use to replace Miner L133 logic
+    
     def make_transaction(self, transaction: Transaction):
         transaction_bytes = transaction.to_puzzle_bytes()
 
@@ -117,6 +124,8 @@ class Node:
             # Add transaction to miner's current block
             self.miner.current_block.add_transaction(transaction)
             self.miner.current_block_changed = True
+        else:
+            self.pending_transactions.append(transaction)
 
         #info('C')
         self.dc.broadcast_transaction(transaction.to_json())
