@@ -69,8 +69,8 @@ h5 {
 }
 
 p {
-  /* color: #BCED09; */
-  color: #000A24;
+  color: #BCED09;
+  /* color: #000A24; */
 }
 
 p.mining {
@@ -257,6 +257,20 @@ label {
   background-color: #000A24;
   padding: 2rem;
   margin-top: 1rem;
+  max-width: 100%;
+  border-style: solid;
+  border-width: 3.5px;
+  border-radius: 8px;
+  border-color: #BCED09;
+  align-content: center;
+}
+
+.smolcard {
+  background-color: #000A24;
+  padding: 0rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 0rem;
   max-width: 100%;
   border-style: solid;
   border-width: 3.5px;

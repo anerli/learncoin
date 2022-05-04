@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Send from "../components/Send";
 import InfoModal from './InfoModal';
+import {hexToFloat} from '../logic/conversions';
 
 function TransactionForm(props) {
   const [pending, setPending] = useState([]);
@@ -14,8 +15,9 @@ function TransactionForm(props) {
     console.log("fetching pending")
       // ! url TMP
       const SERV_URL = 'http://localhost:8000';
+      console.log("props pubkey: ", props.pubkey);
       const response = await fetch(
-        SERV_URL + '/transactions/pending/' + props.publicKey,
+        SERV_URL + '/transactions/pending/' + props.pubkey,
         {
           method: 'GET',
           mode: 'cors',
@@ -23,9 +25,20 @@ function TransactionForm(props) {
       );
       let data = await response.json();
       console.log("Pending: ", data);
+
+      console.log(data['transactions']);
+
+      setPending(data['transactions']);
       // FIXME: Probably not good to reload whole page, should separate into balance component
       //setBalance(data.balance);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchPending();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [pending]);
 
   return (
       <div>
@@ -45,10 +58,20 @@ function TransactionForm(props) {
             </div>
 
             <div className="float-child">
-                <InfoModal text="These are pending transactions."/>
-              <div className="card">
-                  <div className="card_items">
-                      
+                <InfoModal text="These are pending transactions, that is, transactions which are recorded on the block currently being mined but have not been confirmed onto the chain yet."/>
+              <div className="card" style={{height:"400px", overflowY: "scroll"}}>
+                <h2>Pending:</h2>
+                  <div className="card_items" style={{}}>
+                      {pending.map(
+                        (transaction) => (<div className="smolcard">
+                          {transaction['id'] == '00000000000000000000000000000000' && <p>(BLOCK REWARD)</p>}
+                          {/* <p>ID: {transaction['id']}</p> */}
+                          <p>Sender: {transaction['sender']}</p>
+                          <p>Receiver: {transaction['receiver']}</p>
+                          <p>Amount: {hexToFloat(transaction['amount'])} LC</p>
+                        </div>)
+                      )}
+                      {/* <p>{pending.toString()}</p> */}
                   </div>
               </div>
             </div>

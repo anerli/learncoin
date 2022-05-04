@@ -40,7 +40,7 @@ const Homepage = () => {
       return () => clearInterval(interval);
     }, [publicKey]);
     
-
+    
     useEffect(() => {
         if ('privateKey' in cookies) {
             ed.getPublicKey(cookies.privateKey).then(
@@ -53,6 +53,8 @@ const Homepage = () => {
         console.log('pub key: ', publicKey);
     });
 
+    //const transactionForm = TransactionForm({fetchBalanceCallback:fetchBalance, pubkey:publicKey});
+
     return (
         <div>
             <Link to='/'>LOG OUT</Link>
@@ -64,6 +66,7 @@ const Homepage = () => {
                 Your public key: {publicKey}
             </h2>}
             <TransactionForm fetchBalanceCallback={fetchBalance} pubkey={publicKey}/>
+            
         </div>
     );
 }

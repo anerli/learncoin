@@ -1,8 +1,11 @@
+import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { makeTransaction } from "../logic/transactions";
 
 function Send(props) {
     const [cookies] = useCookies(['privateKey']);
+    const [errorMsg, setErrorMsg] = useState('');
+
     // function logWalletData() {
     //     console.log("amt: " + document.getElementById('amount').value);
     //     console.log("receiver: " + document.getElementById('receiver').value); 
@@ -16,10 +19,14 @@ function Send(props) {
       let resp = await makeTransaction(privateKey, receiverPublicKey, amount);
       console.log('resp:');
       console.log(resp);
+
       if (resp.status !== 200) {
         let msg = await resp.text();
         console.log(msg);
-        alert(msg);
+        //alert(msg);
+        setErrorMsg('Error: ' + msg);
+      } else {
+        setErrorMsg('');
       }
 
       //alert("Transaction Pending");
@@ -29,6 +36,7 @@ function Send(props) {
 
     return (
         <div>
+            <p style={{color: 'red'}}>{errorMsg}</p>
             <button className="send_btn" onClick={triggerTransaction}>SEND</button>
         </div>
     );
