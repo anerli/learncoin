@@ -172,12 +172,12 @@ label {
 }
 
 .chain {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 5px;
+  margin: 0 auto;
+  display:flex
 }
 
 .block {
+  display: inline-block;
   background-color: #000A24;
   border-style: solid;
   border-width: 5px;
@@ -188,6 +188,17 @@ label {
   text-align: center;
   padding-top: 20px;
   aspect-ratio: 1;
+}
+
+.link {
+  margin-left: 1%;
+  margin-right: 1%;
+  width: 0;
+  height: 0;
+  border-top: 25px solid transparent;
+  border-left: 50px solid #BCED09;
+  border-bottom: 25px solid transparent;
+  margin-top: 8%;
 }
 
 .pow {

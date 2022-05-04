@@ -23,6 +23,7 @@ signature	:	a655f6a276b1f89e9bf278552d024169e80ab94aaa72f72f68108f89fce89683147b
                     <img className="graphic" src="https://drive.google.com/uc?export=download&id=1bh1yecOYgaQrlQnnMnWAz5NreqeTuaiC" alt="More Info on Block"/>
                     </div>
             </div>
+			<div className="link"></div>
 
             {/* BLOCK */}
             <div className="block"> Proof of Work
@@ -35,6 +36,8 @@ proof	:	072024
                     <img className="graphic" src="https://drive.google.com/uc?export=download&id=1bh1yecOYgaQrlQnnMnWAz5NreqeTuaiC" alt="More Info on Block"/>
                     </div>
             </div>
+			<div className="link"></div>
+
 
                 {/* BLOCK */}
             <div className="block"> Proof of Work
@@ -68,6 +71,7 @@ signature	:	a655f6a276b1f89e9bf278552d024169e80ab94aaa72f72f68108f89fce89683147b
                     <img className="graphic" src="https://drive.google.com/uc?export=download&id=1bh1yecOYgaQrlQnnMnWAz5NreqeTuaiC" alt="More Info on Block"/>
                     </div>
             </div>
+			<div className="link"></div>
 
                 {/* BLOCK */}
                 <div className="block"> Proof of Work
@@ -86,6 +90,7 @@ signature	:	a655f6a276b1f89e9bf278552d024169e80ab94aaa72f72f68108f89fce89683147b
                     <img className="graphic" src="https://drive.google.com/uc?export=download&id=1bh1yecOYgaQrlQnnMnWAz5NreqeTuaiC" alt="More Info on Block"/>
                     </div>
             </div>
+			<div className="link"></div>
 
             {/* BLOCK */}
             <div className="block"> Proof of Work
@@ -105,6 +110,7 @@ signature	:	a655f6a276b1f89e9bf278552d024169e80ab94aaa72f72f68108f89fce89683147b
                     <img className="graphic" src="https://drive.google.com/uc?export=download&id=1bh1yecOYgaQrlQnnMnWAz5NreqeTuaiC" alt="More Info on Block"/>
                     </div>
             </div>
+			<div className="link"></div>
 
             {/* BLOCK */}
             <div className="block"> Proof of Work
@@ -381,6 +387,7 @@ signature	:	a655f6a276b1f89e9bf278552d024169e80ab94aaa72f72f68108f89fce89683147b
                     <img className="graphic" src="https://drive.google.com/uc?export=download&id=1bh1yecOYgaQrlQnnMnWAz5NreqeTuaiC" alt="More Info on Block"/>
                     </div>
             </div>
+			<div className="link"></div>
 
             {/* BLOCK */}
             <div className="block"> Proof of Work
@@ -455,6 +462,7 @@ signature	:	a655f6a276b1f89e9bf278552d024169e80ab94aaa72f72f68108f89fce89683147b
                     <img className="graphic" src="https://drive.google.com/uc?export=download&id=1bh1yecOYgaQrlQnnMnWAz5NreqeTuaiC" alt="More Info on Block"/>
                     </div>
             </div>
+			<div className="link"></div>
 
             </div>
         </div>
