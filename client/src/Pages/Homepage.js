@@ -1,4 +1,4 @@
-import Module from "../components/Module";
+import TransactionForm from "../components/TransactionForm";
 import Balance from "../components/Balance";
 
 import React, { useState, useEffect } from 'react';
@@ -63,7 +63,7 @@ const Homepage = () => {
                 <h2 className='public_key'>
                 Your public key: {publicKey}
             </h2>}
-            <Module fetchBalanceCallback={fetchBalance}/>
+            <TransactionForm fetchBalanceCallback={fetchBalance}/>
         </div>
     );
 }

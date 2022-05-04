@@ -2,7 +2,7 @@ import React from 'react';
 import Send from "../components/Send";
 import InfoModal from './InfoModal';
 
-function Module(props) {
+function TransactionForm(props) {
 
     return (
         <div>
@@ -15,7 +15,7 @@ function Module(props) {
                     <img className="graphic" src="https://drive.google.com/uc?export=download&id=1f8ItY1h0uVrjcaBBtbJ7Q69fzwNSrzd9" alt="LearnCoin logo"/>
                     <input id="amount" type="text" placeholder="Amount of LC to Send"></input>
                     <img className="graphic" src="https://drive.google.com/uc?export=download&id=1Km7Z7WEm5Ydd8i9BfNsMcMFWu4k3xRqH" alt="wallet icon"/>
-                    <input id="receiver" type="text" placeholder="Public Address of Recipient"></input>
+                    <input id="receiver" type="text" placeholder="Public Key of Recipient"></input>
                    <Send fetchBalanceCallback={props.fetchBalanceCallback}/>
                 </div>
             </div>
@@ -27,4 +27,4 @@ function Module(props) {
     );
 }
 
-export default Module;
+export default TransactionForm;
