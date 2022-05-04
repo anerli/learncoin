@@ -8,7 +8,7 @@ function Redirect4() {
             <Link to="/login">
                 <img
                     className="redirect_decal"
-                    src="https://drive.google.com/uc?export=download&id=1T8ab5ZD5OxG1STCtTYadP2SRsjXSUCUW"
+                    src="https://drive.google.com/uc?export=download&id=19-CaQSVoGemMhxk4fBSfr3c_VO0UGTvH"
                     alt="LearnCoin wallet graphic and redirect"
                 />
             </Link>

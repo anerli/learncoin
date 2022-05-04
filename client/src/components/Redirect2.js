@@ -9,7 +9,7 @@ function Redirect2() {
           <Link to="/mining">
             <img
               className="redirect_decal"
-              src="https://drive.google.com/uc?export=download&id=1f9XsCJ9nqDp72mQ99wDdOjiA_widhug4"
+              src="https://drive.google.com/uc?export=download&id=19ySlAN-DmJTVXdkANTam9eMQ7PTqR4XE"
               alt="LearnCoin mining graphic and redirect"
             />
           </Link>
