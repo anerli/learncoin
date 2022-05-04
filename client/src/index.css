@@ -210,10 +210,21 @@ label {
   border-color: #BCED09;
   border-radius: 5%;
   width: 220px;
-  height: 100px;
+  height: 50px;
 }
 
-.more_modal {
+.pow:hover:after {
+  position: absolute;
+  content: attr(title);
+  width: auto;
+  padding: 15px;
+  background-color: black;
+  border: 3px solid #BCED09;
+  border-radius: 2px;
+  color: #BCED09;
+}
+
+.previous_block_hash {
   margin-left: 45px;
   margin-top: 40px;
   margin-bottom: 20px;
@@ -229,14 +240,14 @@ label {
   height: 60px;
 }
 
-.more_modal img {
+.previous_block_hash img {
   height: 30px;
   width: 30px;
   margin: auto;
 
 }
 
-.more_modal:hover:after {
+.previous_block_hash:hover:after {
   position: absolute;
   content: attr(title);
   width: auto;
@@ -475,4 +486,38 @@ a:visited {
   height: 100vh;
   top: 0;
   left: 0;
+}
+
+.transactions {
+  margin-left: 45px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  background-color: #000A24;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #BCED09;
+  border-radius: 5%;
+  width: 150px;
+  color: #BCED09;
+  text-align: center;
+  padding-top: 10px;
+  height: 60px;
+}
+
+.transactions img {
+  height: 30px;
+  width: 30px;
+  margin: auto;
+
+}
+
+.transactions:hover:after {
+  position: absolute;
+  content: attr(title);
+  width: auto;
+  padding: 15px;
+  background-color: black;
+  border: 3px solid #BCED09;
+  border-radius: 2px;
+  color: #BCED09;
 }
