@@ -78,6 +78,10 @@ p.mining {
   color: #F3FADD;
   line-height: 150%;
 }
+p.learning {
+  color: #F3FADD;
+  line-height: 150%;
+}
 
 #privateKey {
   color: #000A24;
