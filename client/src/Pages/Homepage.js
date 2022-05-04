@@ -6,18 +6,20 @@ import { useCookies } from 'react-cookie';
 import * as ed from '@noble/ed25519';
 import InfoModal from "../components/InfoModal";
 import {Link} from "react-router-dom";
+import {SRV_URL} from '../config';
 
 const Homepage = () => {
-    const [cookies] = useCookies(['privateKey']);
+    const [cookies, setPrivateKey] = useCookies(['privateKey']);
     const [publicKey, setPublicKey] = useState('');
     const [balance, setBalance] = useState(0.0);
+    const [privKeyHidden, setPrivKeyHidden] = useState(true);
 
     const fetchBalance = async () => {
       console.log("fetching balance")
       // ! url TMP
-      const SERV_URL = 'http://localhost:8000';
+      //const SERV_URL = 'http://localhost:8000';
       const response = await fetch(
-        SERV_URL + '/transactions/balance/' + publicKey,
+        SRV_URL + '/transactions/balance/' + publicKey,
         {
           method: 'GET',
           mode: 'cors',
@@ -64,7 +66,19 @@ const Homepage = () => {
             {publicKey !== '' &&
                 <h2 className='public_key'>
                 Your public key: {publicKey}
+                
             </h2>}
+            {
+              'privateKey' in cookies &&
+              <div>
+                <nobr>
+              <h2>
+                Your private key: {privKeyHidden ? '****************************************************************' : cookies.privateKey} 
+              </h2>
+              <button onClick={()=>{setPrivKeyHidden(!privKeyHidden)}} style={{display:"inline", margin:"0px"}} className="send_btn">{privKeyHidden ? "SHOW" : "HIDE"}</button>
+              </nobr>
+              </div>
+            }
             <TransactionForm fetchBalanceCallback={fetchBalance} pubkey={publicKey}/>
             
         </div>

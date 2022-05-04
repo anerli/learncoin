@@ -8,17 +8,6 @@ const Signup = () => {
     const [cookies, setCookie] = useCookies(['privateKey']);
     const [privateKey, setPrivateKey] = useState('');
 
-    const testMakeTransaction = async () => {
-        const privateKey = cookies.privateKey;
-
-        console.log('privateKey: ', privateKey);
-        // Sending to yourself? ig?
-        const receiverPublicKey = ed.utils.bytesToHex(await ed.getPublicKey(privateKey));
-
-        await makeTransaction(privateKey, receiverPublicKey, 3.14);
-    }
-    
-
     const generatePrivateKey = () => {
         console.log('Generating private key...');
 
@@ -65,7 +54,6 @@ const Signup = () => {
                 <img src="learncoin.png" className="logo" alt="LearnCoin Logo" height="30" width="170"/>
                 </a>
                 <div className="login_modal">
-                <button onClick={testMakeTransaction}>Test Transaction</button>
                 <h4>Register</h4>
                 <button className="signup_btn" id='privateKeyButton' onClick={generatePrivateKey}>Sign up</button>
                 <h5>There is no way to restore a forgotten key!</h5>
