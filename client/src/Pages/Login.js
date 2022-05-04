@@ -7,6 +7,7 @@ const Login = () => {
     const [cookies, setCookie] = useCookies(['privateKey']);
     // Do NOT remove items from useState tuples
     const [publicKey, setPublicKey] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
 
     const checkLogin = async (formid) =>  {
         const hexPrivateKey = document.getElementById("key").value;
@@ -27,9 +28,11 @@ const Login = () => {
 
         if(valid){
             document.getElementById(formid).submit();
+            setErrorMsg("");
         }
         else{
-            alert("Invalid Private Key");
+            setErrorMsg("Invalid Private Key");
+            //alert("Invalid Private Key");
         }
     };
 
@@ -46,6 +49,7 @@ const Login = () => {
                 <input type="button" value="Submit" onClick={() => checkLogin('myform')}/>
             </form>
         </div>
+        {errorMsg != "" && <p style={{color: "red"}}>{"Error: " + errorMsg}</p>}
         <h3 className="nokey">No key? &nbsp;
           <Link to="/signup">Sign Up</Link> &nbsp;
           or &nbsp;
