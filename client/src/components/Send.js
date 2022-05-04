@@ -22,9 +22,9 @@ function Send(props) {
         alert(msg);
       }
 
-      alert("Transaction Pending");
+      //alert("Transaction Pending");
 
-      props.fetchBalanceCallback();
+      props.sendCallback();
     }
 
     return (

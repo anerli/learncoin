@@ -83,6 +83,7 @@ def bind(node):
         # else:
         #     balance = balances[pubkey]
         balance = node.chain.get_balance(pubkey)
+        #info('balance: ', balance)
         return json({'balance': balance})
     
     @transactions_bp.get('/pending/<pubkey>')

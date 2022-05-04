@@ -63,7 +63,7 @@ const Homepage = () => {
                 <h2 className='public_key'>
                 Your public key: {publicKey}
             </h2>}
-            <TransactionForm fetchBalanceCallback={fetchBalance}/>
+            <TransactionForm fetchBalanceCallback={fetchBalance} pubkey={publicKey}/>
         </div>
     );
 }

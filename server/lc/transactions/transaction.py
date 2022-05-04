@@ -3,6 +3,8 @@ from lc.util.conversions import float_from_bytes
 
 from cryptography.exceptions import InvalidSignature
 
+import math
+
 class Transaction:
     # Special constants for block reward transactions
     BLOCK_REWARD_ID = b'\0'*16
@@ -39,6 +41,13 @@ class Transaction:
         Verifies that the given signature authenticates this transaction.
         Assumes that this is a standard transaction, not a block reward.
         '''
+
+        # If amount is invalid floating point number
+        if math.isnan(float_from_bytes(self.amount)):
+            return False
+        
+        if len(self.sender.hex()) != 64 or len(self.receiver.hex()) != 64:
+            return False
 
         # For easier consistency across Python / JS, we defined the combined byte value
         # of the transaction components as the concatenation of their hex values
