@@ -14,7 +14,7 @@ const Learning = () => {
               one user to another. Each user has an address which identifies them, so that others know where to send the cryptocurrency. However, in order to agree on
               a common list of transactions while preventing malicious users from inserting false transactions or removing valid ones, we use two key mechanisms: digital signatures and blockchain.
             </p>
-
+            <br/>
             <h2>What are Digital Signatures?</h2>
             <p className='learning'>
               Digital signatures are cryptographic mechanisms for verifying that a particular user approved of a certain action. In our case, we would like to verify that anyone
@@ -23,7 +23,7 @@ const Learning = () => {
               using our private key, and any other party can verify that we signed that data by checking with our public key. In our case, we would like to sign all the data
               associated with any transaction we make so that it can be proven to be legit.
             </p>
-
+            <br/>
             <h2>What is a Blockchain?</h2>
             <p className='learning'>
               A blockchain is a chain of data objects, which we call blocks, binded together with cryptographic proofs. Each block can contain whatever information we want. In our case,
@@ -54,7 +54,7 @@ const Learning = () => {
               Additionally, it becomes impossible to remove blocks since for every block removed, in order to gain back the length and become the dominant chain, one would
               have to prove multiple blocks which is incredibly difficult since this requires computational power greater than the rest of the network combined.
             </p>
-
+            <br/>
             <h2>What is Mining?</h2>
             <p className='mining'>
                 When mining a cryptocurrency, you are exchanging some of your computer's power in order to secure transactions with the cryptocurrency.
@@ -62,12 +62,8 @@ const Learning = () => {
                 This incentivizes people to host nodes which support the network and secures the blockchain data. <br/>
 
                 If you would like to try mining yourself on the LearnCoin network, click <a href='/mining'>here</a>!
-                {/* In return for your computers computational power, you are rewarded with some of the crypto being mined!  */}
-
-                {/* Many cryptos will then let you make transactions with other users.
-                All transactions get encrypted for security and passed to all other miners on the cryptocurrency's network. */}
             </p>
-
+            <br/>
             <h2>What is LearnCoin?</h2>
             <p className='learning'>
               LearnCoin is a cryptocurrency implementation meant to be as simple as possible while remaining secure. LearnCoin is written in Python, a relatively easy programming language

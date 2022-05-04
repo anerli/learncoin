@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
-import { makeTransaction } from "../logic/transactions";
 import * as ed from '@noble/ed25519';
 
 const Signup = () => {
@@ -17,31 +16,6 @@ const Signup = () => {
         console.log('generated privateKey: ', privKeyHex);
         setPrivateKey(privKeyHex);
         setCookie('privateKey', privKeyHex, { path: '/' });
-
-        // How you would get the key back, e.g. loading it from the cookie hex value to sign something,
-        // or to load it from the cookie to generate the public key
-        /*
-        let key_again = ec.keyFromPrivate(privateKey, 'hex');
-        console.log(key_again);
-        */
-        
-        // Other example
-        /*
-        let ec = new EC('ed25519');
-        console.log(ec);
-        let key = ec.genKeyPair();
-        console.log(key);
-        let privateKey = key.getPrivate('hex');
-        console.log("privateKey", privateKey);
-        let publicKey = key.getPublic('hex');
-        console.log("publicKey", publicKey);
-        */
-        
-        // Signature example
-        /*
-        var msgHash = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
-        var signature = key.sign(msgHash);
-        */
     };
 
     return (

@@ -8,7 +8,6 @@ function TransactionForm(props) {
   const [pending, setPending] = useState([]);
 
   const onSend = async () => {
-    //props.fetchBalanceCallback();
     fetchPending();
   }
 
@@ -29,8 +28,6 @@ function TransactionForm(props) {
       console.log(data['transactions']);
 
       setPending(data['transactions']);
-      // FIXME: Probably not good to reload whole page, should separate into balance component
-      //setBalance(data.balance);
   };
 
   useEffect(() => {
@@ -64,14 +61,12 @@ function TransactionForm(props) {
                   <div className="card_items" style={{}}>
                       {pending.map(
                         (transaction) => (<div className="smolcard">
-                          {transaction['id'] == '00000000000000000000000000000000' && <p>(BLOCK REWARD)</p>}
-                          {/* <p>ID: {transaction['id']}</p> */}
+                          {transaction['id'] === '00000000000000000000000000000000' && <p>(BLOCK REWARD)</p>}
                           <p>Sender: {transaction['sender']}</p>
                           <p>Receiver: {transaction['receiver']}</p>
                           <p>Amount: {hexToFloat(transaction['amount'])} LC</p>
                         </div>)
                       )}
-                      {/* <p>{pending.toString()}</p> */}
                   </div>
               </div>
             </div>

@@ -31,10 +31,6 @@ const Homepage = () => {
       setBalance(data.balance);
     }
 
-    // useEffect(() => {
-    //   fetchBalance();
-    // }, [publicKey]);
-
     useEffect(() => {
       const interval = setInterval(() => {
         fetchBalance();
@@ -54,8 +50,6 @@ const Homepage = () => {
         }
         console.log('pub key: ', publicKey);
     });
-
-    //const transactionForm = TransactionForm({fetchBalanceCallback:fetchBalance, pubkey:publicKey});
 
     return (
         <div>
