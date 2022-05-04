@@ -56,7 +56,6 @@ const Signup = () => {
                 <div className="login_modal">
                 <h4>Register</h4>
                 <button className="signup_btn" id='privateKeyButton' onClick={generatePrivateKey}>Sign up</button>
-                <h5>There is no way to restore a forgotten key!</h5>
                 {privateKey !== '' && <h4 id='privateKey'>This is your private key: {privateKey}</h4>}
                 {privateKey !== '' && 
                 <Link id = 'signinButton' to="/homepage">
