@@ -16,8 +16,8 @@ const Homepage = () => {
 
     const fetchBalance = async () => {
       console.log("fetching balance")
-      // ! url TMP
-      //const SERV_URL = 'http://localhost:8000';
+
+      console.log( SRV_URL + '/transactions/balance/');
       const response = await fetch(
         SRV_URL + '/transactions/balance/' + publicKey,
         {
@@ -71,12 +71,10 @@ const Homepage = () => {
             {
               'privateKey' in cookies &&
               <div>
-                <nobr>
               <h2>
                 Your private key: {privKeyHidden ? '****************************************************************' : cookies.privateKey} 
               </h2>
               <button onClick={()=>{setPrivKeyHidden(!privKeyHidden)}} style={{display:"inline", margin:"0px"}} className="send_btn">{privKeyHidden ? "SHOW" : "HIDE"}</button>
-              </nobr>
               </div>
             }
             <TransactionForm fetchBalanceCallback={fetchBalance} pubkey={publicKey}/>

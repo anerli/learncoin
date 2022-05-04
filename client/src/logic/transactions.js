@@ -3,9 +3,7 @@ import CryptoJS from 'crypto-js';
 import { floatToHex } from './conversions';
 import * as ed from '@noble/ed25519';
 //const EC = require('elliptic').ec;
-
-// ! temporary
-const SERV_URL = 'http://localhost:8000';
+import {SRV_URL} from '../config';
 
 function generateID() {
   // Generate a random ID, as hex
@@ -55,7 +53,7 @@ export async function makeTransaction(senderPrivateKey, receiverPublicKey, amoun
     console.log('valid? ', await ed.verify(signature, hashHex, senderPublicKey))
 
     const response = await fetch(
-      SERV_URL + '/transactions',
+      SRV_URL + '/transactions',
       {
         method: 'POST',
         mode: 'cors',

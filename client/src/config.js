@@ -1,1 +1,1 @@
-const SRV_URL = "localhost:8000";
+export const SRV_URL = "http://localhost:8000";

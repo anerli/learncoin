@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Send from "../components/Send";
 import InfoModal from './InfoModal';
 import {hexToFloat} from '../logic/conversions';
+import {SRV_URL} from '../config';
 
 function TransactionForm(props) {
   const [pending, setPending] = useState([]);
@@ -13,11 +14,10 @@ function TransactionForm(props) {
 
   const fetchPending = async () => {
     console.log("fetching pending")
-      // ! url TMP
-      const SERV_URL = 'http://localhost:8000';
+
       console.log("props pubkey: ", props.pubkey);
       const response = await fetch(
-        SERV_URL + '/transactions/pending/' + props.pubkey,
+        SRV_URL + '/transactions/pending/' + props.pubkey,
         {
           method: 'GET',
           mode: 'cors',
