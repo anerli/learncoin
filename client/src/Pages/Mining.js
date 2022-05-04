@@ -56,25 +56,6 @@ const Mining = () => {
                 Use `python server.py -h` to get additional information on other arguments.<br/><br/>
 
                 Happy mining!
-
-
-
-                {/* <br/><br/><br/><br/><br/><br/><br/><br/>
-
-                After the learn coin codebase is set up, you will need to navigate to the learncoin/server directory in your terminal: <br/>
-                &emsp; 1) Find where you saved the codebase in your file explorer. <br/>
-                &emsp; 2) Right click on the folder and choose 'Open in terminal'. <br/>
-                &emsp; 3) Type 'cd server' to enter the server folder.
-                <br/>
-                From here, you should be able to see a file called server.py (type 'ls' to see everything inside the current folder).
-                <br/><br/>
-                Type 'Python3 server.py --neighbors coms-402-sd-23.class.las.iastate.edu --mine' to start mining!
-                <br/><br/>
-                'Python3 server.py' starts the LearnCoin server. <br/>
-                '--neighors coms-402-sd-23.class.las.iastate.edu' is a tag that connects your computer to the LearnCoin network through one of the University servers that is constantly running LearnCoin.
-                If this does not work, try one of the other servers by changing 23 to any other number from 23-27. <br/>
-                '--mine' is a tag that tells your LearnCoin server to start mining. <br/>
-                '--k' will allow you to enter a specific private key instead of generating a new one for you. */}
             </p>
         </div>
     )

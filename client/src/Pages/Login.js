@@ -5,7 +5,6 @@ import * as ed from "@noble/ed25519";
 
 const Login = () => {
     const [cookies, setCookie] = useCookies(['privateKey']);
-    // Do NOT remove items from useState tuples
     const [publicKey, setPublicKey] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -32,7 +31,6 @@ const Login = () => {
         }
         else{
             setErrorMsg("Invalid Private Key");
-            //alert("Invalid Private Key");
         }
     };
 
@@ -49,11 +47,9 @@ const Login = () => {
                 <input type="button" value="Submit" onClick={() => checkLogin('myform')}/>
             </form>
         </div>
-        {errorMsg != "" && <p style={{color: "red"}}>{"Error: " + errorMsg}</p>}
+        {errorMsg !== "" && <p style={{color: "red"}}>{"Error: " + errorMsg}</p>}
         <h3 className="nokey">No key? &nbsp;
           <Link to="/signup">Sign Up</Link> &nbsp;
-          or &nbsp;
-          <Link to="/homepage">Guest Login</Link> &nbsp;
         </h3>
         <img src="login_bg.jpg" className="login_bg" alt="login button"></img>
         </div>
