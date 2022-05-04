@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  font-family: 'Roboto Mono';
 }
 
 img {
@@ -75,10 +74,6 @@ p {
 }
 
 p.mining {
-  color: #F3FADD;
-  line-height: 150%;
-}
-p.learning {
   color: #F3FADD;
   line-height: 150%;
 }
@@ -243,7 +238,6 @@ label {
 
 .more_modal:hover:after {
   position: absolute;
-  right: 20%;
   content: attr(title);
   width: auto;
   padding: 15px;
