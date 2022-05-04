@@ -59,7 +59,9 @@ const Learning = () => {
             <p className='mining'>
                 When mining a cryptocurrency, you are exchanging some of your computer's power in order to secure transactions with the cryptocurrency.
                 In return for your computation power, every time you mine a block, a special transaction is added which rewards you with some of the cryptocurrency!
-                This incentivizes people to host nodes which support the network and secures the blockchain data.
+                This incentivizes people to host nodes which support the network and secures the blockchain data. <br/>
+
+                If you would like to try mining yourself on the LearnCoin network, click <a href='/mining'>here</a>!
                 {/* In return for your computers computational power, you are rewarded with some of the crypto being mined!  */}
 
                 {/* Many cryptos will then let you make transactions with other users.
@@ -75,7 +77,7 @@ const Learning = () => {
             </p>
 
             <p className='learning'>
-              In addition to acting as a clean codebase for interested programmers, LearnCoin also provides a simple wallet interface along with information (like this page!) to
+              In addition to acting as a clean codebase for interested programmers, LearnCoin also provides a <a href='/login'>simple wallet interface</a> along with information (like this page!) to
               help people understand the various mechanisms. Around this site, you will see question mark icons which you can hover over to reveal additional information about
               different components!
             </p>
