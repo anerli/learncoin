@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Send from "../components/Send";
 import InfoModal from './InfoModal';
 import {hexToFloat} from '../logic/conversions';
-import {SRV_URL} from '../config';
+import { useCookies } from 'react-cookie';
+//import {SRV_URL} from '../config';
 
 function TransactionForm(props) {
   const [pending, setPending] = useState([]);
+  const [cookies, setCookie] = useCookies(['node']);
 
   const onSend = async () => {
     fetchPending();
@@ -15,6 +17,8 @@ function TransactionForm(props) {
     console.log("fetching pending")
 
       console.log("props pubkey: ", props.pubkey);
+
+      const SRV_URL = "http://" + cookies.node;
       const response = await fetch(
         SRV_URL + '/transactions/pending/' + props.pubkey,
         {
@@ -39,7 +43,6 @@ function TransactionForm(props) {
 
   return (
       <div>
-          <h2 className="card_title">{props.text}</h2>
           <div className="float-container">
             <div className="float-child">
                 <InfoModal text="This is your Wallet. Here, you can create transactions that will be broadcasted to the blockchain."/>
@@ -53,8 +56,9 @@ function TransactionForm(props) {
                   </div>
               </div>
             </div>
-
+            
             <div className="float-child">
+              
                 <InfoModal text="These are pending transactions, that is, transactions which are recorded on the block currently being mined but have not been confirmed onto the chain yet."/>
               <div className="card" style={{height:"400px", overflowY: "scroll"}}>
                 <h2>Pending:</h2>
@@ -72,6 +76,8 @@ function TransactionForm(props) {
             </div>
 
           </div>
+
+          
 
       </div>
     );

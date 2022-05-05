@@ -1,15 +1,16 @@
 import sha256 from 'crypto-js/sha256';
 import CryptoJS from 'crypto-js';
+import { useCookies } from 'react-cookie';
 import { floatToHex } from './conversions';
 import * as ed from '@noble/ed25519';
-import {SRV_URL} from '../config';
+//import {SRV_URL} from '../config';
 
 function generateID() {
   // Generate a random ID, as hex
   return CryptoJS.enc.Hex.stringify(CryptoJS.lib.WordArray.random(16));
 }
 
-export async function makeTransaction(senderPrivateKey, receiverPublicKey, amount) {
+export async function makeTransaction(senderPrivateKey, receiverPublicKey, amount, SRV_URL) {
     /*
     sender: sender's public key as hex
     receiver: receiver's public key as hex
@@ -44,6 +45,7 @@ export async function makeTransaction(senderPrivateKey, receiverPublicKey, amoun
 
     console.log('valid? ', await ed.verify(signature, hashHex, senderPublicKey))
 
+    //const SRV_URL = cookies.node;
     const response = await fetch(
       SRV_URL + '/transactions',
       {

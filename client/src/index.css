@@ -99,6 +99,21 @@ label {
   border: 3.5px solid #BCED09;
 }
 
+.btn {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #000A24;
+  color: #BCED09;
+  border: 3.5px solid #BCED09;
+}
+.btn:hover {
+  cursor: grab;
+  opacity: 80%;
+  background-color: #BCED09;
+  color: #000A24;
+}
+
 .send_btn:hover {
   cursor: grab;
   opacity: 80%;
