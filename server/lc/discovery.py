@@ -37,12 +37,15 @@ class DiscoveryComponent:
             #print(self.neighbors)
             changes_made = False
             to_add = set()
+            ignore = set()
 
             #print('Acquiring lock 2')
             #with self.lock:
             #    print('Lock aquired 2')
                 #print(self.neighbors)
             for n in new_neighbors:
+                if n in ignore:
+                    continue
                 #print('n:', n)
                 try:
                     resp = requests.get(f'http://{n}/discovery')
@@ -51,17 +54,20 @@ class DiscoveryComponent:
                     info(f"Got neighbors {addrs} from {n}")
                     for addr in addrs:
                         #print('addr:', addr)
-                        if addr not in self.neighbors and addr != self.pub_addr:
+                        if addr not in new_neighbors and addr != self.pub_addr:
                             changes_made = True
                             to_add.add(addr)
+
+                            print(to_add)
                             #self.neighbors.add(addr)
 
                     data = self.json_neighbors()
                     _ = requests.post(f'http://{n}/discovery', json=data)
                 except requests.exceptions.ConnectionError:
                     err(f'Failed to connect to neighbor {n}')
+                    ignore.add(n)
             #self.neighbors = self.neighbors.union(to_add)
-            #new_neighbors = new_neighbors.union(to_add)
+            new_neighbors = new_neighbors.union(to_add)
             #print(self.neighbors)
             #print('Lock done 2')
         
