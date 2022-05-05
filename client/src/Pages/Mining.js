@@ -21,6 +21,14 @@ const Mining = () => {
               - Git, the version manager. More information regarding how to install git can be found <a target="blank" href="https://git-scm.com/">here</a>.
             </p>
 
+            <h2>Video Version</h2>
+            <p className='mining'>
+              If you would prefer a video tutorial:
+            </p>
+            <iframe width="1024" height="580"
+            src="https://www.youtube.com/embed/xnv272ybcoQ">
+            </iframe>
+
             <h2>Setup</h2>
             <p className='mining'>
 
