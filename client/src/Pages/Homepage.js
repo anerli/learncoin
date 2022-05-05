@@ -83,7 +83,7 @@ const Homepage = () => {
             <br/>
             <Balance text={balance.toFixed(4) + " LC"}/>
             
-            <InfoModal className='pub_key_text' text="Your public key is how other users can identify you in transactions."/>
+            <InfoModal className='pub_key_text' text="Your public key serves as your address, so this is how other users can identify you in transactions. You private key should always be kept secret, and is used for signing transactions to prove that you approved of them."/>
             {publicKey !== '' &&
               <h2 className='public_key'>
                 Your public key: &nbsp;{publicKey} 
