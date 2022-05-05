@@ -37,7 +37,7 @@ function TransactionForm(props) {
   useEffect(() => {
     const interval = setInterval(() => {
       fetchPending();
-    }, 5000);
+    }, 500);
     return () => clearInterval(interval);
   }, [pending]);
 

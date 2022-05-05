@@ -31,9 +31,15 @@ const Blockchain = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       fetchChain();
-    }, 5000);
+    }, 500);
     return () => clearInterval(interval);
   }, [blocks]);
+
+  useEffect(() => {
+    if (!('node' in cookies)) {
+      setCookie('node', 'coms-402-sd-23.class.las.iastate.edu'); // Default node
+    }
+  });
 
 
   return (<div>

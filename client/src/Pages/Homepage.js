@@ -43,7 +43,7 @@ const Homepage = () => {
     useEffect(() => {
       const interval = setInterval(() => {
         fetchBalance();
-      }, 5000);
+      }, 500);
       return () => clearInterval(interval);
     }, [publicKey]);
     
