@@ -431,6 +431,10 @@ input[type="button"] {
   text-align: right;
 }
 
+a:link {
+  color: #BCED09;
+}
+
 a:visited {
   color: #BCED09;
 }
