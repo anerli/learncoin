@@ -116,6 +116,6 @@ class Block:
                 if sender in totals:
                     totals[sender] -= float_from_bytes(transaction.amount)
                 else:
-                    totals[sender] = float_from_bytes(transaction.amount)
+                    totals[sender] = -float_from_bytes(transaction.amount)
 
         return totals

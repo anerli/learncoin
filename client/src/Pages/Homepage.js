@@ -66,7 +66,7 @@ const Homepage = () => {
     return (
         <div>
             <Link to='/'>LOG OUT</Link>
-            <h1 style={{lineHeight:"0px"}}> LearnCoin  </h1>  
+            <h1 style={{lineHeight:"0px"}}> LearnCoin Wallet </h1>  
 
             {/* <img src="gear.png" width="30px"></img> */}
             {/* value="coms-402-sd-23.class.las.iastate.edu" */}
@@ -80,8 +80,8 @@ const Homepage = () => {
             <input style={{display:"inline", margin: "0 auto", width:"300px", textAlign: "Center"}} id="host" type="text" placeholder="Full Node Hostname / IP"></input>
             
             <button onClick={updateNode} style={{display:"inline", margin:"10px", padding:"10px"}} className="btn">Change Node Host (Current: {cookies.node})</button>
-            <br/>
-            <Balance text={balance.toFixed(4) + " LC"}/>
+            <br/><br/>
+            <Balance text={"Balance: " + balance.toFixed(4) + " LC"}/>
             
             <InfoModal className='pub_key_text' text="Your public key serves as your address, so this is how other users can identify you in transactions. You private key should always be kept secret, and is used for signing transactions to prove that you approved of them."/>
             {publicKey !== '' &&
