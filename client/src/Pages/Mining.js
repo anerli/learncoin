@@ -4,7 +4,7 @@ const Mining = () => {
     return (
         <div>
             <Link to='/'>BACK</Link>
-            <h1 align='center'>Mining LearnCoin!</h1>
+            <h1 align='center'>How to Mine LearnCoin!</h1>
             <br/>
             <h2>So you'd like to mine LearnCoin… Here's how you get started.</h2>
             <p className='mining'>

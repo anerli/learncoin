@@ -48,10 +48,10 @@ function TransactionForm(props) {
                 <InfoModal text="This is your Wallet. Here, you can create transactions that will be broadcasted to the blockchain."/>
               <div className="card">
                   <div className="card_items">
-                    <img className="graphic" src="https://drive.google.com/uc?export=download&id=1f8ItY1h0uVrjcaBBtbJ7Q69fzwNSrzd9" alt="LearnCoin logo"/>
-                    <input id="amount" type="text" placeholder="Amount of LC to Send"></input>
-                    <img className="graphic" src="https://drive.google.com/uc?export=download&id=1Km7Z7WEm5Ydd8i9BfNsMcMFWu4k3xRqH" alt="wallet icon"/>
-                    <input id="receiver" type="text" placeholder="Public Key of Recipient"></input>
+                    <img className="graphic" style={{width: "20px", marginRight:"24px"}} src="lc_coin.png" alt="LearnCoin logo"/>
+                    <input id="amount" style={{width:"450px"}} type="text" placeholder="Amount of LC to Send"></input><br/><br/>
+                    <img className="graphic" style={{width: "20px"}} src="lc_wallet.png" alt="wallet icon"/>
+                    <input id="receiver" style={{width:"450px"}} type="text" placeholder="Public Key of Recipient"></input>
                     <Send sendCallback={onSend}/>
                   </div>
               </div>

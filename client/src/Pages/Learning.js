@@ -7,7 +7,7 @@ const Learning = () => {
             <h1 align='center'>Crypto 101!</h1>
             <br/>
             <h2>What is a Cryptocurrency?</h2>
-            <p className='learning'>
+            <p className='mining'>
               A cryptocurrency is a decentralized system of web servers which work to agree on a common list of transactions between different users.
               Decentralized means that no particular server is in charge of the network. We call each server in such a network a "node".
               The list of transactions simply represents each exchange of the cryptocurrency from
@@ -16,7 +16,7 @@ const Learning = () => {
             </p>
             <br/>
             <h2>What are Digital Signatures?</h2>
-            <p className='learning'>
+            <p className='mining'>
               Digital signatures are cryptographic mechanisms for verifying that a particular user approved of a certain action. In our case, we would like to verify that anyone
               who sends a transaction actually wanted to do so, and that it is not an attacker forging the transaction. We implement this by using what's called a keypair, which
               consists of a public and private key. The private key is never shared with anyone else, whereas the public key can be shared freely. We can "sign" any arbitrary data
@@ -25,13 +25,13 @@ const Learning = () => {
             </p>
             <br/>
             <h2>What is a Blockchain?</h2>
-            <p className='learning'>
+            <p className='mining'>
               A blockchain is a chain of data objects, which we call blocks, binded together with cryptographic proofs. Each block can contain whatever information we want. In our case,
               we would like each block to contain some transactions. That way, combining each list of transactions for each of our blocks in the chain makes the total list of transactions.
               But how are they "chained" together? And why do we need to do this anyway?
             </p>
 
-            <p className='learning'>
+            <p className='mining'>
               The purpose of chaining together blocks this way is in order to prevent any one party from modifying the chain excessively, for example removing many transactions.
               Our digital signature mechanism allows us to verify that provided transactions are valid, but does not prevent nodes from removing transactions.
               Consider, for example, someone making a purchase with a cryptocurrency. They sign the transaction, and it is added to the network. 
@@ -39,12 +39,12 @@ const Learning = () => {
               which does not include their transfer - thus gaining back the money they spent.
             </p>
 
-            <p className='learning'>
+            <p className='mining'>
               To prevent this, we require proof that each block is "valid". But how do we decide which blocks are valid and which aren't? We can use what's called a consensus algorithm for this,
               which is an algorithm designed to agree on something in a decentralized system. In our case, we would like to agree on which blocks are valid and which aren't.
             </p>
 
-            <p className='learning'>
+            <p className='mining'>
               Proof of Work is one such consensus algorithm. For this algorithm, each block needs to be "mined" by solving a cryptographic puzzle involving the block's data,
               which requires computational resources. A solution to one of these puzzles is called a "proof". Additionally, we base the puzzle on the previously mined block's data
               as well, thus forming a chain. By organizing this as a chain, the "strength" of the chain increases over time as more and more proofs are added.
@@ -65,14 +65,14 @@ const Learning = () => {
             </p>
             <br/>
             <h2>What is LearnCoin?</h2>
-            <p className='learning'>
+            <p className='mining'>
               LearnCoin is a cryptocurrency implementation meant to be as simple as possible while remaining secure. LearnCoin is written in Python, a relatively easy programming language
               to understand, and is built only using the fundamental cryptocurrency mechanisms needed for a secure system of transactions. Most cryptocurrencies are highly concerned
               with efficiency - however increasing efficiency often requires additional complicated algorithms. By removing the worry of efficiency, LearnCoin can remain
               minimal, which can allow programmers interested in learning about the inner workings of a cryptocurrency to better understand the basics.
             </p>
 
-            <p className='learning'>
+            <p className='mining'>
               In addition to acting as a clean codebase for interested programmers, LearnCoin also provides a <a href='/login'>simple wallet interface</a> along with information (like this page!) to
               help people understand the various mechanisms. Around this site, you will see question mark icons which you can hover over to reveal additional information about
               different components!
