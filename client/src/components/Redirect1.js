@@ -9,7 +9,7 @@ function Redirect1() {
         <Link to="/learning">
           <img
             className="redirect_decal"
-            src="https://drive.google.com/uc?export=download&id=1hS4HNPEoJ-CU4pzsNYPyjM3YEmhpxaLs"
+            src="btn1.png"
             alt="Crypto learning graphic and redirect"
           />
         </Link>

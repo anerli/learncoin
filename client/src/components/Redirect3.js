@@ -8,7 +8,7 @@ function Redirect3() {
             <Link to="/blockchain">
                 <img
                     className="redirect_decal"
-                    src="https://drive.google.com/uc?export=download&id=1x-7GXbIjnEVKngjA-eBBHKumhCoynzwm"
+                    src="btn3.png"
                     alt="LearnCoin blockchain viewer and redirect"
                 />
             </Link>

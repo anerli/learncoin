@@ -10,7 +10,7 @@ const Blockchain = () => {
 
   const fetchChain = async () => {
     const SRV_URL = "http://" + cookies.node;
-      console.log( SRV_URL + '/transactions/balance/');
+      console.log( SRV_URL );
       const response = await fetch(
         SRV_URL + '/chain/',
         {
