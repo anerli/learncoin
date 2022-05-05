@@ -1,5 +1,4 @@
 import time
-from numpy import False_
 import requests
 import threading
 
